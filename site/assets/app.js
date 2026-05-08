@@ -1,0 +1,1392 @@
+const dictionary = {
+  ko: {
+    brand: "세이프루트",
+    tagline: "여행자 주의 지도",
+    title: "세이프루트 - 해외여행 도난·스캠 주의 지도",
+    description: "한국인 해외여행자를 위한 소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠 주의 지도와 현장 대처 가이드.",
+    mapPanelTitle: "지금 조심할 여행 스팟",
+    mapPanelDesc: "소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠을 장소별 행동요령으로 봐요.",
+    citiesTitle: "도시별 주의 맥락",
+    citiesDesc: "도시마다 위험이 생기는 장소와 타이밍이 달라요. 여행 전 한 번만 훑어도 실수가 줄어요.",
+    panicTitle: "당했을 때 5분 대처",
+    panicDesc: "휴대폰, 지갑, 여권을 잃어버렸을 때 순서가 꼬이면 시간이 크게 늘어나요.",
+    savedTitle: "저장한 주의 스팟",
+    savedDesc: "여행 전에 저장해두면 현장에서 바로 다시 열 수 있어요.",
+    checkTitle: "출발 전 체크",
+    checkDesc: "가방을 잠그는 것보다 중요한 건 당황했을 때 바로 할 수 있는 준비예요.",
+    all: "전체",
+    pickpocket: "소매치기",
+    phone: "휴대폰 날치기",
+    bag: "가방 절도",
+    transit: "교통권·역",
+    scam: "관광지 스캠",
+    night: "야간 주의",
+    map: "주의",
+    cities: "도시",
+    panic: "대처",
+    saved: "저장",
+    check: "체크",
+    route: "길찾기",
+    save: "저장",
+    savedDone: "저장됨",
+    source: "기준",
+    level: "주의도",
+    pattern: "자주 생기는 상황",
+    action: "현장에서 할 일",
+    after: "피해 직후",
+    timing: "주의 시간",
+    placeType: "장소 유형",
+    tags: "태그",
+    noSaved: "아직 저장한 곳이 없어요",
+    noSavedBody: "장소 상세에서 저장을 누르면 여행 전 체크리스트처럼 모여요.",
+    noResults: "조건에 맞는 스팟이 없어요",
+    clear: "조건 해제",
+    nearby: "현재 위치",
+    searchOpen: "검색 열기",
+    searchClose: "검색 닫기",
+    searchPlaceholder: "도시·장소·유형 검색",
+    clearSearch: "검색어 지우기",
+    translateToEnglish: "영어로 번역",
+    translateToKorean: "한국어로 보기",
+    englishOn: "영어로 전환했어.",
+    koreanOn: "한국어로 전환했어.",
+    savedToast: "저장했어. 여행 전에 다시 보기 좋아.",
+    unsavedToast: "저장에서 뺐어.",
+    locationUnavailable: "이 브라우저에서는 현재 위치를 사용할 수 없어.",
+    locationDenied: "위치 권한을 허용하면 내 주변 주의 스팟을 가까운 순서로 볼 수 있어.",
+    locationReady: "현재 위치 기준으로 가까운 스팟을 정렬했어.",
+    movedCity: "중심으로 이동했어.",
+    filtered: "상황으로 좁혔어.",
+    shown: "곳 표시",
+    selected: "선택됨",
+    sourceNote: "이 지도는 신고 통계가 아니라 공식 안전 안내와 여행자에게 반복적으로 알려진 피해 패턴을 정리한 참고 도구예요.",
+    officialLinks: "공식 안전 링크",
+    police: "현지 경찰",
+    card: "카드사 정지",
+    passport: "여권·대사관",
+    insurance: "보험 접수",
+    copySteps: "대처 순서 복사",
+    copied: "복사했어.",
+    copyFailed: "복사가 막혔어. 화면 내용을 길게 눌러 복사해줘.",
+    done: "완료",
+    undone: "미완료",
+    around: "주변",
+    city: "도시",
+    risk: "위험 유형",
+    details: "상세",
+    showMap: "지도 보기",
+    quickTransit: "지하철 탑승",
+    quickPhoto: "사진 찍을 때",
+    quickCafe: "카페·식당",
+    quickNight: "야간 이동",
+    quickQueue: "대기줄",
+    beforeTrip: "여행 전",
+    duringTrip: "여행 중",
+    afterLoss: "분실 후",
+    officialSource: "공식·공공 안전 안내 기반",
+    practicalRule: "실전 규칙",
+    reportRisk: "위험 제보는 아직 열지 않았어요. 허위·낙인 위험이 있어 초기에는 큐레이션 지도로 운영합니다.",
+    cityButtonLabel: "도시 빠른 이동",
+    mainNav: "주요 메뉴",
+    quickLabel: "상황 빠른 보기"
+  },
+  en: {
+    brand: "SafeRoute",
+    tagline: "Traveler risk map",
+    title: "SafeRoute - Travel Theft and Scam Risk Map",
+    description: "A map for Korean travelers to check pickpocketing, phone snatching, bag theft, tourist scams, and what to do on the spot.",
+    mapPanelTitle: "Travel Spots To Watch Now",
+    mapPanelDesc: "Check pickpocketing, phone snatching, bag theft, and tourist scams with simple on-site actions.",
+    citiesTitle: "City Risk Context",
+    citiesDesc: "Each city has different risk patterns by place and timing. A quick scan before travel prevents mistakes.",
+    panicTitle: "First 5 Minutes After Loss",
+    panicDesc: "When your phone, wallet, or passport is gone, the order of action matters more than speed alone.",
+    savedTitle: "Saved Risk Spots",
+    savedDesc: "Save places before the trip and reopen them quickly on the street.",
+    checkTitle: "Pre-Trip Check",
+    checkDesc: "Locking a bag helps, but being ready to act when stressed helps more.",
+    all: "All",
+    pickpocket: "Pickpocket",
+    phone: "Phone snatch",
+    bag: "Bag theft",
+    transit: "Transit",
+    scam: "Tourist scam",
+    night: "Night caution",
+    map: "Risks",
+    cities: "Cities",
+    panic: "SOS",
+    saved: "Saved",
+    check: "Check",
+    route: "Route",
+    save: "Save",
+    savedDone: "Saved",
+    source: "Basis",
+    level: "Risk",
+    pattern: "Common pattern",
+    action: "What to do",
+    after: "After incident",
+    timing: "Timing",
+    placeType: "Place type",
+    tags: "Tags",
+    noSaved: "No saved spots yet",
+    noSavedBody: "Tap Save in a spot detail and it will collect here like a trip checklist.",
+    noResults: "No matching spots yet",
+    clear: "Clear",
+    nearby: "Current location",
+    searchOpen: "Open search",
+    searchClose: "Close search",
+    searchPlaceholder: "Search city, place, or risk type",
+    clearSearch: "Clear search",
+    translateToEnglish: "Translate to English",
+    translateToKorean: "View in Korean",
+    englishOn: "Switched to English.",
+    koreanOn: "Switched to Korean.",
+    savedToast: "Saved. Good to review before the trip.",
+    unsavedToast: "Removed from saved.",
+    locationUnavailable: "Current location is not available in this browser.",
+    locationDenied: "Allow location to sort risk spots by distance.",
+    locationReady: "Sorted by your current location.",
+    movedCity: "centered on the map.",
+    filtered: "mode applied.",
+    shown: "spots shown",
+    selected: "Selected",
+    sourceNote: "This map is not a crime-stat database. It summarizes official safety advice and repeatedly reported traveler risk patterns.",
+    officialLinks: "Official Safety Links",
+    police: "Local police",
+    card: "Freeze cards",
+    passport: "Passport/embassy",
+    insurance: "Insurance claim",
+    copySteps: "Copy response steps",
+    copied: "Copied.",
+    copyFailed: "Copy was blocked. Long-press the text on screen instead.",
+    done: "Done",
+    undone: "Todo",
+    around: "Nearby",
+    city: "City",
+    risk: "Risk type",
+    details: "Details",
+    showMap: "Show map",
+    quickTransit: "Using metro",
+    quickPhoto: "Taking photos",
+    quickCafe: "Cafe/restaurant",
+    quickNight: "Night move",
+    quickQueue: "Waiting line",
+    beforeTrip: "Before trip",
+    duringTrip: "During trip",
+    afterLoss: "After loss",
+    officialSource: "Based on official/public safety advice",
+    practicalRule: "Practical rule",
+    reportRisk: "Public risk reports are not open yet. To avoid false claims and stigma, this starts as a curated map.",
+    cityButtonLabel: "Quick city move",
+    mainNav: "Main menu",
+    quickLabel: "Quick scenarios"
+  }
+};
+
+const cities = {
+  barcelona: {
+    label: { ko: "바르셀로나", en: "Barcelona" },
+    country: { ko: "스페인", en: "Spain" },
+    center: [41.3851, 2.1734],
+    zoom: 13,
+    summary: {
+      ko: "관광지, 해변, 지하철, 광장 주변에서 가방·지갑·휴대폰 관리가 핵심이에요.",
+      en: "Watch bags, wallets, and phones around tourist sites, beaches, metro stations, and plazas."
+    }
+  },
+  paris: {
+    label: { ko: "파리", en: "Paris" },
+    country: { ko: "프랑스", en: "France" },
+    center: [48.8584, 2.2945],
+    zoom: 12,
+    summary: {
+      ko: "유명 관광지, 지하철 환승, 서명·팔찌 접근 같은 산만하게 만드는 상황을 조심해요.",
+      en: "Be careful at famous sights, metro transfers, and distraction approaches such as petitions or bracelets."
+    }
+  },
+  rome: {
+    label: { ko: "로마", en: "Rome" },
+    country: { ko: "이탈리아", en: "Italy" },
+    center: [41.9028, 12.4964],
+    zoom: 12,
+    summary: {
+      ko: "역, 버스, 지하철, 분수·유적지 대기줄에서 주머니와 가방 앞쪽 관리가 중요해요.",
+      en: "At stations, buses, metro, fountains, and monument queues, keep pockets and bags in front."
+    }
+  },
+  london: {
+    label: { ko: "런던", en: "London" },
+    country: { ko: "영국", en: "United Kingdom" },
+    center: [51.5074, -0.1278],
+    zoom: 12,
+    summary: {
+      ko: "혼잡한 상점가와 역, 카페 테이블 위 휴대폰 노출, 자전거·오토바이 날치기 상황을 조심해요.",
+      en: "Watch busy shopping streets, stations, phones left on tables, and bicycle or moped snatching."
+    }
+  },
+  bangkok: {
+    label: { ko: "방콕", en: "Bangkok" },
+    country: { ko: "태국", en: "Thailand" },
+    center: [13.7563, 100.5018],
+    zoom: 12,
+    summary: {
+      ko: "관광지 호객, 택시·툭툭 우회, 야시장 혼잡, 술자리 후 이동을 분리해서 봐야 해요.",
+      en: "Separate risks around touts, taxi/tuk-tuk detours, night market crowds, and late-night moves."
+    }
+  },
+  hochiminh: {
+    label: { ko: "호치민", en: "Ho Chi Minh City" },
+    country: { ko: "베트남", en: "Vietnam" },
+    center: [10.7769, 106.7009],
+    zoom: 13,
+    summary: {
+      ko: "오토바이 날치기와 테라스 좌석 휴대폰 노출을 조심하고, 도로 쪽 손에 폰을 들지 않는 게 좋아요.",
+      en: "Watch motorbike snatching and exposed phones at terrace seats. Avoid holding your phone street-side."
+    }
+  }
+};
+
+const riskTypes = [
+  { key: "all", emoji: "📍", color: "green" },
+  { key: "pickpocket", emoji: "🖐️", color: "amber" },
+  { key: "phone", emoji: "📱", color: "red" },
+  { key: "bag", emoji: "🎒", color: "purple" },
+  { key: "transit", emoji: "🚇", color: "blue" },
+  { key: "scam", emoji: "🎭", color: "amber" },
+  { key: "night", emoji: "🌙", color: "dark" }
+];
+
+const scenarios = [
+  { key: "transit", label: "quickTransit", emoji: "🚇", risks: ["transit", "pickpocket"] },
+  { key: "photo", label: "quickPhoto", emoji: "📸", risks: ["pickpocket", "phone", "scam"] },
+  { key: "cafe", label: "quickCafe", emoji: "☕", risks: ["phone", "bag"] },
+  { key: "night", label: "quickNight", emoji: "🌙", risks: ["night", "phone", "bag"] },
+  { key: "queue", label: "quickQueue", emoji: "🧍", risks: ["pickpocket", "scam"] }
+];
+
+const spots = [
+  {
+    id: "barcelona-ramblas",
+    city: "barcelona",
+    risk: "pickpocket",
+    level: 88,
+    lat: 41.3815,
+    lng: 2.1730,
+    name: { ko: "람블라스 거리와 보케리아 주변", en: "La Rambla and Boqueria area" },
+    area: { ko: "바르셀로나 구시가지", en: "Barcelona Old City" },
+    type: { ko: "관광 보행로", en: "Tourist walking street" },
+    time: { ko: "오후~야간 혼잡 시간", en: "Afternoon to crowded evening" },
+    pattern: { ko: "사진을 보거나 길을 찾는 순간 가방 지퍼, 뒷주머니, 테이블 위 휴대폰이 노출되기 쉬워요.", en: "While checking photos or directions, bag zippers, back pockets, and phones on tables become exposed." },
+    action: { ko: "휴대폰은 벽쪽 손에 들고, 가방은 앞쪽으로 돌리고, 누군가 말을 걸면 먼저 지퍼와 폰부터 확인해요.", en: "Hold the phone on the wall-side hand, move your bag to the front, and check zippers and phone first if approached." },
+    after: { ko: "카드 정지, 경찰 신고서, 보험 접수용 시간·장소 기록을 바로 남겨요.", en: "Freeze cards, file a police report, and record time/place for insurance." },
+    tags: ["pickpocket", "scam", "photo"],
+    source: { ko: "바르셀로나 시청 안전 안내", en: "Barcelona City Council safety advice" }
+  },
+  {
+    id: "barcelona-metro-catalunya",
+    city: "barcelona",
+    risk: "transit",
+    level: 84,
+    lat: 41.3868,
+    lng: 2.1701,
+    name: { ko: "카탈루냐 광장 지하철 환승", en: "Plaça de Catalunya metro interchange" },
+    area: { ko: "카탈루냐 광장", en: "Plaça de Catalunya" },
+    type: { ko: "지하철·광장 환승", en: "Metro and plaza interchange" },
+    time: { ko: "출퇴근·관광 피크", en: "Commute and tourist peak" },
+    pattern: { ko: "개찰구, 에스컬레이터, 승하차 순간에 몸이 가까워지며 주머니와 백팩이 노출돼요.", en: "At gates, escalators, and boarding moments, close contact exposes pockets and backpacks." },
+    action: { ko: "백팩은 앞으로 메고, 탑승 직전 지갑과 여권 위치를 다시 만져 확인해요.", en: "Wear backpacks in front and touch-check wallet and passport before boarding." },
+    after: { ko: "승강장을 벗어나 안전한 벽 쪽에서 분실물, 카드, 숙소 키를 순서대로 확인해요.", en: "Step to a safe wall-side spot and check lost items, cards, and room keys in order." },
+    tags: ["transit", "pickpocket", "crowd"],
+    source: { ko: "바르셀로나 시청·대중교통 안전 권고", en: "Barcelona public safety and transit advice" }
+  },
+  {
+    id: "barcelona-sagrada",
+    city: "barcelona",
+    risk: "scam",
+    level: 77,
+    lat: 41.4036,
+    lng: 2.1744,
+    name: { ko: "사그라다 파밀리아 사진 대기 구역", en: "Sagrada Família photo waiting area" },
+    area: { ko: "에이샴플라", en: "Eixample" },
+    type: { ko: "사진 명소·대기줄", en: "Photo spot and queue" },
+    time: { ko: "입장 전후", en: "Before and after entry" },
+    pattern: { ko: "사진을 부탁하거나 서명·기부를 요청하며 주의를 분산시키는 접근이 생길 수 있어요.", en: "Photo requests, petitions, or donation approaches can distract travelers." },
+    action: { ko: "모르는 사람이 다가오면 걸음을 멈추지 말고, 가방을 몸 앞쪽에 붙인 상태로 짧게 거절해요.", en: "Do not stop for unknown approaches; keep the bag in front and decline briefly." },
+    after: { ko: "소지품이 사라졌다면 입장권, 카드, 여권 순서로 피해 범위를 줄여요.", en: "If something is missing, reduce damage in order: ticket, cards, passport." },
+    tags: ["scam", "photo", "queue"],
+    source: { ko: "관광지 혼잡 구역 안전 권고", en: "Tourist-crowd safety advice" }
+  },
+  {
+    id: "barcelona-beach",
+    city: "barcelona",
+    risk: "bag",
+    level: 81,
+    lat: 41.3784,
+    lng: 2.1925,
+    name: { ko: "바르셀로네타 해변·테라스", en: "Barceloneta beach and terraces" },
+    area: { ko: "바르셀로네타", en: "Barceloneta" },
+    type: { ko: "해변·야외 좌석", en: "Beach and outdoor seating" },
+    time: { ko: "해질녘~야간", en: "Sunset to night" },
+    pattern: { ko: "짐을 의자 뒤나 모래 위에 두고 물건을 보는 순간 가방·휴대폰이 사라질 수 있어요.", en: "Bags or phones can disappear when left behind chairs or on sand while distracted." },
+    action: { ko: "가방끈을 다리나 의자에 걸고, 테이블 위 휴대폰은 내려놓지 않아요.", en: "Loop bag straps around your leg or chair and never leave the phone on the table." },
+    after: { ko: "위치 추적보다 카드 정지와 숙소 복귀 동선을 먼저 잡아요.", en: "Prioritize card freezing and a safe route back before chasing location tracking." },
+    tags: ["bag", "phone", "night"],
+    source: { ko: "바르셀로나 시청 여행자 안전 안내", en: "Barcelona City Council traveler safety advice" }
+  },
+  {
+    id: "paris-eiffel-trocadero",
+    city: "paris",
+    risk: "scam",
+    level: 80,
+    lat: 48.8629,
+    lng: 2.2880,
+    name: { ko: "트로카데로 전망대와 에펠탑 포토존", en: "Trocadéro viewpoint and Eiffel Tower photo area" },
+    area: { ko: "파리 16구", en: "Paris 16th" },
+    type: { ko: "사진 명소", en: "Photo landmark" },
+    time: { ko: "일몰 전후", en: "Around sunset" },
+    pattern: { ko: "사진을 찍는 사이 가방이 열린 상태로 오래 노출되고, 팔찌·서명 접근이 생길 수 있어요.", en: "Open bags stay exposed during photos, and bracelet or petition approaches may appear." },
+    action: { ko: "사진 전 가방 지퍼를 닫고, 삼각대·폰을 바닥에 놓지 말고, 접근형 호객에는 짧게 움직이며 거절해요.", en: "Zip your bag before photos, do not place phone/tripod on the ground, and decline approaches while moving." },
+    after: { ko: "여권이 없다면 사진 데이터보다 경찰 신고와 대사관 절차를 먼저 잡아요.", en: "If your passport is gone, police report and embassy steps come before photo recovery." },
+    tags: ["scam", "pickpocket", "photo"],
+    source: { ko: "공공 여행 안전 안내·관광지 주의 패턴", en: "Public travel safety advice and tourist-site risk patterns" }
+  },
+  {
+    id: "paris-metro-line",
+    city: "paris",
+    risk: "transit",
+    level: 85,
+    lat: 48.8582,
+    lng: 2.3470,
+    name: { ko: "파리 중심부 지하철 환승 구간", en: "Central Paris metro transfer zones" },
+    area: { ko: "샤틀레·루브르·북역 연결", en: "Châtelet, Louvre, Gare du Nord links" },
+    type: { ko: "지하철·환승 통로", en: "Metro and transfer corridors" },
+    time: { ko: "출퇴근·관광 피크", en: "Commute and tourist peak" },
+    pattern: { ko: "출입문이 닫히기 직전 밀착하거나, 길 안내를 빙자해 동선을 멈추게 만드는 경우가 있어요.", en: "Crowding near closing doors or fake direction-help can stop your movement and distract you." },
+    action: { ko: "문 앞보다 벽 쪽으로 서고, 휴대폰은 한 손이 아니라 양손으로 잡아 지도만 짧게 확인해요.", en: "Stand wall-side rather than door-side and hold the phone with both hands for quick map checks." },
+    after: { ko: "지하철 안에서 쫓아가지 말고 다음 역에서 내려 안전하게 신고·정지를 진행해요.", en: "Do not chase inside the metro. Exit at the next station and start reporting/freezing safely." },
+    tags: ["transit", "pickpocket", "phone"],
+    source: { ko: "대중교통 소매치기 예방 안내", en: "Public transport pickpocket prevention advice" }
+  },
+  {
+    id: "paris-montmartre",
+    city: "paris",
+    risk: "scam",
+    level: 74,
+    lat: 48.8867,
+    lng: 2.3431,
+    name: { ko: "몽마르트 언덕 접근로", en: "Montmartre hill approaches" },
+    area: { ko: "사크레쾨르 주변", en: "Around Sacré-Cœur" },
+    type: { ko: "언덕길·관광 접근로", en: "Hill route and tourist approach" },
+    time: { ko: "오후 관광 피크", en: "Afternoon tourist peak" },
+    pattern: { ko: "팔찌, 그림, 기부, 사진 요청처럼 손목이나 시선을 잡는 접근이 생기기 쉬워요.", en: "Bracelet, drawing, donation, or photo approaches may capture your wrist or attention." },
+    action: { ko: "손을 내밀지 말고, 눈을 오래 맞추지 않고, 동행과 멈추지 않는 규칙을 미리 정해요.", en: "Do not offer your hand, avoid prolonged eye contact, and agree with companions not to stop." },
+    after: { ko: "돈을 요구받아도 지갑을 꺼내지 말고 밝고 사람이 많은 쪽으로 이동해요.", en: "If pressured for money, do not take out your wallet; move toward a bright, crowded area." },
+    tags: ["scam", "pickpocket", "photo"],
+    source: { ko: "관광지 접근형 스캠 예방 기준", en: "Tourist approach scam prevention guidance" }
+  },
+  {
+    id: "rome-termini",
+    city: "rome",
+    risk: "transit",
+    level: 88,
+    lat: 41.9010,
+    lng: 12.5018,
+    name: { ko: "테르미니역과 공항 이동 동선", en: "Termini Station and airport transfer routes" },
+    area: { ko: "로마 테르미니", en: "Rome Termini" },
+    type: { ko: "기차역·버스·공항철도", en: "Train station, bus, airport rail" },
+    time: { ko: "출도착·환승 시간", en: "Arrival, departure, and transfer time" },
+    pattern: { ko: "표 발권기 도움, 짐 들어주기, 플랫폼 이동 중 가방 분산 상황이 생겨요.", en: "Ticket-machine help, luggage assistance, and platform movement can split attention." },
+    action: { ko: "발권 도움은 거절하고, 캐리어 위 가방은 손목에 걸고, 여권은 겉가방에 넣지 않아요.", en: "Decline ticket help, loop bag straps while moving luggage, and never keep passport in an outer bag." },
+    after: { ko: "열차를 놓치더라도 카드·여권 피해를 먼저 줄이는 게 비용 손실을 줄여요.", en: "Even if you miss a train, reducing card/passport damage first saves more." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "미국 국무부·영국 여행 안전 안내", en: "U.S. State Department and UK travel safety advice" }
+  },
+  {
+    id: "rome-trevi",
+    city: "rome",
+    risk: "pickpocket",
+    level: 82,
+    lat: 41.9009,
+    lng: 12.4833,
+    name: { ko: "트레비 분수 주변", en: "Trevi Fountain area" },
+    area: { ko: "로마 중심부", en: "Central Rome" },
+    type: { ko: "분수·사진 혼잡지", en: "Fountain and photo crowd" },
+    time: { ko: "낮~밤 상시 혼잡", en: "Day to night crowd" },
+    pattern: { ko: "사진을 찍고 동전을 던지는 순간 손과 시선이 분리돼 주머니·가방이 취약해져요.", en: "Taking photos and tossing coins separates hands and attention, exposing pockets and bags." },
+    action: { ko: "사진 전 소지품을 한 번 줄이고, 동전·폰·가방을 동시에 들지 않아요.", en: "Reduce loose items before photos and avoid juggling coins, phone, and bag at once." },
+    after: { ko: "잃어버린 물건을 찾으려 주변을 오래 배회하지 말고 안전한 곳에서 신고 순서를 잡아요.", en: "Do not wander long looking for items; move safe and start the report sequence." },
+    tags: ["pickpocket", "photo", "queue"],
+    source: { ko: "로마 관광지 소매치기 주의 안내", en: "Rome tourist-area pickpocket advice" }
+  },
+  {
+    id: "rome-vatican",
+    city: "rome",
+    risk: "scam",
+    level: 79,
+    lat: 41.9065,
+    lng: 12.4536,
+    name: { ko: "바티칸 박물관 입장 대기줄", en: "Vatican Museums queue area" },
+    area: { ko: "바티칸 주변", en: "Vatican area" },
+    type: { ko: "입장 대기줄", en: "Entrance queue" },
+    time: { ko: "오전 입장 피크", en: "Morning entry peak" },
+    pattern: { ko: "줄을 서는 동안 가방이 한 방향으로 오래 노출되고, 비공식 티켓·투어 접근이 생겨요.", en: "While queuing, bags stay exposed in one direction and unofficial ticket/tour approaches may appear." },
+    action: { ko: "줄에서는 백팩을 앞으로 메고, 티켓·투어 제안은 공식 앱·공식 창구 기준으로만 확인해요.", en: "In line, wear backpacks in front and verify ticket/tour offers only through official channels." },
+    after: { ko: "티켓 사기 의심이면 결제수단 정지와 영수증 캡처를 먼저 해요.", en: "If ticket fraud is suspected, freeze payment methods and capture receipts first." },
+    tags: ["scam", "queue", "pickpocket"],
+    source: { ko: "관광 대기줄 피해 예방 기준", en: "Tourist queue risk prevention guidance" }
+  },
+  {
+    id: "london-oxford",
+    city: "london",
+    risk: "phone",
+    level: 80,
+    lat: 51.5154,
+    lng: -0.1410,
+    name: { ko: "옥스퍼드 스트리트 쇼핑 동선", en: "Oxford Street shopping route" },
+    area: { ko: "런던 웨스트엔드", en: "London West End" },
+    type: { ko: "상점가·횡단보도", en: "Shopping street and crossings" },
+    time: { ko: "오후~퇴근 시간", en: "Afternoon to commute time" },
+    pattern: { ko: "길찾기 중 도로 쪽 손에 든 휴대폰이 자전거·오토바이 접근에 노출될 수 있어요.", en: "A phone held street-side while navigating can be exposed to bike or moped snatching." },
+    action: { ko: "지도 확인은 건물 벽 쪽에서 멈춰서 하고, 도로 쪽 손에는 폰을 들지 않아요.", en: "Check maps stopped on the building-side, not with the phone in the street-side hand." },
+    after: { ko: "휴대폰 찾기보다 계정 잠금, SIM 정지, 카드 앱 로그아웃을 먼저 해요.", en: "Before chasing the phone, lock accounts, suspend SIM, and log out payment apps." },
+    tags: ["phone", "night", "crowd"],
+    source: { ko: "영국 경찰 소매치기·개인 안전 안내", en: "UK police pickpocketing and personal safety advice" }
+  },
+  {
+    id: "london-piccadilly",
+    city: "london",
+    risk: "bag",
+    level: 73,
+    lat: 51.5101,
+    lng: -0.1340,
+    name: { ko: "피카딜리·소호 카페 테라스", en: "Piccadilly and Soho cafe terraces" },
+    area: { ko: "소호·웨스트엔드", en: "Soho and West End" },
+    type: { ko: "야외 좌석·번화가", en: "Outdoor seating and busy streets" },
+    time: { ko: "저녁~야간", en: "Evening to night" },
+    pattern: { ko: "테이블 위 휴대폰, 의자 뒤 가방, 바닥 쇼핑백이 짧은 순간 사라질 수 있어요.", en: "Phones on tables, bags behind chairs, and shopping bags on floors can disappear quickly." },
+    action: { ko: "가방은 무릎 위나 다리 사이, 휴대폰은 테이블 위가 아니라 안쪽 주머니에 둬요.", en: "Keep bags on lap or between legs, and phones in an inner pocket rather than on the table." },
+    after: { ko: "결제앱과 카드부터 막고, 위치 추적은 동행자 폰으로 조용히 확인해요.", en: "Block payment apps and cards first; check tracking quietly from a companion's phone." },
+    tags: ["bag", "phone", "night"],
+    source: { ko: "영국 경찰 개인 소지품 안전 안내", en: "UK police personal belongings safety advice" }
+  },
+  {
+    id: "bangkok-grand-palace",
+    city: "bangkok",
+    risk: "scam",
+    level: 76,
+    lat: 13.7500,
+    lng: 100.4913,
+    name: { ko: "왕궁 주변 호객·우회 동선", en: "Grand Palace tout and detour area" },
+    area: { ko: "방콕 왕궁 주변", en: "Grand Palace area" },
+    type: { ko: "관광지 접근로", en: "Tourist approach route" },
+    time: { ko: "개장 전후", en: "Around opening hours" },
+    pattern: { ko: "오늘 닫았다, 다른 투어가 낫다, 싸게 데려다 준다 같은 식으로 동선을 바꾸게 할 수 있어요.", en: "You may be told it is closed or that another tour or cheap ride is better, redirecting your route." },
+    action: { ko: "운영시간은 공식 사이트나 입구 안내판으로만 확인하고, 이동 제안은 호출앱 기준 가격과 비교해요.", en: "Check hours only via official site/signage and compare ride offers with app prices." },
+    after: { ko: "이미 탔거나 결제했다면 위치 공유를 켜고, 추가 결제 요구는 거절한 뒤 사람이 많은 곳에서 내려요.", en: "If already in a ride or paid, share location and decline extra charges before exiting in a busy area." },
+    tags: ["scam", "transit", "tour"],
+    source: { ko: "관광지 호객·교통 사기 예방 기준", en: "Tourist tout and transport scam prevention guidance" }
+  },
+  {
+    id: "bangkok-khaosan",
+    city: "bangkok",
+    risk: "night",
+    level: 78,
+    lat: 13.7589,
+    lng: 100.4970,
+    name: { ko: "카오산 로드 야간 이동", en: "Khaosan Road night movement" },
+    area: { ko: "카오산", en: "Khaosan" },
+    type: { ko: "야간 번화가", en: "Nightlife street" },
+    time: { ko: "밤~새벽", en: "Night to late night" },
+    pattern: { ko: "술자리 후 폰·지갑 확인이 느려지고, 택시·툭툭 흥정 중 소지품이 느슨해질 수 있어요.", en: "After drinking, phone/wallet checks slow down and belongings loosen during taxi/tuk-tuk negotiation." },
+    action: { ko: "귀가 전 카드·여권·폰 3가지를 동행자와 서로 확인하고, 호출앱 목적지를 먼저 저장해요.", en: "Before leaving, cross-check card, passport, and phone with companions and save ride-app destination first." },
+    after: { ko: "술자리 주변에서 찾기보다 숙소 도착, 카드 정지, 위치 공유 종료 순서로 정리해요.", en: "Prioritize getting back safely, freezing cards, and closing location sharing rather than searching around nightlife areas." },
+    tags: ["night", "phone", "bag"],
+    source: { ko: "야간 여행자 개인 안전 기준", en: "Night traveler personal safety guidance" }
+  },
+  {
+    id: "bangkok-chatuchak",
+    city: "bangkok",
+    risk: "pickpocket",
+    level: 72,
+    lat: 13.7996,
+    lng: 100.5503,
+    name: { ko: "짜뚜짝 시장 혼잡 통로", en: "Chatuchak Market crowded lanes" },
+    area: { ko: "짜뚜짝", en: "Chatuchak" },
+    type: { ko: "시장·좁은 통로", en: "Market and narrow lanes" },
+    time: { ko: "주말 낮", en: "Weekend daytime" },
+    pattern: { ko: "흥정과 계산 중 지갑을 반복해서 꺼내고, 좁은 통로에서 가방이 뒤쪽으로 밀려요.", en: "During bargaining and paying, wallets come out repeatedly and bags shift backward in narrow lanes." },
+    action: { ko: "잔돈 지갑과 메인 지갑을 분리하고, 구매 전후 지갑을 같은 위치에 넣지 않아요.", en: "Separate small cash from main wallet and avoid returning the wallet to the same visible spot." },
+    after: { ko: "현금보다 카드와 여권 피해 여부를 먼저 확인해요.", en: "Check card and passport exposure before worrying about cash." },
+    tags: ["pickpocket", "bag", "market"],
+    source: { ko: "혼잡 시장 소지품 안전 기준", en: "Crowded market belongings safety guidance" }
+  },
+  {
+    id: "hcm-bui-vien",
+    city: "hochiminh",
+    risk: "phone",
+    level: 82,
+    lat: 10.7676,
+    lng: 106.6932,
+    name: { ko: "부이비엔 거리 오토바이 접근", en: "Bui Vien Street motorbike approach" },
+    area: { ko: "호치민 1군", en: "District 1, Ho Chi Minh City" },
+    type: { ko: "야간 거리·오토바이 통행", en: "Night street with motorbike traffic" },
+    time: { ko: "저녁~새벽", en: "Evening to late night" },
+    pattern: { ko: "도로 쪽 손에 든 휴대폰이나 느슨한 크로스백이 오토바이 접근에 노출돼요.", en: "Street-side phones or loose crossbody bags can be exposed to motorbike snatching." },
+    action: { ko: "도로 쪽 손에는 폰을 들지 말고, 길찾기는 가게 벽 쪽에서 멈춰서 확인해요.", en: "Do not hold the phone street-side; stop near a storefront wall to check directions." },
+    after: { ko: "쫓아가지 말고 계정 잠금과 SIM 정지를 먼저 해요.", en: "Do not chase; lock accounts and suspend the SIM first." },
+    tags: ["phone", "night", "motorbike"],
+    source: { ko: "도심 오토바이 날치기 예방 기준", en: "Urban motorbike snatching prevention guidance" }
+  },
+  {
+    id: "hcm-ben-thanh",
+    city: "hochiminh",
+    risk: "bag",
+    level: 73,
+    lat: 10.7725,
+    lng: 106.6980,
+    name: { ko: "벤탄 시장과 주변 횡단 동선", en: "Ben Thanh Market and crossing routes" },
+    area: { ko: "호치민 중심부", en: "Central Ho Chi Minh City" },
+    type: { ko: "시장·횡단보도", en: "Market and crossings" },
+    time: { ko: "낮~저녁", en: "Day to evening" },
+    pattern: { ko: "시장 안 흥정과 횡단보도 대기 중 지갑과 폰이 자주 움직여 노출돼요.", en: "Bargaining and waiting at crossings make wallets and phones move and become exposed." },
+    action: { ko: "계산용 현금만 따로 두고, 큰 지갑은 시장 안에서 꺼내지 않아요.", en: "Keep only small cash ready and avoid taking out the main wallet inside the market." },
+    after: { ko: "영수증과 결제 내역을 캡처해 보험·카드사 상담에 남겨요.", en: "Capture receipts and payment history for insurance or card-company support." },
+    tags: ["bag", "pickpocket", "market"],
+    source: { ko: "혼잡 시장 여행자 안전 기준", en: "Crowded market traveler safety guidance" }
+  }
+];
+
+const officialLinks = [
+  { label: { ko: "외교부 해외안전여행", en: "Korean MOFA Safe Travel" }, url: "https://www.0404.go.kr/" },
+  { label: { ko: "미국 국무부 여행경보", en: "U.S. State Department Travel Advisories" }, url: "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html/" },
+  { label: { ko: "영국 FCDO 여행 안전", en: "UK FCDO Travel Advice" }, url: "https://www.gov.uk/foreign-travel-advice" },
+  { label: { ko: "Police.uk 소매치기 예방", en: "Police.uk Pickpocketing Prevention" }, url: "https://www.police.uk/cp/crime-prevention/personal-safety-how-to-stay-safe/pickpocketing/" }
+];
+
+const panicSteps = [
+  {
+    key: "police",
+    body: {
+      ko: "안전한 실내나 역무실 근처로 이동한 뒤, 현지 경찰 신고서 또는 분실 신고 접수 가능 여부를 확인해요.",
+      en: "Move to a safe indoor place or staff area, then check how to file a police or loss report."
+    }
+  },
+  {
+    key: "card",
+    body: {
+      ko: "카드 앱, 은행 앱, 간편결제 앱을 즉시 잠그고 동행자 휴대폰으로 카드사에 연락해요.",
+      en: "Lock card, bank, and payment apps immediately and contact card providers from a companion's phone."
+    }
+  },
+  {
+    key: "passport",
+    body: {
+      ko: "여권 피해가 있으면 숙소 복귀보다 대사관·영사관 임시여권 절차와 여권 사진 데이터를 먼저 확인해요.",
+      en: "If the passport is affected, check embassy/consulate emergency passport steps and passport photo data first."
+    }
+  },
+  {
+    key: "insurance",
+    body: {
+      ko: "보험 접수를 위해 시간, 장소, 피해 물품, 경찰 접수 번호, 결제 내역을 한 곳에 정리해요.",
+      en: "For insurance, collect time, place, lost items, police reference number, and payment records in one note."
+    }
+  }
+];
+
+const checklist = [
+  {
+    key: "passportPhoto",
+    group: "beforeTrip",
+    text: { ko: "여권 사진면과 비자/입국 서류를 클라우드와 동행자에게 나눠 보관", en: "Store passport photo page and visa/entry documents in cloud and with a companion." }
+  },
+  {
+    key: "cardFreeze",
+    group: "beforeTrip",
+    text: { ko: "카드사 해외 분실 전화번호와 앱 잠금 메뉴를 미리 캡처", en: "Screenshot card issuer lost-card phone numbers and app freeze menu." }
+  },
+  {
+    key: "phoneLock",
+    group: "beforeTrip",
+    text: { ko: "휴대폰 찾기, 원격 잠금, eSIM 재발급 방법 확인", en: "Check phone-finding, remote lock, and eSIM reissue steps." }
+  },
+  {
+    key: "frontBag",
+    group: "duringTrip",
+    text: { ko: "지하철·시장·사진 명소에서는 가방을 앞쪽으로 돌리기", en: "Move your bag to the front in metro, markets, and photo spots." }
+  },
+  {
+    key: "tablePhone",
+    group: "duringTrip",
+    text: { ko: "카페 테이블 위에 휴대폰·지갑을 올려두지 않기", en: "Never leave phone or wallet on cafe tables." }
+  },
+  {
+    key: "streetHand",
+    group: "duringTrip",
+    text: { ko: "도로 쪽 손에 휴대폰을 들고 길찾기 하지 않기", en: "Do not navigate with the phone in the street-side hand." }
+  },
+  {
+    key: "lossOrder",
+    group: "afterLoss",
+    text: { ko: "피해 직후 카드 정지, 계정 잠금, 경찰 신고, 보험 기록 순서로 진행", en: "After loss: freeze cards, lock accounts, report to police, then collect insurance records." }
+  }
+];
+
+const icons = {
+  route: `<path d="M12 2 3 21l9-4 9 4-9-19Z"/>`,
+  save: `<path d="M6 4h12v17l-6-3.5L6 21V4Z"/>`,
+  saved: `<path d="M6 4h12v17l-6-3.5L6 21V4Z"/><path d="m9 11 2 2 4-5"/>`,
+  copy: `<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
+  link: `<path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/>`
+};
+
+const state = {
+  lang: readLanguage(),
+  panel: "map",
+  filter: "all",
+  scenario: "",
+  city: "",
+  query: "",
+  selectedId: spots[0].id,
+  userPosition: null,
+  saved: readJson("saferoute:saved", []),
+  checks: readJson("saferoute:checks", {})
+};
+
+const riskByKey = new Map(riskTypes.map((risk) => [risk.key, risk]));
+const spotById = new Map(spots.map((spot) => [spot.id, spot]));
+const sheet = document.querySelector("#sheet");
+const toast = document.querySelector("#toast");
+const statusPill = document.querySelector("#statusPill");
+const quickRail = document.querySelector("#quickRail");
+const searchPanel = document.querySelector("#searchPanel");
+const searchToggle = document.querySelector("#searchToggle");
+const searchClear = document.querySelector("#searchClear");
+const spotSearch = document.querySelector("#spotSearch");
+const languageToggle = document.querySelector("#languageToggle");
+const locateButton = document.querySelector("#locateButton");
+
+let map;
+let markerLayer;
+let userMarker;
+const markers = new Map();
+
+startWhenReady();
+
+function startWhenReady() {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startWhenReady, { once: true });
+    return;
+  }
+  if (!window.L) {
+    window.setTimeout(startWhenReady, 16);
+    return;
+  }
+  init();
+}
+
+function init() {
+  applyLanguage();
+  bootMap();
+  bindEvents();
+  renderQuickRail();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  }
+}
+
+function bootMap() {
+  map = L.map("map", {
+    zoomControl: false,
+    attributionControl: true,
+    fadeAnimation: false,
+    zoomAnimation: false,
+    markerZoomAnimation: false
+  }).setView(cities.barcelona.center, cities.barcelona.zoom);
+
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap",
+    updateWhenIdle: true,
+    updateWhenZooming: false,
+    keepBuffer: 1
+  }).addTo(map);
+
+  markerLayer = L.layerGroup().addTo(map);
+}
+
+function bindEvents() {
+  document.querySelectorAll(".nav-button").forEach((button) => {
+    button.addEventListener("click", () => setPanel(button.dataset.panel));
+  });
+
+  searchToggle.addEventListener("click", () => setSearchPanel(searchPanel.hidden, true));
+  searchClear.addEventListener("click", clearSearch);
+  languageToggle.addEventListener("click", toggleLanguage);
+  locateButton.addEventListener("click", locateUser);
+
+  spotSearch.addEventListener("input", (event) => {
+    state.query = event.target.value.trim();
+    searchClear.hidden = !state.query;
+    syncSelected();
+    renderSheet();
+    renderMarkers();
+    refreshStatus();
+  });
+
+  document.querySelectorAll("[data-city]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const city = cities[button.dataset.city];
+      if (!city) return;
+      state.city = button.dataset.city;
+      state.scenario = "";
+      map.setView(city.center, city.zoom);
+      syncSelected();
+      renderSheet();
+      renderMarkers();
+      refreshStatus();
+      setSearchPanel(false);
+      showToast(`${city.label[state.lang]} ${tr("movedCity")}`);
+    });
+  });
+
+  quickRail.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-scenario]");
+    if (!button) return;
+    applyScenario(button.dataset.scenario);
+  });
+
+  sheet.addEventListener("click", (event) => {
+    const toggle = event.target.closest("[data-sheet-toggle]");
+    if (toggle) {
+      sheet.classList.toggle("is-expanded");
+      sheet.classList.toggle("is-collapsed");
+      window.setTimeout(() => map.invalidateSize(), 180);
+      return;
+    }
+
+    const filter = event.target.closest("[data-risk-filter]");
+    if (filter) {
+      state.filter = filter.dataset.riskFilter;
+      state.scenario = "";
+      syncSelected();
+      renderQuickRail();
+      renderSheet();
+      renderMarkers();
+      refreshStatus();
+      return;
+    }
+
+    const spotButton = event.target.closest("[data-spot-id]");
+    if (spotButton) {
+      selectSpot(spotButton.dataset.spotId, true);
+      return;
+    }
+
+    const saveButton = event.target.closest("[data-save]");
+    if (saveButton) {
+      toggleSave(saveButton.dataset.save);
+      return;
+    }
+
+    const cityButton = event.target.closest("[data-open-city]");
+    if (cityButton) {
+      state.city = cityButton.dataset.openCity;
+      const city = cities[state.city];
+      map.setView(city.center, city.zoom);
+      setPanel("map");
+      syncSelected();
+      renderMarkers();
+      refreshStatus();
+      return;
+    }
+
+    const clear = event.target.closest("[data-clear]");
+    if (clear) {
+      resetFilters();
+      return;
+    }
+
+    const copy = event.target.closest("[data-copy-steps]");
+    if (copy) {
+      copyPanicSteps();
+      return;
+    }
+
+    const check = event.target.closest("[data-check]");
+    if (check) {
+      state.checks[check.dataset.check] = !state.checks[check.dataset.check];
+      writeJson("saferoute:checks", state.checks);
+      renderSheet();
+      return;
+    }
+  });
+}
+
+function setPanel(panel) {
+  state.panel = panel;
+  document.querySelectorAll(".nav-button").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.panel === panel);
+  });
+  sheet.classList.toggle("is-expanded", panel !== "map");
+  sheet.classList.toggle("is-collapsed", panel === "map");
+  renderSheet();
+  window.setTimeout(() => map.invalidateSize(), 180);
+}
+
+function setSearchPanel(open, focus = false) {
+  searchPanel.hidden = !open;
+  searchToggle.setAttribute("aria-expanded", String(open));
+  searchToggle.setAttribute("aria-label", tr(open ? "searchClose" : "searchOpen"));
+  if (open && focus) window.requestAnimationFrame(() => spotSearch.focus());
+}
+
+function toggleLanguage() {
+  state.lang = state.lang === "ko" ? "en" : "ko";
+  writeJson("saferoute:lang", state.lang);
+  applyLanguage();
+  renderQuickRail();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  showToast(state.lang === "en" ? tr("englishOn") : tr("koreanOn"));
+}
+
+function applyLanguage() {
+  document.documentElement.lang = state.lang === "en" ? "en" : "ko";
+  document.title = tr("title");
+  document.querySelector("meta[name='description']")?.setAttribute("content", tr("description"));
+  document.querySelector("meta[property='og:title']")?.setAttribute("content", tr("title"));
+  document.querySelector("meta[property='og:description']")?.setAttribute("content", tr("description"));
+  document.querySelector("meta[name='twitter:title']")?.setAttribute("content", tr("title"));
+  document.querySelector("meta[name='twitter:description']")?.setAttribute("content", tr("description"));
+  document.querySelector("[data-i18n='brand']").textContent = tr("brand");
+  document.querySelector("[data-i18n='tagline']").textContent = tr("tagline");
+  document.querySelector("#map").setAttribute("aria-label", `${tr("brand")} map`);
+  searchToggle.setAttribute("aria-label", tr(searchPanel?.hidden ? "searchOpen" : "searchClose"));
+  locateButton.setAttribute("aria-label", tr("nearby"));
+  searchClear.setAttribute("aria-label", tr("clearSearch"));
+  languageToggle.setAttribute("aria-label", state.lang === "ko" ? tr("translateToEnglish") : tr("translateToKorean"));
+  languageToggle.setAttribute("aria-pressed", String(state.lang === "en"));
+  languageToggle.querySelector(".language-code").textContent = state.lang === "ko" ? "EN" : "한";
+  spotSearch.placeholder = tr("searchPlaceholder");
+  document.querySelector(".city-strip").setAttribute("aria-label", tr("cityButtonLabel"));
+  document.querySelector(".bottom-nav").setAttribute("aria-label", tr("mainNav"));
+  quickRail.setAttribute("aria-label", tr("quickLabel"));
+  document.querySelectorAll("[data-city]").forEach((button) => {
+    button.textContent = cities[button.dataset.city].label[state.lang];
+  });
+  document.querySelectorAll(".nav-button").forEach((button) => {
+    const span = button.querySelector("span");
+    if (span) span.textContent = tr(button.dataset.panel);
+  });
+}
+
+function renderQuickRail() {
+  quickRail.innerHTML = scenarios.map((scenario) => `
+    <button type="button" class="quick-chip ${state.scenario === scenario.key ? "is-active" : ""}" data-scenario="${scenario.key}">
+      <span aria-hidden="true">${scenario.emoji}</span>
+      <strong>${tr(scenario.label)}</strong>
+    </button>
+  `).join("");
+}
+
+function renderSheet() {
+  if (state.panel === "cities") {
+    sheet.innerHTML = renderCities();
+  } else if (state.panel === "panic") {
+    sheet.innerHTML = renderPanic();
+  } else if (state.panel === "saved") {
+    sheet.innerHTML = renderSaved();
+  } else if (state.panel === "check") {
+    sheet.innerHTML = renderCheck();
+  } else {
+    sheet.innerHTML = renderMapPanel();
+  }
+}
+
+function renderMapPanel() {
+  const list = filteredSpots();
+  const selected = list.find((spot) => spot.id === state.selectedId) || list[0] || null;
+  return `
+    ${sheetGrip()}
+    <div class="sheet-head" data-sheet-toggle>
+      <div>
+        <h1>${tr("mapPanelTitle")}</h1>
+        <p>${tr("mapPanelDesc")}</p>
+      </div>
+      <span class="compact-stat">${countSpots(list.length)}</span>
+    </div>
+    <div class="filter-row">
+      ${riskTypes.map((risk) => filterChip(risk)).join("")}
+    </div>
+    ${contextTools()}
+    ${selected ? renderSpotDetail(selected) : renderEmpty()}
+    <div class="spot-list">
+      ${list.map((spot) => renderSpotCard(spot)).join("")}
+    </div>
+  `;
+}
+
+function renderCities() {
+  return `
+    ${sheetGrip()}
+    <div class="sheet-head" data-sheet-toggle>
+      <div>
+        <h2>${tr("citiesTitle")}</h2>
+        <p>${tr("citiesDesc")}</p>
+      </div>
+    </div>
+    ${Object.entries(cities).map(([key, city]) => {
+      const citySpots = spots.filter((spot) => spot.city === key);
+      const topRisk = citySpots.slice().sort((a, b) => b.level - a.level)[0];
+      return `
+        <button class="city-card" type="button" data-open-city="${key}">
+          <strong>${city.label[state.lang]} · ${city.country[state.lang]}</strong>
+          <span>${city.summary[state.lang]}</span>
+          <span>${countSpots(citySpots.length)} · ${riskEmoji(topRisk?.risk)} ${riskLabel(topRisk?.risk)}</span>
+        </button>
+      `;
+    }).join("")}
+    <div class="guide-card">
+      <strong>${tr("sourceNote")}</strong>
+      <p>${tr("reportRisk")}</p>
+    </div>
+  `;
+}
+
+function renderPanic() {
+  return `
+    ${sheetGrip()}
+    <div class="sheet-head" data-sheet-toggle>
+      <div>
+        <h2>${tr("panicTitle")}</h2>
+        <p>${tr("panicDesc")}</p>
+      </div>
+    </div>
+    <button class="primary-button" type="button" data-copy-steps>${icon("copy")}${tr("copySteps")}</button>
+    <div class="panic-card">
+      <ol class="step-list">
+        ${panicSteps.map((step) => `<li><strong>${tr(step.key)}</strong><br>${step.body[state.lang]}</li>`).join("")}
+      </ol>
+    </div>
+    <div class="guide-card">
+      <strong>${tr("officialLinks")}</strong>
+      <div class="detail-actions">
+        ${officialLinks.map((link) => `<a class="text-button" href="${link.url}" target="_blank" rel="noreferrer">${icon("link")}${link.label[state.lang]}</a>`).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderSaved() {
+  const saved = state.saved.map((id) => spotById.get(id)).filter(Boolean);
+  return `
+    ${sheetGrip()}
+    <div class="sheet-head" data-sheet-toggle>
+      <div>
+        <h2>${tr("savedTitle")}</h2>
+        <p>${tr("savedDesc")}</p>
+      </div>
+      <span class="compact-stat">${countSpots(saved.length)}</span>
+    </div>
+    ${saved.length ? saved.map((spot) => renderSpotCard(spot)).join("") : `<div class="spot-card"><h3>${tr("noSaved")}</h3><p>${tr("noSavedBody")}</p></div>`}
+  `;
+}
+
+function renderCheck() {
+  const groups = ["beforeTrip", "duringTrip", "afterLoss"];
+  return `
+    ${sheetGrip()}
+    <div class="sheet-head" data-sheet-toggle>
+      <div>
+        <h2>${tr("checkTitle")}</h2>
+        <p>${tr("checkDesc")}</p>
+      </div>
+    </div>
+    ${groups.map((group) => `
+      <div class="check-card">
+        <strong>${tr(group)}</strong>
+        ${checklist.filter((item) => item.group === group).map((item) => `
+          <button type="button" class="check-row ${state.checks[item.key] ? "is-done" : ""}" data-check="${item.key}" aria-pressed="${state.checks[item.key] ? "true" : "false"}">
+            <span class="check-box">✓</span>
+            <span>${item.text[state.lang]}</span>
+          </button>
+        `).join("")}
+      </div>
+    `).join("")}
+  `;
+}
+
+function renderSpotDetail(spot) {
+  const saved = state.saved.includes(spot.id);
+  return `
+    <section class="spot-card is-selected">
+      <div class="spot-title-row">
+        <div>
+          <h3>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</h3>
+          <p>${spot.area[state.lang]} · ${spot.type[state.lang]}</p>
+        </div>
+        <span class="badge ${badgeClass(spot.level)}">${tr("level")} ${spot.level}</span>
+      </div>
+      <div class="tag-row">
+        ${spot.tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
+      </div>
+      <div class="detail-actions">
+        <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
+        <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+      </div>
+      <div class="info-grid">
+        <div><span>${tr("city")}</span><strong>${cities[spot.city].label[state.lang]}</strong></div>
+        <div><span>${tr("timing")}</span><strong>${spot.time[state.lang]}</strong></div>
+        <div><span>${tr("risk")}</span><strong>${riskEmoji(spot.risk)} ${riskLabel(spot.risk)}</strong></div>
+        <div><span>${tr("source")}</span><strong>${spot.source[state.lang]}</strong></div>
+      </div>
+      <div class="decision-card">
+        <span>${tr("pattern")}</span>
+        <strong>${spot.pattern[state.lang]}</strong>
+      </div>
+      <ul class="note-list">
+        <li><strong>${tr("action")}</strong><br>${spot.action[state.lang]}</li>
+        <li><strong>${tr("after")}</strong><br>${spot.after[state.lang]}</li>
+      </ul>
+    </section>
+  `;
+}
+
+function renderSpotCard(spot) {
+  return `
+    <button class="spot-card ${spot.id === state.selectedId ? "is-selected" : ""}" type="button" data-spot-id="${spot.id}">
+      <div class="spot-title-row">
+        <div>
+          <h3>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</h3>
+          <p>${spot.area[state.lang]} · ${riskLabel(spot.risk)} · ${spot.time[state.lang]}</p>
+        </div>
+        <span class="badge ${badgeClass(spot.level)}">${spot.level}</span>
+      </div>
+    </button>
+  `;
+}
+
+function renderEmpty() {
+  return `<section class="spot-card"><h3>${tr("noResults")}</h3><p>${tr("sourceNote")}</p></section>`;
+}
+
+function sheetGrip() {
+  return `<button class="sheet-grip" type="button" data-sheet-toggle aria-label="${tr("showMap")}"></button>`;
+}
+
+function filterChip(risk) {
+  return `<button class="chip ${state.filter === risk.key ? "is-active" : ""}" type="button" data-risk-filter="${risk.key}"><span>${risk.emoji}</span>${tr(risk.key)}</button>`;
+}
+
+function contextTools() {
+  const labels = [];
+  if (state.city) labels.push(`${tr("city")} ${cities[state.city].label[state.lang]}`);
+  if (state.filter !== "all") labels.push(`${tr("risk")} ${riskLabel(state.filter)}`);
+  if (state.scenario) labels.push(tr(scenarios.find((item) => item.key === state.scenario)?.label || ""));
+  if (state.query) labels.push(`${tr("searchPlaceholder")}: ${escapeHtml(state.query)}`);
+  if (!labels.length) return "";
+  return `<div class="decision-card"><strong>${labels.join(" · ")}</strong><p><button class="text-button" type="button" data-clear>${tr("clear")}</button></p></div>`;
+}
+
+function filteredSpots() {
+  const query = state.query.toLowerCase();
+  const scenario = scenarios.find((item) => item.key === state.scenario);
+  return spots
+    .filter((spot) => !state.city || spot.city === state.city)
+    .filter((spot) => state.filter === "all" || spot.risk === state.filter || spot.tags.includes(state.filter))
+    .filter((spot) => !scenario || scenario.risks.includes(spot.risk) || spot.tags.some((tag) => scenario.risks.includes(tag)))
+    .filter((spot) => {
+      if (!query) return true;
+      return [
+        spot.name.ko,
+        spot.name.en,
+        spot.area.ko,
+        spot.area.en,
+        spot.type.ko,
+        spot.type.en,
+        spot.tags.join(" "),
+        cities[spot.city].label.ko,
+        cities[spot.city].label.en,
+        riskLabel(spot.risk)
+      ].join(" ").toLowerCase().includes(query);
+    })
+    .sort((a, b) => {
+      if (state.userPosition) {
+        const diff = distanceTo(a) - distanceTo(b);
+        if (diff) return diff;
+      }
+      return b.level - a.level;
+    });
+}
+
+function syncSelected() {
+  const list = filteredSpots();
+  if (!list.length) return;
+  if (!list.some((spot) => spot.id === state.selectedId)) {
+    state.selectedId = list[0].id;
+  }
+}
+
+function selectSpot(id, move) {
+  const spot = spotById.get(id);
+  if (!spot) return;
+  state.selectedId = id;
+  if (move) {
+    map.setView([spot.lat, spot.lng], 15);
+    sheet.classList.add("is-expanded");
+    sheet.classList.remove("is-collapsed");
+  }
+  renderSheet();
+  renderMarkers();
+}
+
+function renderMarkers() {
+  const list = filteredSpots();
+  const visible = new Set(list.map((spot) => spot.id));
+  markers.forEach((marker, id) => {
+    if (!visible.has(id)) {
+      markerLayer.removeLayer(marker);
+      markers.delete(id);
+    }
+  });
+  list.forEach((spot) => {
+    const html = `<div class="sum-marker marker-${spot.risk} ${spot.id === state.selectedId ? "marker-selected" : ""}"><span>${riskEmoji(spot.risk)}</span></div>`;
+    const existing = markers.get(spot.id);
+    if (existing) {
+      existing.setIcon(markerIcon(html));
+      return;
+    }
+    const marker = L.marker([spot.lat, spot.lng], { icon: markerIcon(html), keyboard: true });
+    marker.on("click", () => selectSpot(spot.id, false));
+    marker.addTo(markerLayer);
+    markers.set(spot.id, marker);
+  });
+}
+
+function markerIcon(html) {
+  return L.divIcon({
+    html,
+    className: "sum-marker-wrap",
+    iconSize: [42, 42],
+    iconAnchor: [21, 42]
+  });
+}
+
+function refreshStatus() {
+  const count = filteredSpots().length;
+  statusPill.textContent = `📍 ${countSpots(count)}`;
+}
+
+function applyScenario(key) {
+  state.scenario = state.scenario === key ? "" : key;
+  state.filter = "all";
+  syncSelected();
+  renderQuickRail();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  const scenario = scenarios.find((item) => item.key === key);
+  if (scenario && state.scenario) showToast(`${tr(scenario.label)} ${tr("filtered")}`);
+}
+
+function resetFilters() {
+  state.filter = "all";
+  state.city = "";
+  state.scenario = "";
+  state.query = "";
+  spotSearch.value = "";
+  searchClear.hidden = true;
+  syncSelected();
+  renderQuickRail();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+}
+
+function clearSearch() {
+  state.query = "";
+  spotSearch.value = "";
+  searchClear.hidden = true;
+  syncSelected();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  window.requestAnimationFrame(() => spotSearch.focus());
+}
+
+function toggleSave(id) {
+  if (state.saved.includes(id)) {
+    state.saved = state.saved.filter((item) => item !== id);
+    showToast(tr("unsavedToast"));
+  } else {
+    state.saved.unshift(id);
+    showToast(tr("savedToast"));
+  }
+  state.saved = [...new Set(state.saved)].slice(0, 60);
+  writeJson("saferoute:saved", state.saved);
+  renderSheet();
+}
+
+function locateUser() {
+  if (!navigator.geolocation) {
+    showToast(tr("locationUnavailable"));
+    return;
+  }
+  locateButton.classList.add("is-loading");
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => {
+      state.userPosition = { lat: coords.latitude, lng: coords.longitude };
+      if (userMarker) map.removeLayer(userMarker);
+      userMarker = L.circleMarker([coords.latitude, coords.longitude], {
+        radius: 8,
+        color: "#ffffff",
+        weight: 3,
+        fillColor: "#178a70",
+        fillOpacity: 0.95
+      }).addTo(map).bindPopup(tr("nearby"));
+      map.setView([coords.latitude, coords.longitude], 14);
+      locateButton.classList.remove("is-loading");
+      syncSelected();
+      renderSheet();
+      renderMarkers();
+      showToast(tr("locationReady"));
+    },
+    () => {
+      locateButton.classList.remove("is-loading");
+      showToast(tr("locationDenied"));
+    },
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+  );
+}
+
+function copyPanicSteps() {
+  const text = panicSteps.map((step, index) => `${index + 1}. ${tr(step.key)} - ${step.body[state.lang]}`).join("\n");
+  copyText(text).then(() => showToast(tr("copied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  const ok = document.execCommand("copy");
+  textarea.remove();
+  if (!ok) throw new Error("copy failed");
+}
+
+function mapsUrl(spot) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${spot.lat},${spot.lng}`)}`;
+}
+
+function riskLabel(key) {
+  return key ? tr(key) : "";
+}
+
+function riskEmoji(key) {
+  return riskByKey.get(key)?.emoji || "📍";
+}
+
+function tagEmoji(tag) {
+  return riskByKey.get(tag)?.emoji || {
+    photo: "📸",
+    queue: "🧍",
+    crowd: "👥",
+    tour: "🎟️",
+    market: "🛍️",
+    motorbike: "🏍️"
+  }[tag] || "📍";
+}
+
+function tagLabel(tag) {
+  return tr(tag) !== tag ? tr(tag) : ({
+    photo: state.lang === "ko" ? "사진" : "Photo",
+    queue: state.lang === "ko" ? "대기줄" : "Queue",
+    crowd: state.lang === "ko" ? "혼잡" : "Crowd",
+    tour: state.lang === "ko" ? "투어" : "Tour",
+    market: state.lang === "ko" ? "시장" : "Market",
+    motorbike: state.lang === "ko" ? "오토바이" : "Motorbike"
+  }[tag] || tag);
+}
+
+function badgeClass(level) {
+  if (level >= 82) return "danger";
+  if (level >= 74) return "warn";
+  return "";
+}
+
+function countSpots(count) {
+  if (state.lang === "ko") return `${count}${tr("shown")}`;
+  return `${count} ${count === 1 ? "spot shown" : tr("shown")}`;
+}
+
+function icon(name) {
+  return `<svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true">${icons[name] || icons.route}</svg>`;
+}
+
+function distanceTo(spot) {
+  if (!state.userPosition) return 0;
+  const radius = 6371000;
+  const toRad = (value) => value * Math.PI / 180;
+  const dLat = toRad(spot.lat - state.userPosition.lat);
+  const dLng = toRad(spot.lng - state.userPosition.lng);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(state.userPosition.lat)) * Math.cos(toRad(spot.lat)) * Math.sin(dLng / 2) ** 2;
+  return radius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function tr(key) {
+  return dictionary[state.lang]?.[key] || dictionary.ko[key] || key;
+}
+
+function readLanguage() {
+  const value = readJson("saferoute:lang", "ko");
+  return value === "en" ? "en" : "ko";
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  window.clearTimeout(showToast.timer);
+  showToast.timer = window.setTimeout(() => {
+    toast.classList.remove("is-visible");
+  }, 2300);
+}
+
+function readJson(key, fallback) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key));
+    return value ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writeJson(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    showToast("기기 저장 공간이 부족해서 임시로만 반영됐어.");
+  }
+}

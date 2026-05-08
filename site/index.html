@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>세이프루트 - 해외여행 도난·스캠 주의 지도</title>
+    <meta name="description" content="한국인 해외여행자를 위한 소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠 주의 지도와 현장 대처 가이드.">
+    <meta name="theme-color" content="#f5f2e9">
+    <link rel="canonical" href="https://saferoute.kr/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="세이프루트">
+    <meta property="og:title" content="세이프루트 - 해외여행 도난·스캠 주의 지도">
+    <meta property="og:description" content="해외여행 중 도난과 스캠이 자주 보고되는 장소 유형, 행동요령, 피해 직후 대처를 지도에서 빠르게 확인하세요.">
+    <meta property="og:url" content="https://saferoute.kr/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="세이프루트 - 해외여행 도난·스캠 주의 지도">
+    <meta name="twitter:description" content="한국인 해외여행자를 위한 도난·스캠 주의 지도와 현장 대처 가이드.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-7217591196020054">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://tile.openstreetmap.org">
+    <link rel="dns-prefetch" href="https://tile.openstreetmap.org">
+    <link rel="preload" href="/assets/vendor/leaflet/leaflet.css" as="style">
+    <link rel="preload" href="/assets/styles.css?v=20260508-1" as="style">
+    <link rel="preload" href="/assets/vendor/leaflet/leaflet.js" as="script">
+    <link rel="modulepreload" href="/assets/app.js?v=20260508-1">
+    <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260508-1">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "세이프루트",
+        "url": "https://saferoute.kr/",
+        "applicationCategory": "TravelApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "ko-KR",
+        "description": "한국인 해외여행자를 위한 소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠 주의 지도와 현장 대처 가이드."
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div id="map" class="map-surface" aria-label="세이프루트 지도"></div>
+
+      <header class="topbar" aria-label="상단 탐색">
+        <a class="brand" href="/" aria-label="세이프루트 홈">
+          <span class="brand-mark">路</span>
+          <span>
+            <strong data-i18n="brand">세이프루트</strong>
+            <small data-i18n="tagline">여행자 주의 지도</small>
+          </span>
+        </a>
+        <div class="top-actions">
+          <button class="icon-button" id="locateButton" type="button" aria-label="현재 위치">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="1.5"/></svg>
+          </button>
+          <button class="icon-button" id="searchToggle" type="button" aria-label="검색 열기" aria-controls="searchPanel" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+          </button>
+          <button class="icon-button language-button" id="languageToggle" type="button" aria-label="영어로 번역" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
+            <span class="language-code" aria-hidden="true">EN</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="search-panel" id="searchPanel" hidden>
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+          <input id="spotSearch" type="search" placeholder="도시·장소·유형 검색" autocomplete="off">
+          <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기" hidden>×</button>
+        </div>
+        <div class="city-strip" aria-label="도시 빠른 이동">
+          <button type="button" data-city="barcelona">바르셀로나</button>
+          <button type="button" data-city="paris">파리</button>
+          <button type="button" data-city="rome">로마</button>
+          <button type="button" data-city="london">런던</button>
+          <button type="button" data-city="bangkok">방콕</button>
+        </div>
+      </section>
+
+      <aside class="status-pill" id="statusPill">📍 0곳 표시</aside>
+      <div class="quick-rail" id="quickRail" aria-label="상황 빠른 보기"></div>
+      <main class="bottom-sheet is-collapsed" id="sheet" aria-live="polite"></main>
+
+      <nav class="bottom-nav" aria-label="주요 메뉴">
+        <button type="button" class="nav-button is-active" data-panel="map">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>
+          <span>주의</span>
+        </button>
+        <button type="button" class="nav-button" data-panel="cities">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 6v12M16 6v12"/></svg>
+          <span>도시</span>
+        </button>
+        <button type="button" class="nav-button nav-panic" data-panel="panic">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg>
+          <span>대처</span>
+        </button>
+        <button type="button" class="nav-button" data-panel="saved">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-3.5L6 21V4Z"/></svg>
+          <span>저장</span>
+        </button>
+        <button type="button" class="nav-button" data-panel="check">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 11 2 2 4-5"/><path d="M20 6 9 17l-5-5"/></svg>
+          <span>체크</span>
+        </button>
+      </nav>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <noscript>
+      <main class="static-shell">
+        <h1>세이프루트는 해외여행 도난·스캠 주의 지도를 제공합니다</h1>
+        <p>세이프루트는 특정 개인이나 집단을 지목하지 않고, 관광객 피해가 반복적으로 언급되는 장소 유형과 상황을 정리합니다. 지하철, 기차역, 유명 광장, 관광지 대기줄, 카페 테라스, 야간 해변처럼 주의가 필요한 맥락을 지도와 체크리스트로 보여줍니다.</p>
+        <p>이 사이트는 경찰 신고나 대사관 안내를 대체하지 않습니다. 실제 피해가 발생하면 현지 경찰, 카드사, 보험사, 여권 발급 기관에 즉시 연락해야 합니다.</p>
+      </main>
+    </noscript>
+
+    <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
+    <script src="/assets/app.js?v=20260508-1" type="module"></script>
+  </body>
+</html>

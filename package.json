@@ -1,0 +1,9 @@
+{
+  "name": "saferoute",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "python -m http.server 4197 --directory site --bind 127.0.0.1"
+  }
+}

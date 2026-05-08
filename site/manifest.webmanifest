@@ -1,0 +1,16 @@
+{
+  "name": "세이프루트",
+  "short_name": "세이프루트",
+  "description": "해외여행 도난·스캠 주의 지도",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f2e9",
+  "theme_color": "#f5f2e9",
+  "icons": [
+    {
+      "src": "/assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
