@@ -1,8 +1,8 @@
-const CACHE_NAME = "saferoute-v5-maplang";
+const CACHE_NAME = "saferoute-v6-deploy";
 const LOCAL_ASSETS = [
   "/",
-  "/assets/styles.css?v=20260508-maplang",
-  "/assets/app.js?v=20260508-maplang",
+  "/assets/styles.css?v=20260508-deploy1",
+  "/assets/app.js?v=20260508-deploy1",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",

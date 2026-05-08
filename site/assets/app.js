@@ -343,6 +343,46 @@ const cities = {
       ko: "오토바이 날치기와 테라스 좌석 휴대폰 노출을 조심하고, 도로 쪽 손에 폰을 들지 않는 게 좋아요.",
       en: "Watch motorbike snatching and exposed phones at terrace seats. Avoid holding your phone street-side."
     }
+  },
+  tokyo: {
+    label: { ko: "도쿄", en: "Tokyo" },
+    country: { ko: "일본", en: "Japan" },
+    center: [35.6762, 139.6503],
+    zoom: 12,
+    summary: {
+      ko: "큰 도난보다 야간 호객, 술자리 후 분실, 역 환승 중 가방 분산을 분리해서 보는 게 좋아요.",
+      en: "Rather than only theft, separate late-night touting, after-drinks loss, and station-transfer bag exposure."
+    }
+  },
+  newyork: {
+    label: { ko: "뉴욕", en: "New York" },
+    country: { ko: "미국", en: "United States" },
+    center: [40.7580, -73.9855],
+    zoom: 12,
+    summary: {
+      ko: "타임스퀘어, 지하철 환승, 야간 귀가, 카페 테이블 위 휴대폰 노출을 상황별로 나눠 확인해요.",
+      en: "Review Times Square, subway transfers, late-night returns, and exposed phones on cafe tables by situation."
+    }
+  },
+  istanbul: {
+    label: { ko: "이스탄불", en: "Istanbul" },
+    country: { ko: "튀르키예", en: "Turkiye" },
+    center: [41.0082, 28.9784],
+    zoom: 12,
+    summary: {
+      ko: "관광지 접근형 제안, 시장 혼잡, 야간 번화가 이동처럼 대화가 길어지는 순간을 짧게 끊는 게 핵심이에요.",
+      en: "The key is cutting long approaches short around tourist offers, market crowds, and late-night entertainment areas."
+    }
+  },
+  amsterdam: {
+    label: { ko: "암스테르담", en: "Amsterdam" },
+    country: { ko: "네덜란드", en: "Netherlands" },
+    center: [52.3676, 4.9041],
+    zoom: 12,
+    summary: {
+      ko: "중앙역, 운하 주변, 야간 골목, 자전거 동선이 겹칠 때 휴대폰과 가방 위치를 먼저 확인해요.",
+      en: "Check phone and bag position around Central Station, canals, night alleys, and bicycle-heavy routes."
+    }
   }
 };
 
@@ -653,6 +693,142 @@ const spots = [
     after: { ko: "영수증과 결제 내역을 캡처해 보험·카드사 상담에 남겨요.", en: "Capture receipts and payment history for insurance or card-company support." },
     tags: ["bag", "pickpocket", "market"],
     source: { ko: "혼잡 시장 여행자 안전 기준", en: "Crowded market traveler safety guidance" }
+  },
+  {
+    id: "tokyo-shinjuku-night",
+    city: "tokyo",
+    risk: "night",
+    level: 70,
+    lat: 35.6938,
+    lng: 139.7036,
+    name: { ko: "신주쿠 야간 호객·귀가 동선", en: "Shinjuku night tout and return route" },
+    area: { ko: "신주쿠·가부키초 주변", en: "Shinjuku and Kabukicho area" },
+    type: { ko: "야간 번화가", en: "Night entertainment district" },
+    time: { ko: "저녁~막차 전후", en: "Evening to last-train period" },
+    pattern: { ko: "술자리 후 목적지가 흐려지고, 호객·동행 제안·택시 이동 제안이 길어지면 판단이 느려질 수 있어요.", en: "After drinks, direction gets fuzzy and long tout, companion, or taxi approaches can slow judgment." },
+    action: { ko: "막차 전 귀가 경로를 먼저 저장하고, 모르는 제안은 대화가 길어지기 전에 끊어요.", en: "Save the return route before last train and cut off unknown offers before the conversation gets long." },
+    after: { ko: "결제나 이동이 찝찝하면 영수증과 위치 기록을 남기고, 숙소나 역무실처럼 밝은 곳에서 정리해요.", en: "If a payment or ride feels wrong, keep receipts and location history, then regroup in a bright place such as lodging or station staff area." },
+    tags: ["night", "scam", "transit"],
+    source: { ko: "야간 번화가 여행자 안전 기준", en: "Night entertainment traveler safety guidance" }
+  },
+  {
+    id: "tokyo-ueno-asakusa",
+    city: "tokyo",
+    risk: "transit",
+    level: 66,
+    lat: 35.7138,
+    lng: 139.7773,
+    name: { ko: "우에노·아사쿠사 환승과 관광 동선", en: "Ueno and Asakusa transfer route" },
+    area: { ko: "우에노·아사쿠사", en: "Ueno and Asakusa" },
+    type: { ko: "역·시장·관광 보행로", en: "Station, market, and tourist walk" },
+    time: { ko: "주말 낮~저녁", en: "Weekend daytime to evening" },
+    pattern: { ko: "캐리어와 기념품, 교통카드, 휴대폰이 동시에 움직이는 구간에서는 물건을 두고 오거나 가방을 열어둔 채 걷기 쉬워요.", en: "When luggage, souvenirs, transit cards, and phones move together, it is easy to leave items behind or walk with an open bag." },
+    action: { ko: "개찰구 전에는 폰·교통카드·지갑을 한 손에 몰지 말고, 가방 지퍼를 먼저 닫아요.", en: "Before gates, do not pile phone, transit card, and wallet into one hand; zip the bag first." },
+    after: { ko: "물건을 두고 온 것 같다면 이동 경로를 되짚기보다 마지막 결제·개찰·좌석 위치부터 메모해요.", en: "If an item may be left behind, note the last payment, gate, and seat location before retracing." },
+    tags: ["transit", "bag", "market"],
+    source: { ko: "환승·관광 동선 소지품 관리 기준", en: "Transfer and tourist-route belongings guidance" }
+  },
+  {
+    id: "nyc-times-square",
+    city: "newyork",
+    risk: "phone",
+    level: 78,
+    lat: 40.7580,
+    lng: -73.9855,
+    name: { ko: "타임스퀘어 사진·인파 구간", en: "Times Square photo and crowd zone" },
+    area: { ko: "맨해튼 미드타운", en: "Midtown Manhattan" },
+    type: { ko: "사진 명소·보행 혼잡지", en: "Photo spot and pedestrian crowd" },
+    time: { ko: "오후~야간", en: "Afternoon to night" },
+    pattern: { ko: "사진, 캐릭터 접근, 길찾기, 광고판 구경이 겹치면 휴대폰과 지갑 위치 확인이 느려져요.", en: "Photos, character approaches, navigation, and billboards can slow phone and wallet checks." },
+    action: { ko: "사진을 찍기 전 지갑을 안쪽에 넣고, 휴대폰은 손목 스트랩이나 양손으로 짧게만 들어요.", en: "Before photos, move the wallet inside and hold the phone briefly with a wrist strap or both hands." },
+    after: { ko: "휴대폰이 사라졌다면 추격보다 계정 잠금, 결제앱 로그아웃, 위치 기록 캡처를 먼저 해요.", en: "If a phone is gone, lock accounts, log out payment apps, and capture location history before chasing." },
+    tags: ["phone", "photo", "crowd"],
+    source: { ko: "대도시 인파·휴대폰 노출 예방 기준", en: "Large-city crowd and phone exposure guidance" }
+  },
+  {
+    id: "nyc-subway-transfer",
+    city: "newyork",
+    risk: "transit",
+    level: 76,
+    lat: 40.7527,
+    lng: -73.9772,
+    name: { ko: "맨해튼 지하철 환승·플랫폼", en: "Manhattan subway transfer platforms" },
+    area: { ko: "그랜드 센트럴·타임스퀘어 환승권", en: "Grand Central and Times Square transfer area" },
+    type: { ko: "지하철 환승·플랫폼", en: "Subway transfer and platform" },
+    time: { ko: "출퇴근·공연 종료 후", en: "Commute and after-show periods" },
+    pattern: { ko: "노선 확인, 계단 이동, 열차 탑승이 겹치면 캐리어 위 가방과 뒷주머니가 뒤로 밀려요.", en: "Line checks, stairs, and boarding can push bags on luggage and back pockets out of attention." },
+    action: { ko: "계단 전에는 길찾기를 끝내고, 플랫폼에서는 백팩을 앞으로 돌리고 벽 쪽에 서요.", en: "Finish navigation before stairs, wear backpacks in front, and stand wall-side on platforms." },
+    after: { ko: "분실이 의심되면 차 안에서 찾기보다 다음 역 직원 구역이나 밝은 공간에서 정리해요.", en: "If loss is suspected, regroup at staff areas or bright spaces rather than searching inside the train." },
+    tags: ["transit", "pickpocket", "bag"],
+    source: { ko: "대중교통 혼잡 구간 안전 기준", en: "Transit crowd safety guidance" }
+  },
+  {
+    id: "istanbul-sultanahmet",
+    city: "istanbul",
+    risk: "scam",
+    level: 77,
+    lat: 41.0055,
+    lng: 28.9768,
+    name: { ko: "술탄아흐메트 관광지 접근", en: "Sultanahmet tourist approaches" },
+    area: { ko: "술탄아흐메트 광장 주변", en: "Around Sultanahmet Square" },
+    type: { ko: "관광지·광장 접근로", en: "Tourist site and plaza approach" },
+    time: { ko: "오전 입장 전후", en: "Around morning entry" },
+    pattern: { ko: "사진, 길 안내, 상점 추천, 투어 제안이 이어지며 자연스럽게 동선을 바꾸게 만들 수 있어요.", en: "Photo help, directions, shop recommendations, or tour offers can gradually redirect the route." },
+    action: { ko: "대화가 길어지면 가격·장소·동행 여부가 흐려지므로, 공식 입구와 예약 정보 기준으로만 움직여요.", en: "Long conversations blur price, location, and companions, so move only by official entrances and booking info." },
+    after: { ko: "결제했다면 추가 이동 전 영수증·지도 위치·상점명을 캡처해요.", en: "If you paid, capture receipt, map location, and shop name before moving further." },
+    tags: ["scam", "photo", "tour"],
+    source: { ko: "관광지 접근형 제안 판단 기준", en: "Tourist approach offer guidance" }
+  },
+  {
+    id: "istanbul-grand-bazaar",
+    city: "istanbul",
+    risk: "pickpocket",
+    level: 74,
+    lat: 41.0107,
+    lng: 28.9680,
+    name: { ko: "그랜드 바자르 시장 통로", en: "Grand Bazaar market lanes" },
+    area: { ko: "그랜드 바자르", en: "Grand Bazaar" },
+    type: { ko: "시장·좁은 통로", en: "Market and narrow lanes" },
+    time: { ko: "낮 쇼핑 피크", en: "Daytime shopping peak" },
+    pattern: { ko: "흥정과 방향 전환이 반복되면 지갑을 꺼내는 위치가 노출되고, 가방이 몸 뒤로 밀릴 수 있어요.", en: "Repeated bargaining and turns expose where the wallet comes out and can push bags behind the body." },
+    action: { ko: "소액 현금만 따로 꺼내 쓰고, 구매가 끝나면 바로 넓은 통로에서 소지품 위치를 재확인해요.", en: "Use only small separated cash and recheck belongings in a wider lane after purchases." },
+    after: { ko: "현금보다 카드·여권·숙소 키 피해 여부를 먼저 확인해요.", en: "Check card, passport, and room-key exposure before focusing on cash." },
+    tags: ["pickpocket", "bag", "market"],
+    source: { ko: "혼잡 시장 여행자 안전 기준", en: "Crowded market traveler safety guidance" }
+  },
+  {
+    id: "amsterdam-central",
+    city: "amsterdam",
+    risk: "transit",
+    level: 75,
+    lat: 52.3791,
+    lng: 4.9003,
+    name: { ko: "암스테르담 중앙역 환승", en: "Amsterdam Centraal transfers" },
+    area: { ko: "중앙역·운하 입구", en: "Centraal Station and canal entry" },
+    type: { ko: "기차역·트램·도보 환승", en: "Rail, tram, and walking transfer" },
+    time: { ko: "도착 직후·저녁", en: "Arrival and evening" },
+    pattern: { ko: "기차, 트램, 숙소 방향을 동시에 확인하다 보면 캐리어 위 가방과 휴대폰이 분리돼요.", en: "Checking train, tram, and lodging direction at once can split attention from bags and phones." },
+    action: { ko: "역 밖으로 나오기 전 숙소 방향을 정하고, 캐리어 위 가방은 손목에 걸어요.", en: "Decide lodging direction before exiting and loop the bag on luggage around your wrist." },
+    after: { ko: "분실이 의심되면 운하 쪽으로 이동하기 전 역 내부 밝은 곳에서 카드와 여권을 확인해요.", en: "If loss is suspected, check cards and passport in a bright station area before moving toward canals." },
+    tags: ["transit", "bag", "crowd"],
+    source: { ko: "역 환승 소지품 관리 기준", en: "Station transfer belongings guidance" }
+  },
+  {
+    id: "amsterdam-canal-night",
+    city: "amsterdam",
+    risk: "night",
+    level: 72,
+    lat: 52.3702,
+    lng: 4.8952,
+    name: { ko: "운하 주변 야간 보행 동선", en: "Canal-side night walking route" },
+    area: { ko: "구시가지 운하권", en: "Old city canal area" },
+    type: { ko: "야간 보행·좁은 골목", en: "Night walk and narrow lanes" },
+    time: { ko: "밤~새벽", en: "Night to late night" },
+    pattern: { ko: "어두운 운하길과 자전거 동선이 겹치면 길찾기 중 휴대폰과 가방끈이 느슨해질 수 있어요.", en: "Dark canal paths and bicycle traffic can make phones and bag straps loosen while navigating." },
+    action: { ko: "지도는 밝은 상점 앞에서 확인하고, 혼자라면 큰길·트램 동선으로 우회해요.", en: "Check maps near bright storefronts and detour to main streets or tram routes when alone." },
+    after: { ko: "위협을 느꼈다면 동선을 계속 설명하려 하지 말고 밝은 매장이나 역 쪽으로 이동해요.", en: "If you feel unsafe, stop explaining your route and move toward a bright store or station." },
+    tags: ["night", "phone", "bag"],
+    source: { ko: "야간 보행 안전 기준", en: "Night walking safety guidance" }
   }
 ];
 
@@ -711,6 +887,11 @@ const checklist = [
     text: { ko: "휴대폰 찾기, 원격 잠금, eSIM 재발급 방법 확인", en: "Check phone-finding, remote lock, and eSIM reissue steps." }
   },
   {
+    key: "offlineRoute",
+    group: "beforeTrip",
+    text: { ko: "숙소, 대사관, 공항, 마지막 지하철역을 오프라인 지도나 캡처로 저장", en: "Save lodging, embassy, airport, and last transit station in offline maps or screenshots." }
+  },
+  {
     key: "frontBag",
     group: "duringTrip",
     text: { ko: "지하철·시장·사진 명소에서는 가방을 앞쪽으로 돌리기", en: "Move your bag to the front in metro, markets, and photo spots." }
@@ -726,9 +907,19 @@ const checklist = [
     text: { ko: "도로 쪽 손에 휴대폰을 들고 길찾기 하지 않기", en: "Do not navigate with the phone in the street-side hand." }
   },
   {
+    key: "shortDecline",
+    group: "duringTrip",
+    text: { ko: "서명, 기부, 사진, 투어 제안은 멈춰서 설명하지 말고 짧게 거절", en: "Decline petitions, donations, photos, or tour offers briefly without stopping to explain." }
+  },
+  {
     key: "lossOrder",
     group: "afterLoss",
     text: { ko: "피해 직후 카드 정지, 계정 잠금, 경찰 신고, 보험 기록 순서로 진행", en: "After loss: freeze cards, lock accounts, report to police, then collect insurance records." }
+  },
+  {
+    key: "shareIncident",
+    group: "afterLoss",
+    text: { ko: "동행자나 가족에게 현재 위치와 피해 물품, 연락 가능한 번호를 먼저 공유", en: "Share current location, affected items, and reachable contact number with companions or family first." }
   }
 ];
 
@@ -767,6 +958,30 @@ const drills = [
     options: [
       { key: "table", text: { ko: "시야 안에 있으니 그대로 둔다", en: "Leave it because it is visible" } },
       { key: "inner", text: { ko: "안쪽 주머니에 넣고 가방 끈을 몸에 건다", en: "Move it to an inner pocket and loop the bag strap" } }
+    ]
+  },
+  {
+    key: "streetPhone",
+    answer: "storefront",
+    prompt: {
+      ko: "낯선 도시에서 길을 찾느라 도로 쪽 손에 휴대폰을 들고 걸어요. 더 안전한 행동은?",
+      en: "In an unfamiliar city, you are walking with the phone in the street-side hand for navigation. Safer action?"
+    },
+    options: [
+      { key: "walk", text: { ko: "계속 걸으면서 화면을 확대한다", en: "Keep walking while zooming the screen" } },
+      { key: "storefront", text: { ko: "밝은 상점 벽 쪽에 멈춰서 경로를 확인한다", en: "Stop wall-side near a bright storefront and check the route" } }
+    ]
+  },
+  {
+    key: "tourOffer",
+    answer: "official",
+    prompt: {
+      ko: "관광지 입구에서 오늘 닫았다고 하며 다른 투어를 권해요. 먼저 할 일은?",
+      en: "At a tourist entrance, someone says it is closed and suggests another tour. First step?"
+    },
+    options: [
+      { key: "follow", text: { ko: "설명을 더 듣기 위해 따라간다", en: "Follow to hear more details" } },
+      { key: "official", text: { ko: "공식 입구·공식 사이트 기준으로만 확인한다", en: "Verify only by official entrance or official site" } }
     ]
   }
 ];
