@@ -138,7 +138,20 @@ const dictionary = {
     drillDesc: "짧게 눌러보면서 위험한 순간의 첫 행동을 몸에 익혀요.",
     drillScore: "훈련 점수",
     correct: "좋은 선택",
-    retry: "다시 생각"
+    retry: "다시 생각",
+    routeLoopTitle: "오늘 주의 동선",
+    routeLoopDesc: "선택한 조건에서 먼저 볼 스팟을 짧은 순서로 묶었어요.",
+    routeLoopProgress: "탐색 진행",
+    firstStop: "먼저 확인",
+    nextStop: "다음 확인",
+    reviewed: "확인함",
+    streetSenseTitle: "현장 10초 판단",
+    streetSenseDesc: "지도만 보지 말고 몸, 가방, 결제수단을 동시에 확인하세요.",
+    safeMove: "안전한 움직임",
+    dangerSignal: "위험 신호",
+    exitPlan: "빠져나갈 순서",
+    loopCheck: "체크 이어가기",
+    loopPanic: "대처 순서 보기"
   },
   en: {
     brand: "SafeRoute",
@@ -279,7 +292,20 @@ const dictionary = {
     drillDesc: "Tap through short choices so the first action feels automatic.",
     drillScore: "Drill score",
     correct: "Good choice",
-    retry: "Think again"
+    retry: "Think again",
+    routeLoopTitle: "Today's caution route",
+    routeLoopDesc: "A short review order built from your current city and risk filters.",
+    routeLoopProgress: "Review progress",
+    firstStop: "Check first",
+    nextStop: "Check next",
+    reviewed: "Reviewed",
+    streetSenseTitle: "10-second street decision",
+    streetSenseDesc: "Do not only read the map. Check body position, bag, and payment tools together.",
+    safeMove: "Safer move",
+    dangerSignal: "Danger signal",
+    exitPlan: "Exit order",
+    loopCheck: "Continue checklist",
+    loopPanic: "Open SOS steps"
   }
 };
 
@@ -996,8 +1022,6 @@ const icons = {
   list: `<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>`
 };
 
-const vectorMapStyleUrl = "https://tiles.openfreemap.org/styles/positron";
-
 const state = {
   lang: readLanguage(),
   panel: "map",
@@ -1009,6 +1033,7 @@ const state = {
   userPosition: null,
   saved: readJson("saferoute:saved", []),
   recent: readJson("saferoute:recent", []),
+  viewed: readJson("saferoute:viewed", []),
   incident: readJson("saferoute:incident", {}),
   drill: readJson("saferoute:drill", {}),
   checks: readJson("saferoute:checks", {})
@@ -1031,9 +1056,7 @@ let map;
 let markerLayer;
 let userMarker;
 let baseMapLayer;
-let baseMapSeq = 0;
 const markers = new Map();
-const vectorStyleCache = new Map();
 
 startWhenReady();
 
@@ -1080,22 +1103,9 @@ function bootMap() {
   });
 }
 
-async function setBaseMapLanguage(language, notify = true) {
-  const seq = baseMapSeq + 1;
-  baseMapSeq = seq;
-  const mapLanguage = language === "en" ? "en" : "ko";
-  if (notify) showToast(tr("mapLanguageLoading"));
-  try {
-    if (!window.maplibregl || !L.maplibreGL) throw new Error("vector map unavailable");
-    const style = await localizedVectorStyle(mapLanguage);
-    if (seq !== baseMapSeq || !map) return;
-    replaceBaseMap(L.maplibreGL({ style, interactive: false }));
-    if (notify) showToast(tr("mapLanguageReady"));
-  } catch {
-    if (seq !== baseMapSeq || !map) return;
-    replaceBaseMap(rasterBaseMap());
-    if (notify) showToast(tr("mapLanguageFallback"));
-  }
+function setBaseMapLanguage(language, notify = true) {
+  replaceBaseMap(rasterBaseMap(language));
+  if (notify) showToast(tr("mapLanguageReady"));
 }
 
 function replaceBaseMap(nextLayer) {
@@ -1105,44 +1115,14 @@ function replaceBaseMap(nextLayer) {
 }
 
 function rasterBaseMap() {
-  return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  return L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
     maxZoom: 19,
-    attribution: "&copy; OpenStreetMap",
+    subdomains: "abcd",
+    attribution: "&copy; OpenStreetMap &copy; CARTO",
     updateWhenIdle: true,
     updateWhenZooming: false,
     keepBuffer: 1
   });
-}
-
-async function localizedVectorStyle(language) {
-  if (vectorStyleCache.has(language)) return cloneJson(vectorStyleCache.get(language));
-  const response = await fetch(vectorMapStyleUrl);
-  if (!response.ok) throw new Error("map style failed");
-  const style = await response.json();
-  const textField = mapLabelExpression(language);
-  style.layers = style.layers.map((layer) => {
-    if (layer.type !== "symbol" || !layer.layout?.["text-field"]) return layer;
-    return {
-      ...layer,
-      layout: {
-        ...layer.layout,
-        "text-field": textField
-      }
-    };
-  });
-  vectorStyleCache.set(language, style);
-  return cloneJson(style);
-}
-
-function mapLabelExpression(language) {
-  const fields = language === "en"
-    ? ["name:en", "name_en", "name:latin", "name", "name:ko"]
-    : ["name:ko", "name_ko", "name:en", "name_en", "name:latin", "name"];
-  return ["coalesce", ...fields.map((field) => ["get", field])];
-}
-
-function cloneJson(value) {
-  return JSON.parse(JSON.stringify(value));
 }
 
 function bindEvents() {
@@ -1424,6 +1404,7 @@ function renderMapPanel() {
     ${contextTools()}
     ${renderTripRoutine(list, selected)}
     ${renderCityBrief(list, selected)}
+    ${renderRouteLoop(list, selected)}
     ${selected ? renderSpotDetail(selected) : renderEmpty()}
     <div class="spot-list">
       ${list.map((spot) => renderSpotCard(spot)).join("")}
@@ -1705,6 +1686,41 @@ function renderCheckProgress() {
   `;
 }
 
+function renderRouteLoop(list, selected) {
+  if (!list.length) return "";
+  const queue = routeQueue(list, selected);
+  const viewedCount = list.filter((spot) => state.viewed.includes(spot.id)).length;
+  const percent = Math.round((viewedCount / list.length) * 100);
+  return `
+    <section class="loop-card">
+      <div class="brief-head">
+        <div>
+          <span>${tr("routeLoopTitle")}</span>
+          <strong>${queue[0] ? `${riskEmoji(queue[0].risk)} ${queue[0].name[state.lang]}` : tr("routeLoopTitle")}</strong>
+        </div>
+        <span class="compact-stat">${viewedCount}/${list.length}</span>
+      </div>
+      <p>${tr("routeLoopDesc")}</p>
+      <div class="loop-meter" aria-label="${tr("routeLoopProgress")}">
+        <span style="width: ${percent}%"></span>
+      </div>
+      <div class="route-steps">
+        ${queue.map((spot, index) => `
+          <button type="button" class="route-step ${spot.id === state.selectedId ? "is-active" : ""}" data-spot-id="${spot.id}">
+            <span>${index === 0 ? tr("firstStop") : tr("nextStop")} ${index + 1}</span>
+            <strong>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</strong>
+            <em>${cities[spot.city].label[state.lang]} · ${riskLabel(spot.risk)} · ${state.viewed.includes(spot.id) ? tr("reviewed") : spot.time[state.lang]}</em>
+          </button>
+        `).join("")}
+      </div>
+      <div class="loop-actions">
+        <button class="text-button" type="button" data-open-panel="check">${tr("loopCheck")}</button>
+        <button class="text-button" type="button" data-open-panel="panic">${tr("loopPanic")}</button>
+      </div>
+    </section>
+  `;
+}
+
 function renderIncidentNote() {
   const incident = state.incident || {};
   return `
@@ -1797,6 +1813,7 @@ function renderSpotDetail(spot) {
       <div class="tag-row">
         ${spot.tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
       </div>
+      ${renderStreetSense(spot)}
       <div class="detail-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
@@ -1859,6 +1876,21 @@ function contextTools() {
   if (state.query) labels.push(`${tr("searchPlaceholder")}: ${escapeHtml(state.query)}`);
   if (!labels.length) return "";
   return `<div class="decision-card"><strong>${labels.join(" · ")}</strong><p><button class="text-button" type="button" data-clear>${tr("clear")}</button></p></div>`;
+}
+
+function routeQueue(list, selected) {
+  const seed = selected || list[0];
+  if (!seed) return [];
+  return [seed, ...list
+    .filter((spot) => spot.id !== seed.id)
+    .sort((a, b) => {
+      const cityScore = Number(b.city === seed.city) - Number(a.city === seed.city);
+      if (cityScore) return cityScore;
+      const riskScore = Number(b.risk === seed.risk) - Number(a.risk === seed.risk);
+      if (riskScore) return riskScore;
+      return b.level - a.level;
+    })]
+    .slice(0, 4);
 }
 
 function filteredSpots() {
@@ -1993,9 +2025,109 @@ function spotPlaybook(spot) {
   return (state.lang === "en" ? en : ko)[spot.risk] || (state.lang === "en" ? en.pickpocket : ko.pickpocket);
 }
 
+function renderStreetSense(spot) {
+  const sense = streetSense(spot);
+  return `
+    <div class="street-panel">
+      <div>
+        <span>${tr("streetSenseTitle")}</span>
+        <strong>${sense.title}</strong>
+        <p>${tr("streetSenseDesc")}</p>
+      </div>
+      <div class="street-grid">
+        <div><span>${tr("safeMove")}</span><p>${sense.move}</p></div>
+        <div><span>${tr("dangerSignal")}</span><p>${sense.signal}</p></div>
+        <div><span>${tr("exitPlan")}</span><p>${sense.exit}</p></div>
+      </div>
+    </div>
+  `;
+}
+
+function streetSense(spot) {
+  const ko = {
+    pickpocket: {
+      title: "가방 지퍼와 뒷주머니를 먼저 닫기",
+      move: "사진을 찍기 전 가방을 몸 앞쪽으로 돌리고, 지퍼 손잡이를 손바닥 안쪽으로 숨겨요.",
+      signal: "서명지, 지도, 사진 요청처럼 시야를 가리는 물건이 갑자기 가까워지면 한 걸음 빠져요.",
+      exit: "소지품을 확인한 뒤 벽 쪽이나 매장 입구처럼 등 뒤가 막힌 곳으로 이동해요."
+    },
+    phone: {
+      title: "도로 쪽 손에 휴대폰을 두지 않기",
+      move: "지도 확인은 멈춰서 짧게 하고, 폰은 양손 또는 벽 쪽 손으로 잡아요.",
+      signal: "오토바이, 자전거, 빠르게 스치는 사람이 폰 쪽으로 붙으면 화면을 바로 내리고 몸 안쪽으로 넣어요.",
+      exit: "추격하지 말고 결제앱, SIM, 계정 잠금 순서로 피해를 줄여요."
+    },
+    bag: {
+      title: "의자 뒤, 바닥, 옆자리 금지",
+      move: "가방끈을 다리나 손목에 걸고, 쇼핑백은 몸 안쪽 손에 모아요.",
+      signal: "옆자리 물건을 가리는 외투, 종이, 메뉴판이 생기면 가방 위치를 즉시 바꿔요.",
+      exit: "없어진 물건을 찾으러 배회하지 말고 안전한 실내에서 카드와 숙소 키부터 확인해요."
+    },
+    transit: {
+      title: "타기 직전 멈춤 시간을 줄이기",
+      move: "개찰구 전 목적지와 승강장을 확인하고, 탑승 직전 여권·지갑 위치를 만져봐요.",
+      signal: "에스컬레이터, 문 앞, 개찰구에서 몸이 비정상적으로 밀착되면 가방을 앞으로 돌려요.",
+      exit: "차 안에서 따라가지 말고 다음 역에서 내려 신고와 카드 정지를 진행해요."
+    },
+    scam: {
+      title: "대화가 길어지기 전에 끊기",
+      move: "서명, 기부, 투어, 사진 제안은 걸음을 멈추지 않고 짧게 거절해요.",
+      signal: "오늘 닫았다, 싸게 데려다준다, 공식보다 낫다는 말로 동선을 바꾸려 하면 거리를 둬요.",
+      exit: "이미 결제했다면 영수증, 위치, 상점명을 캡처하고 추가 이동은 멈춰요."
+    },
+    night: {
+      title: "귀가 동선과 결제수단을 먼저 고정",
+      move: "술자리 전후 카드, 여권, 휴대폰 3가지를 동행자와 서로 확인해요.",
+      signal: "호객, 과도한 친절, 목적지 변경 제안이 이어지면 대화보다 이동을 우선해요.",
+      exit: "밝은 큰길이나 역으로 이동한 뒤 위치 공유와 호출앱 목적지를 다시 확인해요."
+    }
+  };
+  const en = {
+    pickpocket: {
+      title: "Zip bag and empty back pockets first",
+      move: "Before photos, move the bag to your front and hide zipper pulls inside your palm.",
+      signal: "If papers, maps, or photo requests suddenly block your view, step back first.",
+      exit: "Check belongings, then move wall-side or near a storefront where nobody is behind you."
+    },
+    phone: {
+      title: "Keep the phone away from the street-side hand",
+      move: "Stop briefly for maps and hold the phone with both hands or the wall-side hand.",
+      signal: "If bikes, scooters, or fast passers-by close in near the phone, lower it immediately.",
+      exit: "Do not chase. Lock payment apps, SIM, and accounts in that order."
+    },
+    bag: {
+      title: "No bags behind chairs, on floors, or on spare seats",
+      move: "Loop straps around your leg or wrist and keep shopping bags on the inside hand.",
+      signal: "If a coat, paper, or menu blocks your view of the bag, move it immediately.",
+      exit: "Do not wander looking for items; move indoors and check cards and room keys first."
+    },
+    transit: {
+      title: "Reduce standing-still moments before boarding",
+      move: "Check platform and destination before gates, then touch-check passport and wallet before boarding.",
+      signal: "If contact feels unusual at escalators, doors, or gates, move the bag to the front.",
+      exit: "Do not follow inside transit. Exit next stop and start report or card freeze steps."
+    },
+    scam: {
+      title: "Cut the conversation before it gets long",
+      move: "Decline petitions, donations, tours, or photo offers without stopping.",
+      signal: "If someone says it is closed, cheaper elsewhere, or better than official routes, keep distance.",
+      exit: "If paid already, capture receipt, location, and store name before moving further."
+    },
+    night: {
+      title: "Fix return route and payment tools first",
+      move: "Before and after drinks, cross-check card, passport, and phone with companions.",
+      signal: "If touting, forced friendliness, or destination changes continue, prioritize leaving.",
+      exit: "Move to a bright main street or station, then recheck location sharing and ride-app destination."
+    }
+  };
+  return (state.lang === "en" ? en : ko)[spot.risk] || (state.lang === "en" ? en.pickpocket : ko.pickpocket);
+}
+
 function rememberSpot(id) {
   state.recent = [id, ...state.recent.filter((item) => item !== id)].slice(0, 18);
+  state.viewed = [id, ...state.viewed.filter((item) => item !== id)].slice(0, 120);
   writeJson("saferoute:recent", state.recent);
+  writeJson("saferoute:viewed", state.viewed);
 }
 
 function selectSpot(id, move) {

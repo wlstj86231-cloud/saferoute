@@ -50,6 +50,14 @@ button {
   cursor: pointer;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(23, 138, 112, 0.36);
+  outline-offset: 2px;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -79,11 +87,6 @@ a {
   margin-bottom: calc(var(--dock-height) + env(safe-area-inset-bottom) + 12px) !important;
   border-radius: 6px 0 0 0;
   font-size: 10px;
-}
-
-.maplibregl-ctrl-bottom-left,
-.maplibregl-ctrl-bottom-right {
-  display: none;
 }
 
 .topbar {
@@ -155,6 +158,7 @@ a {
 .text-button,
 .sheet-mini-action,
 .mini-spot,
+.route-step,
 .signal-strip button,
 .compare-list button,
 .drill-options button {
@@ -172,6 +176,18 @@ a {
   color: var(--ink);
   background: var(--surface-soft);
   border: 1px solid var(--line);
+}
+
+.icon-button:active,
+.quick-chip:active,
+.chip:active,
+.text-button:active,
+.route-step:active,
+.mini-spot:active,
+.spot-card:active,
+.city-card:active,
+.nav-button:active {
+  transform: translateY(1px);
 }
 
 .icon-button svg,
@@ -378,6 +394,17 @@ a {
   box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
   transition: max-height 180ms ease, transform 180ms ease;
+  scrollbar-width: thin;
+  scrollbar-color: #c6d6d2 transparent;
+}
+
+.bottom-sheet::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bottom-sheet::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #c6d6d2;
 }
 
 .bottom-sheet.is-collapsed {
@@ -545,6 +572,7 @@ button.spot-card {
   font-size: 18px;
   line-height: 1.25;
   text-align: left;
+  overflow-wrap: anywhere;
 }
 
 .spot-title-row p,
@@ -592,6 +620,38 @@ button.spot-card {
   margin-top: 11px;
 }
 
+.street-panel {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #f0d9b5;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fffaf1, #ffffff);
+}
+
+.street-panel > div:first-child strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 17px;
+  line-height: 1.34;
+}
+
+.street-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.street-grid div {
+  padding: 10px;
+  border: 1px solid #eadbc4;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.street-grid p {
+  font-weight: 750;
+}
+
 .decision-card {
   margin-top: 12px;
   padding: 12px;
@@ -601,6 +661,7 @@ button.spot-card {
 }
 
 .routine-card,
+.loop-card,
 .progress-card,
 .brief-card,
 .compare-card,
@@ -615,6 +676,7 @@ button.spot-card {
 }
 
 .routine-copy span,
+.loop-card span,
 .progress-card span,
 .brief-card span,
 .compare-card span,
@@ -622,6 +684,7 @@ button.spot-card {
 .playbook-card span,
 .drill-card span,
 .mini-spot span,
+.street-panel span,
 .section-label,
 .related-block > strong {
   color: #126653;
@@ -630,6 +693,7 @@ button.spot-card {
 }
 
 .routine-copy strong,
+.loop-card .brief-head strong,
 .progress-card strong,
 .brief-head strong,
 .playbook-card > strong {
@@ -639,11 +703,13 @@ button.spot-card {
 }
 
 .routine-copy p,
+.loop-card p,
 .progress-card p,
 .compare-card p,
 .incident-card p,
 .playbook-card p,
-.drill-card p {
+.drill-card p,
+.street-panel p {
   margin: 6px 0 0;
   color: var(--muted);
   line-height: 1.48;
@@ -689,6 +755,69 @@ button.spot-card {
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #178a70, #52c29e);
+}
+
+.loop-meter {
+  height: 8px;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e4ebe9;
+}
+
+.loop-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #178a70, #d08a2c);
+}
+
+.route-steps {
+  display: grid;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.route-step {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  min-height: 74px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface);
+  text-align: left;
+}
+
+.route-step.is-active {
+  border-color: #9bd8c5;
+  background: #f2fbf7;
+  box-shadow: inset 4px 0 0 #45b995;
+}
+
+.route-step strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.route-step em {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loop-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .brief-head {
@@ -966,6 +1095,7 @@ button.spot-card {
   display: block;
   margin-top: 5px;
   font-size: 15px;
+  overflow-wrap: anywhere;
 }
 
 .note-list,
@@ -1224,6 +1354,7 @@ button.spot-card {
   .bottom-sheet.is-collapsed .filter-row,
   .bottom-sheet.is-collapsed .decision-card,
   .bottom-sheet.is-collapsed .routine-card,
+  .bottom-sheet.is-collapsed .loop-card,
   .bottom-sheet.is-collapsed .brief-card,
   .bottom-sheet.is-collapsed .compare-card,
   .bottom-sheet.is-collapsed .incident-card,
@@ -1311,8 +1442,20 @@ button.spot-card {
   }
 
   .brief-grid,
+  .loop-actions,
   .incident-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 
