@@ -50,6 +50,10 @@ const dictionary = {
     translateToKorean: "한국어로 보기",
     englishOn: "영어로 전환했어.",
     koreanOn: "한국어로 전환했어.",
+    mapLanguageLoading: "지도 언어를 바꾸는 중...",
+    mapLanguageReady: "지도 언어를 맞췄어.",
+    mapLanguageFallback: "지도 언어 전환이 불안정해서 기본 지도로 보여줄게.",
+    otherSpots: "다른 스팟 보기",
     savedToast: "저장했어. 여행 전에 다시 보기 좋아.",
     unsavedToast: "저장에서 뺐어.",
     locationUnavailable: "이 브라우저에서는 현재 위치를 사용할 수 없어.",
@@ -187,6 +191,10 @@ const dictionary = {
     translateToKorean: "View in Korean",
     englishOn: "Switched to English.",
     koreanOn: "Switched to Korean.",
+    mapLanguageLoading: "Switching map language...",
+    mapLanguageReady: "Map language updated.",
+    mapLanguageFallback: "Map language is unstable, so the default map is shown.",
+    otherSpots: "View other spots",
     savedToast: "Saved. Good to review before the trip.",
     unsavedToast: "Removed from saved.",
     locationUnavailable: "Current location is not available in this browser.",
@@ -768,8 +776,12 @@ const icons = {
   save: `<path d="M6 4h12v17l-6-3.5L6 21V4Z"/>`,
   saved: `<path d="M6 4h12v17l-6-3.5L6 21V4Z"/><path d="m9 11 2 2 4-5"/>`,
   copy: `<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
-  link: `<path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/>`
+  link: `<path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/>`,
+  map: `<path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/>`,
+  list: `<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>`
 };
+
+const vectorMapStyleUrl = "https://tiles.openfreemap.org/styles/positron";
 
 const state = {
   lang: readLanguage(),
@@ -803,7 +815,10 @@ const locateButton = document.querySelector("#locateButton");
 let map;
 let markerLayer;
 let userMarker;
+let baseMapLayer;
+let baseMapSeq = 0;
 const markers = new Map();
+const vectorStyleCache = new Map();
 
 startWhenReady();
 
@@ -841,19 +856,78 @@ function bootMap() {
     markerZoomAnimation: false
   }).setView(cities.barcelona.center, cities.barcelona.zoom);
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap",
-    updateWhenIdle: true,
-    updateWhenZooming: false,
-    keepBuffer: 1
-  }).addTo(map);
+  setBaseMapLanguage(state.lang, false);
 
   markerLayer = L.layerGroup().addTo(map);
   map.on("click", () => {
     if (!searchPanel.hidden) setSearchPanel(false);
     if (state.panel === "map") setSheetMode("collapsed");
   });
+}
+
+async function setBaseMapLanguage(language, notify = true) {
+  const seq = baseMapSeq + 1;
+  baseMapSeq = seq;
+  const mapLanguage = language === "en" ? "en" : "ko";
+  if (notify) showToast(tr("mapLanguageLoading"));
+  try {
+    if (!window.maplibregl || !L.maplibreGL) throw new Error("vector map unavailable");
+    const style = await localizedVectorStyle(mapLanguage);
+    if (seq !== baseMapSeq || !map) return;
+    replaceBaseMap(L.maplibreGL({ style, interactive: false }));
+    if (notify) showToast(tr("mapLanguageReady"));
+  } catch {
+    if (seq !== baseMapSeq || !map) return;
+    replaceBaseMap(rasterBaseMap());
+    if (notify) showToast(tr("mapLanguageFallback"));
+  }
+}
+
+function replaceBaseMap(nextLayer) {
+  if (baseMapLayer) map.removeLayer(baseMapLayer);
+  baseMapLayer = nextLayer.addTo(map);
+  markerLayer?.eachLayer((layer) => layer.bringToFront?.());
+}
+
+function rasterBaseMap() {
+  return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap",
+    updateWhenIdle: true,
+    updateWhenZooming: false,
+    keepBuffer: 1
+  });
+}
+
+async function localizedVectorStyle(language) {
+  if (vectorStyleCache.has(language)) return cloneJson(vectorStyleCache.get(language));
+  const response = await fetch(vectorMapStyleUrl);
+  if (!response.ok) throw new Error("map style failed");
+  const style = await response.json();
+  const textField = mapLabelExpression(language);
+  style.layers = style.layers.map((layer) => {
+    if (layer.type !== "symbol" || !layer.layout?.["text-field"]) return layer;
+    return {
+      ...layer,
+      layout: {
+        ...layer.layout,
+        "text-field": textField
+      }
+    };
+  });
+  vectorStyleCache.set(language, style);
+  return cloneJson(style);
+}
+
+function mapLabelExpression(language) {
+  const fields = language === "en"
+    ? ["name:en", "name_en", "name:latin", "name", "name:ko"]
+    : ["name:ko", "name_ko", "name:en", "name_en", "name:latin", "name"];
+  return ["coalesce", ...fields.map((field) => ["get", field])];
+}
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
 }
 
 function bindEvents() {
@@ -941,6 +1015,12 @@ function bindEvents() {
     const saveButton = event.target.closest("[data-save]");
     if (saveButton) {
       toggleSave(saveButton.dataset.save);
+      return;
+    }
+
+    const focusListButton = event.target.closest("[data-focus-list]");
+    if (focusListButton) {
+      focusSpotList();
       return;
     }
 
@@ -1034,10 +1114,20 @@ function setSearchPanel(open, focus = false) {
   if (open && focus) window.requestAnimationFrame(() => spotSearch.focus());
 }
 
+function focusSpotList() {
+  const list = sheet.querySelector(".spot-list");
+  if (!list) {
+    renderSheet();
+    return;
+  }
+  list.scrollIntoView({ block: "start", behavior: "smooth" });
+}
+
 function toggleLanguage() {
   state.lang = state.lang === "ko" ? "en" : "ko";
   writeJson("saferoute:lang", state.lang);
   applyLanguage();
+  setBaseMapLanguage(state.lang);
   renderQuickRail();
   renderSheet();
   renderMarkers();
@@ -1495,6 +1585,10 @@ function renderSpotDetail(spot) {
       <div class="detail-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+      </div>
+      <div class="detail-actions return-actions">
+        <button class="text-button" type="button" data-sheet-collapse>${icon("map")}${tr("mapWide")}</button>
+        <button class="text-button" type="button" data-focus-list>${icon("list")}${tr("otherSpots")}</button>
       </div>
       <div class="info-grid">
         <div><span>${tr("city")}</span><strong>${cities[spot.city].label[state.lang]}</strong></div>

@@ -81,6 +81,11 @@ a {
   font-size: 10px;
 }
 
+.maplibregl-ctrl-bottom-left,
+.maplibregl-ctrl-bottom-right {
+  display: none;
+}
+
 .topbar {
   position: absolute;
   z-index: 10;
@@ -457,6 +462,14 @@ a {
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 6px;
+}
+
+.return-actions {
+  overflow: visible;
+}
+
+.return-actions .text-button {
+  flex: 1 1 0;
 }
 
 .chip,

@@ -19,14 +19,17 @@
     <meta name="google-adsense-account" content="ca-pub-7217591196020054">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://tile.openstreetmap.org">
+    <link rel="preconnect" href="https://tiles.openfreemap.org">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://tiles.openfreemap.org">
     <link rel="dns-prefetch" href="https://tile.openstreetmap.org">
     <link rel="preload" href="/assets/vendor/leaflet/leaflet.css" as="style">
-    <link rel="preload" href="/assets/styles.css?v=20260508-rpm3" as="style">
+    <link rel="preload" href="/assets/styles.css?v=20260508-maplang" as="style">
     <link rel="preload" href="/assets/vendor/leaflet/leaflet.js" as="script">
-    <link rel="modulepreload" href="/assets/app.js?v=20260508-rpm3">
+    <link rel="modulepreload" href="/assets/app.js?v=20260508-maplang">
     <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-    <link rel="stylesheet" href="/assets/styles.css?v=20260508-rpm3">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260508-maplang">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -120,6 +123,8 @@
     </noscript>
 
     <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-    <script src="/assets/app.js?v=20260508-rpm3" type="module"></script>
+    <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet/leaflet-maplibre-gl.js" defer></script>
+    <script src="/assets/app.js?v=20260508-maplang" type="module"></script>
   </body>
 </html>
