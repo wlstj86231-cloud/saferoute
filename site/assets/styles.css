@@ -151,7 +151,8 @@ a {
 .sheet-mini-action,
 .mini-spot,
 .signal-strip button,
-.compare-list button {
+.compare-list button,
+.drill-options button {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -591,7 +592,8 @@ button.spot-card {
 .brief-card,
 .compare-card,
 .incident-card,
-.playbook-card {
+.playbook-card,
+.drill-card {
   margin-top: 10px;
   padding: 13px;
   border: 1px solid #d5ece4;
@@ -605,6 +607,7 @@ button.spot-card {
 .compare-card span,
 .incident-card span,
 .playbook-card span,
+.drill-card span,
 .mini-spot span,
 .section-label,
 .related-block > strong {
@@ -626,7 +629,8 @@ button.spot-card {
 .progress-card p,
 .compare-card p,
 .incident-card p,
-.playbook-card p {
+.playbook-card p,
+.drill-card p {
   margin: 6px 0 0;
   color: var(--muted);
   line-height: 1.48;
@@ -803,6 +807,73 @@ button.spot-card {
 
 .playbook-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.drill-list {
+  display: grid;
+  gap: 9px;
+  margin-top: 11px;
+}
+
+.drill-item {
+  display: grid;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.drill-item > strong {
+  line-height: 1.42;
+}
+
+.drill-options {
+  display: grid;
+  gap: 7px;
+}
+
+.drill-options button {
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface-soft);
+  text-align: left;
+  font-weight: 850;
+  line-height: 1.42;
+}
+
+.drill-options button.is-correct {
+  border-color: #9bd8c5;
+  background: var(--green-soft);
+}
+
+.drill-options button.is-wrong {
+  border-color: #edbbb3;
+  background: var(--red-soft);
+}
+
+.drill-result {
+  width: fit-content;
+  min-height: 27px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+
+.drill-result.is-correct {
+  color: #126653;
+  border-color: #9bd8c5;
+  background: var(--green-soft);
+}
+
+.drill-result.is-wrong {
+  color: #8b3128;
+  border-color: #edbbb3;
+  background: var(--red-soft);
 }
 
 .related-block {
@@ -1144,6 +1215,7 @@ button.spot-card {
   .bottom-sheet.is-collapsed .compare-card,
   .bottom-sheet.is-collapsed .incident-card,
   .bottom-sheet.is-collapsed .playbook-card,
+  .bottom-sheet.is-collapsed .drill-card,
   .bottom-sheet.is-collapsed .progress-card,
   .bottom-sheet.is-collapsed .spot-card,
   .bottom-sheet.is-collapsed .spot-list,

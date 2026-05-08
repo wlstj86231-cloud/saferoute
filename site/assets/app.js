@@ -124,7 +124,17 @@ const dictionary = {
     incidentSave: "메모 저장",
     incidentCopy: "메모 복사",
     incidentSaved: "피해 기록 메모를 저장했어.",
-    incidentEmpty: "아직 기록한 메모가 없어요."
+    incidentEmpty: "아직 기록한 메모가 없어요.",
+    tripBriefTitle: "저장 스팟 여행 브리프",
+    tripBriefDesc: "저장한 스팟을 동행에게 보내기 좋은 짧은 브리프로 묶어요.",
+    copyBrief: "브리프 복사",
+    briefCopied: "여행 브리프를 복사했어.",
+    briefEmpty: "저장한 스팟이 있어야 브리프를 만들 수 있어요.",
+    drillTitle: "상황 훈련",
+    drillDesc: "짧게 눌러보면서 위험한 순간의 첫 행동을 몸에 익혀요.",
+    drillScore: "훈련 점수",
+    correct: "좋은 선택",
+    retry: "다시 생각"
   },
   en: {
     brand: "SafeRoute",
@@ -251,7 +261,17 @@ const dictionary = {
     incidentSave: "Save note",
     incidentCopy: "Copy note",
     incidentSaved: "Incident note saved.",
-    incidentEmpty: "No incident note yet."
+    incidentEmpty: "No incident note yet.",
+    tripBriefTitle: "Saved spot travel brief",
+    tripBriefDesc: "Turn saved spots into a compact brief you can send to companions.",
+    copyBrief: "Copy brief",
+    briefCopied: "Travel brief copied.",
+    briefEmpty: "Save at least one spot to build a travel brief.",
+    drillTitle: "Situation drill",
+    drillDesc: "Tap through short choices so the first action feels automatic.",
+    drillScore: "Drill score",
+    correct: "Good choice",
+    retry: "Think again"
   }
 };
 
@@ -704,6 +724,45 @@ const checklist = [
   }
 ];
 
+const drills = [
+  {
+    key: "metroCrowd",
+    answer: "wall",
+    prompt: {
+      ko: "지하철 문 앞이 붐비고 누군가 길을 묻는 척 멈춰 세워요. 첫 행동은?",
+      en: "A metro doorway is crowded and someone stops you with a direction question. First action?"
+    },
+    options: [
+      { key: "phone", text: { ko: "휴대폰을 꺼내 지도부터 보여준다", en: "Take out the phone and show the map" } },
+      { key: "wall", text: { ko: "벽 쪽으로 비켜서 가방과 주머니를 먼저 확인한다", en: "Step wall-side and check bag and pockets first" } }
+    ]
+  },
+  {
+    key: "photoSpot",
+    answer: "zip",
+    prompt: {
+      ko: "사진 명소에서 낯선 사람이 사진을 찍어주겠다고 해요. 안전한 순서는?",
+      en: "At a photo spot, a stranger offers to take a photo. Safer order?"
+    },
+    options: [
+      { key: "zip", text: { ko: "가방 지퍼를 닫고 폰을 넘기지 않은 채 거절한다", en: "Zip the bag and decline without handing over the phone" } },
+      { key: "pose", text: { ko: "일단 포즈를 잡고 사진을 부탁한다", en: "Pose first and ask for the photo" } }
+    ]
+  },
+  {
+    key: "cafeTable",
+    answer: "inner",
+    prompt: {
+      ko: "카페 테라스에서 결제 후 휴대폰을 테이블 위에 올려뒀어요. 다음 행동은?",
+      en: "After paying at a terrace cafe, the phone is on the table. Next action?"
+    },
+    options: [
+      { key: "table", text: { ko: "시야 안에 있으니 그대로 둔다", en: "Leave it because it is visible" } },
+      { key: "inner", text: { ko: "안쪽 주머니에 넣고 가방 끈을 몸에 건다", en: "Move it to an inner pocket and loop the bag strap" } }
+    ]
+  }
+];
+
 const icons = {
   route: `<path d="M12 2 3 21l9-4 9 4-9-19Z"/>`,
   save: `<path d="M6 4h12v17l-6-3.5L6 21V4Z"/>`,
@@ -724,6 +783,7 @@ const state = {
   saved: readJson("saferoute:saved", []),
   recent: readJson("saferoute:recent", []),
   incident: readJson("saferoute:incident", {}),
+  drill: readJson("saferoute:drill", {}),
   checks: readJson("saferoute:checks", {})
 };
 
@@ -925,6 +985,20 @@ function bindEvents() {
     const incidentCopy = event.target.closest("[data-copy-incident]");
     if (incidentCopy) {
       copyIncidentNote();
+      return;
+    }
+
+    const briefCopy = event.target.closest("[data-copy-brief]");
+    if (briefCopy) {
+      copySavedBrief();
+      return;
+    }
+
+    const drillAnswer = event.target.closest("[data-drill-answer]");
+    if (drillAnswer) {
+      state.drill[drillAnswer.dataset.drill] = drillAnswer.dataset.drillAnswer;
+      writeJson("saferoute:drill", state.drill);
+      renderSheet();
       return;
     }
   });
@@ -1129,6 +1203,7 @@ function renderSaved() {
         <span class="compact-stat">${countSpots(saved.length)}</span>
       </div>
     </div>
+    ${renderSavedBrief(saved)}
     ${saved.length ? saved.map((spot) => renderSpotCard(spot)).join("") : `<div class="spot-card"><h3>${tr("noSaved")}</h3><p>${tr("noSavedBody")}</p></div>`}
     ${recent.length ? `
       <div class="section-label">${tr("recentTitle")}</div>
@@ -1149,6 +1224,7 @@ function renderCheck() {
       <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
     </div>
     ${renderCheckProgress()}
+    ${renderRiskDrill()}
     ${groups.map((group) => `
       <div class="check-card">
         <strong>${tr(group)}</strong>
@@ -1160,6 +1236,66 @@ function renderCheck() {
         `).join("")}
       </div>
     `).join("")}
+  `;
+}
+
+function renderSavedBrief(saved) {
+  const targets = saved.length ? saved : filteredSpots().slice(0, 3);
+  const mix = cityRiskMix(targets).slice(0, 4);
+  return `
+    <section class="brief-card travel-brief-card">
+      <div class="brief-head">
+        <div>
+          <span>${tr("tripBriefTitle")}</span>
+          <strong>${saved.length ? countSpots(saved.length) : tr("noSaved")}</strong>
+        </div>
+        <button class="sheet-mini-action" type="button" data-copy-brief>${tr("copyBrief")}</button>
+      </div>
+      <p>${tr("tripBriefDesc")}</p>
+      <div class="signal-strip" aria-label="${tr("cityRiskMix")}">
+        ${mix.map((item) => `<button type="button" data-risk-filter="${item.key}">${riskEmoji(item.key)} ${riskLabel(item.key)} ${item.count}</button>`).join("")}
+      </div>
+      <div class="related-rail">
+        ${targets.slice(0, 4).map((spot) => renderMiniSpot(spot)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderRiskDrill() {
+  const done = drills.filter((drill) => state.drill[drill.key] === drill.answer).length;
+  return `
+    <section class="drill-card">
+      <div class="brief-head">
+        <div>
+          <span>${tr("drillTitle")}</span>
+          <strong>${tr("drillScore")} ${done}/${drills.length}</strong>
+        </div>
+      </div>
+      <p>${tr("drillDesc")}</p>
+      <div class="drill-list">
+        ${drills.map((drill) => {
+          const picked = state.drill[drill.key] || "";
+          return `
+            <div class="drill-item">
+              <strong>${drill.prompt[state.lang]}</strong>
+              <div class="drill-options">
+                ${drill.options.map((option) => {
+                  const selected = picked === option.key;
+                  const correct = selected && option.key === drill.answer;
+                  return `
+                    <button type="button" class="${selected ? correct ? "is-correct" : "is-wrong" : ""}" data-drill="${drill.key}" data-drill-answer="${option.key}" aria-pressed="${selected ? "true" : "false"}">
+                      ${option.text[state.lang]}
+                    </button>
+                  `;
+                }).join("")}
+              </div>
+              ${picked ? `<span class="drill-result ${picked === drill.answer ? "is-correct" : "is-wrong"}">${picked === drill.answer ? tr("correct") : tr("retry")}</span>` : ""}
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </section>
   `;
 }
 
@@ -1713,6 +1849,29 @@ function copyIncidentNote() {
     return;
   }
   copyText(text).then(() => showToast(tr("copied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+function copySavedBrief() {
+  const saved = state.saved.map((id) => spotById.get(id)).filter(Boolean);
+  if (!saved.length) {
+    showToast(tr("briefEmpty"));
+    return;
+  }
+  copyText(savedBriefText(saved)).then(() => showToast(tr("briefCopied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+function savedBriefText(saved) {
+  const lines = [
+    `[${tr("brand")}] ${tr("tripBriefTitle")}`,
+    `${tr("savedCount")}: ${saved.length}`,
+    ""
+  ];
+  saved.slice(0, 10).forEach((spot, index) => {
+    lines.push(`${index + 1}. ${cities[spot.city].label[state.lang]} / ${riskEmoji(spot.risk)} ${riskLabel(spot.risk)} / ${spot.name[state.lang]}`);
+    lines.push(`- ${tr("atSpot")}: ${spotPlaybook(spot).at}`);
+    lines.push(`- ${tr("ifHappens")}: ${spotPlaybook(spot).after}`);
+  });
+  return lines.join("\n");
 }
 
 function incidentNoteText() {
