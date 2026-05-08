@@ -88,7 +88,21 @@ const dictionary = {
     reportRisk: "위험 제보는 아직 열지 않았어요. 허위·낙인 위험이 있어 초기에는 큐레이션 지도로 운영합니다.",
     cityButtonLabel: "도시 빠른 이동",
     mainNav: "주요 메뉴",
-    quickLabel: "상황 빠른 보기"
+    quickLabel: "상황 빠른 보기",
+    mapWide: "지도 크게",
+    tripRoutineTitle: "30초 여행 루틴",
+    tripRoutineDesc: "도시·상황·저장·체크를 한 번에 묶어서 지금 볼 순서를 잡아줘요.",
+    currentCity: "현재 도시",
+    topRisk: "먼저 볼 위험",
+    savedCount: "저장",
+    checkProgress: "체크 진행",
+    nextSpots: "다음으로 볼 스팟",
+    relatedTitle: "이어서 보면 좋은 스팟",
+    recentTitle: "최근 확인한 스팟",
+    progressReady: "출발 준비",
+    progressBody: "체크가 쌓일수록 현장에서 당황할 일이 줄어들어요.",
+    reviewSaved: "저장한 곳 다시 보기",
+    cityRiskMix: "위험 유형 요약"
   },
   en: {
     brand: "SafeRoute",
@@ -179,7 +193,21 @@ const dictionary = {
     reportRisk: "Public risk reports are not open yet. To avoid false claims and stigma, this starts as a curated map.",
     cityButtonLabel: "Quick city move",
     mainNav: "Main menu",
-    quickLabel: "Quick scenarios"
+    quickLabel: "Quick scenarios",
+    mapWide: "Bigger map",
+    tripRoutineTitle: "30-second travel routine",
+    tripRoutineDesc: "City, scenario, saved spots, and checks are bundled into a quick review path.",
+    currentCity: "Current city",
+    topRisk: "Top risk",
+    savedCount: "Saved",
+    checkProgress: "Check progress",
+    nextSpots: "Next spots to review",
+    relatedTitle: "Good spots to review next",
+    recentTitle: "Recently viewed spots",
+    progressReady: "Trip readiness",
+    progressBody: "The more you check now, the less you freeze on the street.",
+    reviewSaved: "Review saved spots",
+    cityRiskMix: "Risk type summary"
   }
 };
 
@@ -650,6 +678,7 @@ const state = {
   selectedId: spots[0].id,
   userPosition: null,
   saved: readJson("saferoute:saved", []),
+  recent: readJson("saferoute:recent", []),
   checks: readJson("saferoute:checks", {})
 };
 
@@ -716,6 +745,10 @@ function bootMap() {
   }).addTo(map);
 
   markerLayer = L.layerGroup().addTo(map);
+  map.on("click", () => {
+    if (!searchPanel.hidden) setSearchPanel(false);
+    if (state.panel === "map") setSheetMode("collapsed");
+  });
 }
 
 function bindEvents() {
@@ -735,6 +768,16 @@ function bindEvents() {
     renderSheet();
     renderMarkers();
     refreshStatus();
+  });
+
+  spotSearch.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (state.query) {
+      clearSearch();
+      return;
+    }
+    setSearchPanel(false);
+    searchToggle.focus();
   });
 
   document.querySelectorAll("[data-city]").forEach((button) => {
@@ -760,11 +803,15 @@ function bindEvents() {
   });
 
   sheet.addEventListener("click", (event) => {
+    const collapse = event.target.closest("[data-sheet-collapse]");
+    if (collapse) {
+      setSheetMode("collapsed");
+      return;
+    }
+
     const toggle = event.target.closest("[data-sheet-toggle]");
     if (toggle) {
-      sheet.classList.toggle("is-expanded");
-      sheet.classList.toggle("is-collapsed");
-      window.setTimeout(() => map.invalidateSize(), 180);
+      setSheetMode(sheet.classList.contains("is-collapsed") ? "expanded" : "collapsed");
       return;
     }
 
@@ -831,9 +878,14 @@ function setPanel(panel) {
   document.querySelectorAll(".nav-button").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.panel === panel);
   });
-  sheet.classList.toggle("is-expanded", panel !== "map");
-  sheet.classList.toggle("is-collapsed", panel === "map");
+  setSheetMode(panel === "map" ? "collapsed" : "expanded");
   renderSheet();
+}
+
+function setSheetMode(mode) {
+  const expanded = mode === "expanded";
+  sheet.classList.toggle("is-expanded", expanded);
+  sheet.classList.toggle("is-collapsed", !expanded);
   window.setTimeout(() => map.invalidateSize(), 180);
 }
 
@@ -918,12 +970,16 @@ function renderMapPanel() {
         <h1>${tr("mapPanelTitle")}</h1>
         <p>${tr("mapPanelDesc")}</p>
       </div>
-      <span class="compact-stat">${countSpots(list.length)}</span>
+      <div class="sheet-head-actions">
+        <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
+        <span class="compact-stat">${countSpots(list.length)}</span>
+      </div>
     </div>
     <div class="filter-row">
       ${riskTypes.map((risk) => filterChip(risk)).join("")}
     </div>
     ${contextTools()}
+    ${renderTripRoutine(list, selected)}
     ${selected ? renderSpotDetail(selected) : renderEmpty()}
     <div class="spot-list">
       ${list.map((spot) => renderSpotCard(spot)).join("")}
@@ -939,15 +995,20 @@ function renderCities() {
         <h2>${tr("citiesTitle")}</h2>
         <p>${tr("citiesDesc")}</p>
       </div>
+      <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
     </div>
     ${Object.entries(cities).map(([key, city]) => {
       const citySpots = spots.filter((spot) => spot.city === key);
       const topRisk = citySpots.slice().sort((a, b) => b.level - a.level)[0];
+      const mix = cityRiskMix(citySpots).slice(0, 3);
       return `
         <button class="city-card" type="button" data-open-city="${key}">
           <strong>${city.label[state.lang]} · ${city.country[state.lang]}</strong>
           <span>${city.summary[state.lang]}</span>
           <span>${countSpots(citySpots.length)} · ${riskEmoji(topRisk?.risk)} ${riskLabel(topRisk?.risk)}</span>
+          <span class="city-risk-mix" aria-label="${tr("cityRiskMix")}">
+            ${mix.map((item) => `<em>${riskEmoji(item.key)} ${riskLabel(item.key)} ${item.count}</em>`).join("")}
+          </span>
         </button>
       `;
     }).join("")}
@@ -966,6 +1027,7 @@ function renderPanic() {
         <h2>${tr("panicTitle")}</h2>
         <p>${tr("panicDesc")}</p>
       </div>
+      <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
     </div>
     <button class="primary-button" type="button" data-copy-steps>${icon("copy")}${tr("copySteps")}</button>
     <div class="panic-card">
@@ -984,6 +1046,10 @@ function renderPanic() {
 
 function renderSaved() {
   const saved = state.saved.map((id) => spotById.get(id)).filter(Boolean);
+  const recent = state.recent
+    .map((id) => spotById.get(id))
+    .filter((spot) => spot && !state.saved.includes(spot.id))
+    .slice(0, 5);
   return `
     ${sheetGrip()}
     <div class="sheet-head" data-sheet-toggle>
@@ -991,9 +1057,16 @@ function renderSaved() {
         <h2>${tr("savedTitle")}</h2>
         <p>${tr("savedDesc")}</p>
       </div>
-      <span class="compact-stat">${countSpots(saved.length)}</span>
+      <div class="sheet-head-actions">
+        <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
+        <span class="compact-stat">${countSpots(saved.length)}</span>
+      </div>
     </div>
     ${saved.length ? saved.map((spot) => renderSpotCard(spot)).join("") : `<div class="spot-card"><h3>${tr("noSaved")}</h3><p>${tr("noSavedBody")}</p></div>`}
+    ${recent.length ? `
+      <div class="section-label">${tr("recentTitle")}</div>
+      ${recent.map((spot) => renderSpotCard(spot)).join("")}
+    ` : ""}
   `;
 }
 
@@ -1006,7 +1079,9 @@ function renderCheck() {
         <h2>${tr("checkTitle")}</h2>
         <p>${tr("checkDesc")}</p>
       </div>
+      <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
     </div>
+    ${renderCheckProgress()}
     ${groups.map((group) => `
       <div class="check-card">
         <strong>${tr(group)}</strong>
@@ -1018,6 +1093,79 @@ function renderCheck() {
         `).join("")}
       </div>
     `).join("")}
+  `;
+}
+
+function renderTripRoutine(list, selected) {
+  if (!list.length) return "";
+  const cityKey = state.city || selected?.city || list[0]?.city;
+  const city = cities[cityKey];
+  const top = list.slice().sort((a, b) => b.level - a.level)[0];
+  const progress = checkProgress();
+  const next = list.filter((spot) => spot.id !== selected?.id).slice(0, 2);
+  return `
+    <section class="routine-card">
+      <div class="routine-copy">
+        <span>${tr("tripRoutineTitle")}</span>
+        <strong>${city ? city.label[state.lang] : tr("currentCity")} · ${riskEmoji(top?.risk)} ${riskLabel(top?.risk)}</strong>
+        <p>${tr("tripRoutineDesc")}</p>
+      </div>
+      <div class="routine-metrics">
+        <div><span>${tr("savedCount")}</span><strong>${state.saved.length}</strong></div>
+        <div><span>${tr("checkProgress")}</span><strong>${progress.done}/${progress.total}</strong></div>
+      </div>
+      ${next.length ? `
+        <div class="related-rail" aria-label="${tr("nextSpots")}">
+          ${next.map((spot) => renderMiniSpot(spot)).join("")}
+        </div>
+      ` : ""}
+    </section>
+  `;
+}
+
+function renderCheckProgress() {
+  const progress = checkProgress();
+  return `
+    <section class="progress-card">
+      <div>
+        <span>${tr("progressReady")}</span>
+        <strong>${progress.done}/${progress.total} · ${progress.percent}%</strong>
+        <p>${tr("progressBody")}</p>
+      </div>
+      <div class="progress-track" aria-label="${tr("checkProgress")}">
+        <span style="width: ${progress.percent}%"></span>
+      </div>
+    </section>
+  `;
+}
+
+function renderRelatedSpots(spot) {
+  const related = spots
+    .filter((item) => item.id !== spot.id && (item.city === spot.city || item.risk === spot.risk || item.tags.some((tag) => spot.tags.includes(tag))))
+    .sort((a, b) => {
+      const cityScore = Number(b.city === spot.city) - Number(a.city === spot.city);
+      if (cityScore) return cityScore;
+      return b.level - a.level;
+    })
+    .slice(0, 3);
+  if (!related.length) return "";
+  return `
+    <div class="related-block">
+      <strong>${tr("relatedTitle")}</strong>
+      <div class="related-rail">
+        ${related.map((item) => renderMiniSpot(item)).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderMiniSpot(spot) {
+  return `
+    <button class="mini-spot" type="button" data-spot-id="${spot.id}">
+      <span>${riskEmoji(spot.risk)} ${riskLabel(spot.risk)}</span>
+      <strong>${spot.name[state.lang]}</strong>
+      <em>${cities[spot.city].label[state.lang]} · ${spot.level}</em>
+    </button>
   `;
 }
 
@@ -1053,6 +1201,7 @@ function renderSpotDetail(spot) {
         <li><strong>${tr("action")}</strong><br>${spot.action[state.lang]}</li>
         <li><strong>${tr("after")}</strong><br>${spot.after[state.lang]}</li>
       </ul>
+      ${renderRelatedSpots(spot)}
     </section>
   `;
 }
@@ -1132,14 +1281,39 @@ function syncSelected() {
   }
 }
 
+function checkProgress() {
+  const total = checklist.length;
+  const done = checklist.filter((item) => state.checks[item.key]).length;
+  return {
+    total,
+    done,
+    percent: total ? Math.round((done / total) * 100) : 0
+  };
+}
+
+function cityRiskMix(citySpots) {
+  const counts = new Map();
+  citySpots.forEach((spot) => {
+    counts.set(spot.risk, (counts.get(spot.risk) || 0) + 1);
+  });
+  return [...counts.entries()]
+    .map(([key, count]) => ({ key, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+function rememberSpot(id) {
+  state.recent = [id, ...state.recent.filter((item) => item !== id)].slice(0, 18);
+  writeJson("saferoute:recent", state.recent);
+}
+
 function selectSpot(id, move) {
   const spot = spotById.get(id);
   if (!spot) return;
   state.selectedId = id;
+  rememberSpot(id);
   if (move) {
     map.setView([spot.lat, spot.lng], 15);
-    sheet.classList.add("is-expanded");
-    sheet.classList.remove("is-collapsed");
+    setSheetMode("expanded");
   }
   renderSheet();
   renderMarkers();
@@ -1162,7 +1336,11 @@ function renderMarkers() {
       return;
     }
     const marker = L.marker([spot.lat, spot.lng], { icon: markerIcon(html), keyboard: true });
-    marker.on("click", () => selectSpot(spot.id, false));
+    marker.on("click", (event) => {
+      if (event?.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
+      selectSpot(spot.id, false);
+      setSheetMode("expanded");
+    });
     marker.addTo(markerLayer);
     markers.set(spot.id, marker);
   });

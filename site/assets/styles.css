@@ -146,8 +146,11 @@ a {
 .icon-button,
 .nav-button,
 .chip,
-.text-button {
+.text-button,
+.sheet-mini-action,
+.mini-spot {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .icon-button {
@@ -421,6 +424,27 @@ a {
   font-weight: 900;
 }
 
+.sheet-head-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sheet-mini-action {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 1px solid #cce8df;
+  border-radius: 8px;
+  color: #136451;
+  background: var(--green-soft);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .filter-row,
 .risk-rail,
 .action-grid,
@@ -559,6 +583,127 @@ button.spot-card {
   border: 1px solid #d5ece4;
 }
 
+.routine-card,
+.progress-card {
+  margin-top: 10px;
+  padding: 13px;
+  border: 1px solid #d5ece4;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f6fbf8, #ffffff);
+}
+
+.routine-copy span,
+.progress-card span,
+.mini-spot span,
+.section-label,
+.related-block > strong {
+  color: #126653;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.routine-copy strong,
+.progress-card strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 17px;
+}
+
+.routine-copy p,
+.progress-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+.routine-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.routine-metrics div {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.routine-metrics span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.routine-metrics strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+}
+
+.progress-track {
+  height: 9px;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e4ebe9;
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #178a70, #52c29e);
+}
+
+.related-block {
+  margin-top: 13px;
+}
+
+.related-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(160px, 58%);
+  gap: 8px;
+  overflow-x: auto;
+  margin-top: 8px;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.related-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.mini-spot {
+  display: grid;
+  gap: 5px;
+  min-height: 108px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface-soft);
+  text-align: left;
+}
+
+.mini-spot strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.35;
+}
+
+.mini-spot em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
 .decision-card strong {
   display: block;
   margin-top: 4px;
@@ -653,6 +798,31 @@ button.spot-card {
 
 .city-card span {
   color: var(--muted);
+}
+
+.city-risk-mix {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.city-risk-mix em {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: #244249;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.section-label {
+  margin: 14px 0 2px;
 }
 
 .check-row {
@@ -789,6 +959,53 @@ button.spot-card {
 
   .bottom-sheet {
     max-height: min(66dvh, 680px);
+  }
+}
+
+@media (max-width: 779px) {
+  .bottom-sheet {
+    transition: max-height 180ms ease, padding 180ms ease, transform 180ms ease;
+  }
+
+  .bottom-sheet.is-collapsed {
+    max-height: 104px;
+    overflow: hidden;
+    padding: 10px 12px;
+  }
+
+  .bottom-sheet.is-collapsed .sheet-grip {
+    margin-bottom: 8px;
+  }
+
+  .bottom-sheet.is-collapsed .sheet-head {
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .bottom-sheet.is-collapsed .sheet-head h1,
+  .bottom-sheet.is-collapsed .sheet-head h2 {
+    font-size: 18px;
+    line-height: 1.18;
+  }
+
+  .bottom-sheet.is-collapsed .sheet-head p,
+  .bottom-sheet.is-collapsed .sheet-mini-action,
+  .bottom-sheet.is-collapsed .filter-row,
+  .bottom-sheet.is-collapsed .decision-card,
+  .bottom-sheet.is-collapsed .routine-card,
+  .bottom-sheet.is-collapsed .progress-card,
+  .bottom-sheet.is-collapsed .spot-card,
+  .bottom-sheet.is-collapsed .spot-list,
+  .bottom-sheet.is-collapsed .guide-card,
+  .bottom-sheet.is-collapsed .panic-card,
+  .bottom-sheet.is-collapsed .check-card,
+  .bottom-sheet.is-collapsed .city-card,
+  .bottom-sheet.is-collapsed .section-label {
+    display: none !important;
+  }
+
+  .bottom-sheet.is-expanded {
+    max-height: min(72dvh, 660px);
   }
 }
 

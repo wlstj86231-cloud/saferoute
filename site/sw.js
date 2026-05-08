@@ -1,8 +1,8 @@
-const CACHE_NAME = "saferoute-v1";
+const CACHE_NAME = "saferoute-v2-rpm";
 const LOCAL_ASSETS = [
   "/",
-  "/assets/styles.css?v=20260508-1",
-  "/assets/app.js?v=20260508-1",
+  "/assets/styles.css?v=20260508-rpm",
+  "/assets/app.js?v=20260508-rpm",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",
