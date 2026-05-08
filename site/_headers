@@ -6,6 +6,24 @@
 /
   Cache-Control: public, max-age=0, must-revalidate
 
+/about/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/cities/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/contact/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/field-notes/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/guide/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/privacy/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /sw.js
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -19,4 +37,7 @@
   Cache-Control: public, max-age=86400
 
 /sitemap.xml
+  Cache-Control: public, max-age=86400
+
+/feed.xml
   Cache-Control: public, max-age=86400
