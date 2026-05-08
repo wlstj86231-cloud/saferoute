@@ -560,6 +560,119 @@ button.spot-card {
   box-shadow: inset 4px 0 0 #4fc5a0;
 }
 
+.map-hint-card,
+.spot-brief-card {
+  display: grid;
+  gap: 11px;
+}
+
+.map-hint-card h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.28;
+}
+
+.map-hint-card p {
+  margin: 0;
+}
+
+.spot-brief-card .spot-title-row,
+.spot-brief-card .tag-row {
+  margin: 0;
+}
+
+.compact-tags {
+  gap: 6px;
+}
+
+.brief-line {
+  padding: 11px;
+  border: 1px solid #d5ece4;
+  border-radius: 8px;
+  background: #f6fbf8;
+}
+
+.brief-line.is-action {
+  border-color: #eadbc4;
+  background: #fffaf1;
+}
+
+.brief-line span,
+.brief-stats span {
+  display: block;
+  color: #126653;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.brief-line strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.brief-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.brief-stats div {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.brief-stats strong {
+  display: block;
+  overflow: hidden;
+  margin-top: 4px;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brief-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: visible;
+  padding-bottom: 0;
+}
+
+.brief-actions .text-button,
+.brief-actions .primary-button {
+  width: auto;
+  min-width: 0;
+  padding-inline: 9px;
+}
+
+.incident-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  overflow: visible;
+  padding-bottom: 0;
+}
+
+.incident-actions .primary-button,
+.incident-actions .text-button {
+  width: auto;
+  min-width: 0;
+  padding-inline: 8px;
+}
+
+.compact-filter-row {
+  margin-top: 0;
+}
+
+.danger-action {
+  color: #8b3128;
+  background: var(--red-soft);
+  border-color: #edbbb3;
+}
+
 .spot-title-row {
   display: flex;
   align-items: flex-start;
@@ -1329,13 +1442,13 @@ button.spot-card {
   }
 
   .bottom-sheet.is-collapsed {
-    max-height: 104px;
+    max-height: 30px;
     overflow: hidden;
-    padding: 10px 12px;
+    padding: 7px 12px 8px;
   }
 
   .bottom-sheet.is-collapsed .sheet-grip {
-    margin-bottom: 8px;
+    margin-bottom: 0;
   }
 
   .bottom-sheet.is-collapsed .sheet-head {
@@ -1349,6 +1462,7 @@ button.spot-card {
     line-height: 1.18;
   }
 
+  .bottom-sheet.is-collapsed .sheet-head,
   .bottom-sheet.is-collapsed .sheet-head p,
   .bottom-sheet.is-collapsed .sheet-mini-action,
   .bottom-sheet.is-collapsed .filter-row,
@@ -1372,7 +1486,7 @@ button.spot-card {
   }
 
   .bottom-sheet.is-expanded {
-    max-height: min(72dvh, 660px);
+    max-height: min(60dvh, 520px);
   }
 
   .playbook-grid {
@@ -1434,6 +1548,14 @@ button.spot-card {
   .bottom-sheet {
     bottom: calc(var(--dock-height) + env(safe-area-inset-bottom) + 16px);
     padding: 11px;
+  }
+
+  .bottom-sheet.is-collapsed {
+    max-height: 30px;
+  }
+
+  .bottom-sheet.is-expanded {
+    max-height: min(60dvh, 510px);
   }
 
   .sheet-head h1,

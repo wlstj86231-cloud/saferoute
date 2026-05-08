@@ -94,6 +94,11 @@ const dictionary = {
     mainNav: "주요 메뉴",
     quickLabel: "상황 빠른 보기",
     mapWide: "지도 크게",
+    mapFirstTitle: "지도에서 위험 이모티콘을 눌러요",
+    mapFirstDesc: "원하는 표시를 누르면 지금 필요한 주의 정보만 짧게 떠요.",
+    mapFirstHelp: "도시·위험 필터는 위쪽 버튼이나 아래 칩에서 가볍게 바꿀 수 있어요.",
+    oneLineRisk: "한 줄 주의",
+    quickAction: "지금 할 일",
     tripRoutineTitle: "30초 여행 루틴",
     tripRoutineDesc: "도시·상황·저장·체크를 한 번에 묶어서 지금 볼 순서를 잡아줘요.",
     currentCity: "현재 도시",
@@ -127,7 +132,9 @@ const dictionary = {
     incidentMemo: "메모",
     incidentSave: "메모 저장",
     incidentCopy: "메모 복사",
+    incidentClear: "메모 지우기",
     incidentSaved: "피해 기록 메모를 저장했어.",
+    incidentCleared: "피해 기록 메모를 지웠어.",
     incidentEmpty: "아직 기록한 메모가 없어요.",
     tripBriefTitle: "저장 스팟 여행 브리프",
     tripBriefDesc: "저장한 스팟을 동행에게 보내기 좋은 짧은 브리프로 묶어요.",
@@ -248,6 +255,11 @@ const dictionary = {
     mainNav: "Main menu",
     quickLabel: "Quick scenarios",
     mapWide: "Bigger map",
+    mapFirstTitle: "Tap a risk emoji on the map",
+    mapFirstDesc: "Tap the marker you need and only the short safety note will open.",
+    mapFirstHelp: "Use the top buttons or chips below to lightly change city and risk filters.",
+    oneLineRisk: "One-line risk",
+    quickAction: "Do now",
     tripRoutineTitle: "30-second travel routine",
     tripRoutineDesc: "City, scenario, saved spots, and checks are bundled into a quick review path.",
     currentCity: "Current city",
@@ -281,7 +293,9 @@ const dictionary = {
     incidentMemo: "Memo",
     incidentSave: "Save note",
     incidentCopy: "Copy note",
+    incidentClear: "Clear note",
     incidentSaved: "Incident note saved.",
+    incidentCleared: "Incident note cleared.",
     incidentEmpty: "No incident note yet.",
     tripBriefTitle: "Saved spot travel brief",
     tripBriefDesc: "Turn saved spots into a compact brief you can send to companions.",
@@ -1029,7 +1043,7 @@ const state = {
   scenario: "",
   city: "",
   query: "",
-  selectedId: spots[0].id,
+  selectedId: "",
   userPosition: null,
   saved: readJson("saferoute:saved", []),
   recent: readJson("saferoute:recent", []),
@@ -1263,6 +1277,12 @@ function bindEvents() {
       return;
     }
 
+    const incidentClear = event.target.closest("[data-clear-incident]");
+    if (incidentClear) {
+      clearIncidentNote();
+      return;
+    }
+
     const briefCopy = event.target.closest("[data-copy-brief]");
     if (briefCopy) {
       copySavedBrief();
@@ -1385,30 +1405,26 @@ function renderSheet() {
 
 function renderMapPanel() {
   const list = filteredSpots();
-  const selected = list.find((spot) => spot.id === state.selectedId) || list[0] || null;
-  return `
-    ${sheetGrip()}
+  const selected = list.find((spot) => spot.id === state.selectedId) || null;
+  const introHead = selected
+    ? ""
+    : `
     <div class="sheet-head" data-sheet-toggle>
       <div>
-        <h1>${tr("mapPanelTitle")}</h1>
-        <p>${tr("mapPanelDesc")}</p>
+        <h1>${tr("mapFirstTitle")}</h1>
+        <p>${tr("mapFirstDesc")}</p>
       </div>
       <div class="sheet-head-actions">
         <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
         <span class="compact-stat">${countSpots(list.length)}</span>
       </div>
     </div>
-    <div class="filter-row">
-      ${riskTypes.map((risk) => filterChip(risk)).join("")}
-    </div>
+  `;
+  return `
+    ${sheetGrip()}
+    ${introHead}
     ${contextTools()}
-    ${renderTripRoutine(list, selected)}
-    ${renderCityBrief(list, selected)}
-    ${renderRouteLoop(list, selected)}
-    ${selected ? renderSpotDetail(selected) : renderEmpty()}
-    <div class="spot-list">
-      ${list.map((spot) => renderSpotCard(spot)).join("")}
-    </div>
+    ${selected ? renderSpotBrief(selected) : renderMapFirstHint(list)}
   `;
 }
 
@@ -1747,9 +1763,10 @@ function renderIncidentNote() {
           <textarea name="memo" rows="3" placeholder="${state.lang === "ko" ? "상황을 짧게 기록" : "short situation note"}">${escapeHtml(incident.memo || "")}</textarea>
         </label>
       </div>
-      <div class="detail-actions">
+      <div class="detail-actions incident-actions">
         <button class="primary-button" type="submit">${tr("incidentSave")}</button>
         <button class="text-button" type="button" data-copy-incident>${tr("incidentCopy")}</button>
+        <button class="text-button danger-action" type="button" data-clear-incident>${tr("incidentClear")}</button>
       </div>
     </form>
   `;
@@ -1796,6 +1813,54 @@ function renderMiniSpot(spot) {
       <strong>${spot.name[state.lang]}</strong>
       <em>${cities[spot.city].label[state.lang]} · ${spot.level}</em>
     </button>
+  `;
+}
+
+function renderMapFirstHint(list) {
+  return `
+    <section class="spot-card map-hint-card">
+      <h3>${tr("mapFirstTitle")}</h3>
+      <p>${tr("mapFirstHelp")}</p>
+      <div class="brief-stats">
+        <div><span>${tr("details")}</span><strong>${countSpots(list.length)}</strong></div>
+        <div><span>${tr("quickLabel")}</span><strong>${scenarios.slice(0, 3).map((item) => item.emoji).join(" ")}</strong></div>
+      </div>
+      <div class="filter-row compact-filter-row">
+        ${riskTypes.map((risk) => filterChip(risk)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderSpotBrief(spot) {
+  const saved = state.saved.includes(spot.id);
+  const tags = spot.tags.slice(0, 3);
+  return `
+    <section class="spot-card spot-brief-card is-selected">
+      <div class="spot-title-row">
+        <div>
+          <h3>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</h3>
+          <p>${spot.area[state.lang]} · ${spot.type[state.lang]} · ${spot.time[state.lang]}</p>
+        </div>
+        <span class="badge ${badgeClass(spot.level)}">${tr("level")} ${spot.level}</span>
+      </div>
+      <div class="tag-row compact-tags">
+        ${tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
+      </div>
+      <div class="brief-line">
+        <span>${tr("oneLineRisk")}</span>
+        <strong>${spot.pattern[state.lang]}</strong>
+      </div>
+      <div class="brief-line is-action">
+        <span>${tr("quickAction")}</span>
+        <strong>${spot.action[state.lang]}</strong>
+      </div>
+      <div class="detail-actions brief-actions">
+        <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
+        <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+        <button class="primary-button" type="button" data-open-panel="panic">${icon("list")}${tr("panic")}</button>
+      </div>
+    </section>
   `;
 }
 
@@ -1926,9 +1991,12 @@ function filteredSpots() {
 
 function syncSelected() {
   const list = filteredSpots();
-  if (!list.length) return;
+  if (!list.length) {
+    state.selectedId = "";
+    return;
+  }
   if (!list.some((spot) => spot.id === state.selectedId)) {
-    state.selectedId = list[0].id;
+    state.selectedId = "";
   }
 }
 
@@ -2281,6 +2349,13 @@ function saveIncidentNote(form) {
   };
   writeJson("saferoute:incident", state.incident);
   showToast(tr("incidentSaved"));
+}
+
+function clearIncidentNote() {
+  state.incident = {};
+  writeJson("saferoute:incident", state.incident);
+  renderSheet();
+  showToast(tr("incidentCleared"));
 }
 
 function copyIncidentNote() {
