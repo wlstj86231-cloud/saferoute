@@ -1094,8 +1094,16 @@ function init() {
   renderSheet();
   renderMarkers();
   refreshStatus();
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  registerServiceWorkerWhenIdle();
+}
+
+function registerServiceWorkerWhenIdle() {
+  if (!("serviceWorker" in navigator)) return;
+  const register = () => navigator.serviceWorker.register("/sw.js").catch(() => {});
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(register, { timeout: 3500 });
+  } else {
+    window.setTimeout(register, 1600);
   }
 }
 
