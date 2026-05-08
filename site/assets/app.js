@@ -102,7 +102,29 @@ const dictionary = {
     progressReady: "출발 준비",
     progressBody: "체크가 쌓일수록 현장에서 당황할 일이 줄어들어요.",
     reviewSaved: "저장한 곳 다시 보기",
-    cityRiskMix: "위험 유형 요약"
+    cityRiskMix: "위험 유형 요약",
+    cityBriefTitle: "도시 안전 브리핑",
+    compareTitle: "도시별 위험 비교",
+    compareDesc: "여행 전에는 도시별 평균 위험도와 스팟 수를 훑어보면 동선 감각이 빨리 잡혀요.",
+    averageRisk: "평균 위험",
+    focusTime: "주의 시간",
+    strongestSignals: "강한 신호",
+    openCheck: "체크 열기",
+    openSOS: "대처 열기",
+    beforeSpot: "가기 전",
+    atSpot: "현장",
+    ifHappens: "당했을 때",
+    playbookTitle: "3단계 행동 플레이북",
+    incidentTitle: "피해 기록 메모",
+    incidentDesc: "시간·장소·물품을 바로 남겨두면 신고와 보험 접수 때 덜 흔들려요.",
+    incidentTime: "시간",
+    incidentPlace: "장소",
+    incidentItems: "잃어버린 물품",
+    incidentMemo: "메모",
+    incidentSave: "메모 저장",
+    incidentCopy: "메모 복사",
+    incidentSaved: "피해 기록 메모를 저장했어.",
+    incidentEmpty: "아직 기록한 메모가 없어요."
   },
   en: {
     brand: "SafeRoute",
@@ -207,7 +229,29 @@ const dictionary = {
     progressReady: "Trip readiness",
     progressBody: "The more you check now, the less you freeze on the street.",
     reviewSaved: "Review saved spots",
-    cityRiskMix: "Risk type summary"
+    cityRiskMix: "Risk type summary",
+    cityBriefTitle: "City safety brief",
+    compareTitle: "Compare city risk",
+    compareDesc: "Before a trip, scanning average risk and spot count helps you understand the route faster.",
+    averageRisk: "Average risk",
+    focusTime: "Watch time",
+    strongestSignals: "Strong signals",
+    openCheck: "Open check",
+    openSOS: "Open SOS",
+    beforeSpot: "Before",
+    atSpot: "On site",
+    ifHappens: "If it happens",
+    playbookTitle: "3-step action playbook",
+    incidentTitle: "Incident note",
+    incidentDesc: "Saving time, place, and items makes police and insurance steps less chaotic.",
+    incidentTime: "Time",
+    incidentPlace: "Place",
+    incidentItems: "Lost items",
+    incidentMemo: "Memo",
+    incidentSave: "Save note",
+    incidentCopy: "Copy note",
+    incidentSaved: "Incident note saved.",
+    incidentEmpty: "No incident note yet."
   }
 };
 
@@ -679,6 +723,7 @@ const state = {
   userPosition: null,
   saved: readJson("saferoute:saved", []),
   recent: readJson("saferoute:recent", []),
+  incident: readJson("saferoute:incident", {}),
   checks: readJson("saferoute:checks", {})
 };
 
@@ -870,6 +915,25 @@ function bindEvents() {
       renderSheet();
       return;
     }
+
+    const panelButton = event.target.closest("[data-open-panel]");
+    if (panelButton) {
+      setPanel(panelButton.dataset.openPanel);
+      return;
+    }
+
+    const incidentCopy = event.target.closest("[data-copy-incident]");
+    if (incidentCopy) {
+      copyIncidentNote();
+      return;
+    }
+  });
+
+  sheet.addEventListener("submit", (event) => {
+    const form = event.target.closest("#incidentForm");
+    if (!form) return;
+    event.preventDefault();
+    saveIncidentNote(form);
   });
 }
 
@@ -980,6 +1044,7 @@ function renderMapPanel() {
     </div>
     ${contextTools()}
     ${renderTripRoutine(list, selected)}
+    ${renderCityBrief(list, selected)}
     ${selected ? renderSpotDetail(selected) : renderEmpty()}
     <div class="spot-list">
       ${list.map((spot) => renderSpotCard(spot)).join("")}
@@ -997,6 +1062,7 @@ function renderCities() {
       </div>
       <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
     </div>
+    ${renderCityCompare()}
     ${Object.entries(cities).map(([key, city]) => {
       const citySpots = spots.filter((spot) => spot.city === key);
       const topRisk = citySpots.slice().sort((a, b) => b.level - a.level)[0];
@@ -1035,6 +1101,7 @@ function renderPanic() {
         ${panicSteps.map((step) => `<li><strong>${tr(step.key)}</strong><br>${step.body[state.lang]}</li>`).join("")}
       </ol>
     </div>
+    ${renderIncidentNote()}
     <div class="guide-card">
       <strong>${tr("officialLinks")}</strong>
       <div class="detail-actions">
@@ -1123,6 +1190,64 @@ function renderTripRoutine(list, selected) {
   `;
 }
 
+function renderCityBrief(list, selected) {
+  if (!list.length) return "";
+  const cityKey = state.city || selected?.city || list[0]?.city;
+  const city = cities[cityKey];
+  const citySpots = spots.filter((spot) => spot.city === cityKey);
+  const top = citySpots.slice().sort((a, b) => b.level - a.level)[0];
+  const mix = cityRiskMix(citySpots).slice(0, 4);
+  const average = averageRisk(citySpots);
+  const times = citySpots.slice().sort((a, b) => b.level - a.level).slice(0, 2).map((spot) => spot.time[state.lang]);
+  return `
+    <section class="brief-card">
+      <div class="brief-head">
+        <div>
+          <span>${tr("cityBriefTitle")}</span>
+          <strong>${city?.label[state.lang] || tr("currentCity")}</strong>
+        </div>
+        <span class="badge ${badgeClass(average)}">${tr("averageRisk")} ${average}</span>
+      </div>
+      <div class="brief-grid">
+        <div><span>${tr("topRisk")}</span><strong>${riskEmoji(top?.risk)} ${riskLabel(top?.risk)}</strong></div>
+        <div><span>${tr("focusTime")}</span><strong>${times.join(" · ")}</strong></div>
+      </div>
+      <div class="signal-strip" aria-label="${tr("strongestSignals")}">
+        ${mix.map((item) => `<button type="button" data-risk-filter="${item.key}">${riskEmoji(item.key)} ${riskLabel(item.key)} ${item.count}</button>`).join("")}
+      </div>
+      <div class="brief-actions">
+        <button class="text-button" type="button" data-open-panel="check">${tr("openCheck")}</button>
+        <button class="text-button" type="button" data-open-panel="panic">${tr("openSOS")}</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderCityCompare() {
+  const stats = Object.entries(cities)
+    .map(([key, city]) => {
+      const citySpots = spots.filter((spot) => spot.city === key);
+      return { key, city, count: citySpots.length, average: averageRisk(citySpots), top: cityRiskMix(citySpots)[0] };
+    })
+    .sort((a, b) => b.average - a.average);
+  return `
+    <section class="compare-card">
+      <div>
+        <span>${tr("compareTitle")}</span>
+        <p>${tr("compareDesc")}</p>
+      </div>
+      <div class="compare-list">
+        ${stats.map((item, index) => `
+          <button type="button" data-open-city="${item.key}">
+            <strong>${index + 1}. ${item.city.label[state.lang]}</strong>
+            <span>${tr("averageRisk")} ${item.average} · ${countSpots(item.count)} · ${riskEmoji(item.top?.key)} ${riskLabel(item.top?.key)}</span>
+          </button>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function renderCheckProgress() {
   const progress = checkProgress();
   return `
@@ -1136,6 +1261,54 @@ function renderCheckProgress() {
         <span style="width: ${progress.percent}%"></span>
       </div>
     </section>
+  `;
+}
+
+function renderIncidentNote() {
+  const incident = state.incident || {};
+  return `
+    <form class="incident-card" id="incidentForm">
+      <div>
+        <span>${tr("incidentTitle")}</span>
+        <p>${tr("incidentDesc")}</p>
+      </div>
+      <div class="incident-grid">
+        <label>
+          <span>${tr("incidentTime")}</span>
+          <input name="time" type="text" value="${escapeHtml(incident.time || "")}" placeholder="${state.lang === "ko" ? "예: 21:30" : "e.g. 21:30"}">
+        </label>
+        <label>
+          <span>${tr("incidentPlace")}</span>
+          <input name="place" type="text" value="${escapeHtml(incident.place || "")}" placeholder="${state.lang === "ko" ? "역·거리·가게명" : "station, street, store"}">
+        </label>
+        <label class="is-wide">
+          <span>${tr("incidentItems")}</span>
+          <input name="items" type="text" value="${escapeHtml(incident.items || "")}" placeholder="${state.lang === "ko" ? "휴대폰, 카드, 여권" : "phone, cards, passport"}">
+        </label>
+        <label class="is-wide">
+          <span>${tr("incidentMemo")}</span>
+          <textarea name="memo" rows="3" placeholder="${state.lang === "ko" ? "상황을 짧게 기록" : "short situation note"}">${escapeHtml(incident.memo || "")}</textarea>
+        </label>
+      </div>
+      <div class="detail-actions">
+        <button class="primary-button" type="submit">${tr("incidentSave")}</button>
+        <button class="text-button" type="button" data-copy-incident>${tr("incidentCopy")}</button>
+      </div>
+    </form>
+  `;
+}
+
+function renderSpotPlaybook(spot) {
+  const playbook = spotPlaybook(spot);
+  return `
+    <div class="playbook-card">
+      <strong>${tr("playbookTitle")}</strong>
+      <div class="playbook-grid">
+        <div><span>${tr("beforeSpot")}</span><p>${playbook.before}</p></div>
+        <div><span>${tr("atSpot")}</span><p>${playbook.at}</p></div>
+        <div><span>${tr("ifHappens")}</span><p>${playbook.after}</p></div>
+      </div>
+    </div>
   `;
 }
 
@@ -1201,6 +1374,7 @@ function renderSpotDetail(spot) {
         <li><strong>${tr("action")}</strong><br>${spot.action[state.lang]}</li>
         <li><strong>${tr("after")}</strong><br>${spot.after[state.lang]}</li>
       </ul>
+      ${renderSpotPlaybook(spot)}
       ${renderRelatedSpots(spot)}
     </section>
   `;
@@ -1299,6 +1473,79 @@ function cityRiskMix(citySpots) {
   return [...counts.entries()]
     .map(([key, count]) => ({ key, count }))
     .sort((a, b) => b.count - a.count);
+}
+
+function averageRisk(citySpots) {
+  if (!citySpots.length) return 0;
+  return Math.round(citySpots.reduce((sum, spot) => sum + spot.level, 0) / citySpots.length);
+}
+
+function spotPlaybook(spot) {
+  const ko = {
+    pickpocket: {
+      before: "지갑과 여권을 다른 위치에 나누고, 바깥 주머니를 비워둬요.",
+      at: "사진이나 길찾기 전에 가방 지퍼를 먼저 닫고 몸 앞쪽으로 돌려요.",
+      after: "카드 정지, 경찰 신고용 시간·장소 기록, 보험 접수 순서로 움직여요."
+    },
+    phone: {
+      before: "휴대폰 찾기, 원격 잠금, eSIM 재발급 방법을 미리 확인해요.",
+      at: "도로 쪽 손에 휴대폰을 들지 말고 벽 쪽에서 멈춰 지도를 봐요.",
+      after: "추격보다 계정 잠금, SIM 정지, 결제앱 로그아웃을 먼저 해요."
+    },
+    bag: {
+      before: "가방 안쪽에 여권·카드를 넣고 쇼핑백은 최소화해요.",
+      at: "의자 뒤나 바닥에 두지 말고 다리나 손목에 끈을 걸어요.",
+      after: "숙소 복귀 동선, 카드 정지, 분실 물품 목록을 바로 정리해요."
+    },
+    transit: {
+      before: "역에 들어가기 전에 표와 목적지를 확인해서 멈춰 서는 시간을 줄여요.",
+      at: "문 앞보다 벽 쪽에 서고, 탑승 직전 주머니와 여권 위치를 다시 만져봐요.",
+      after: "차 안에서 쫓지 말고 다음 역에서 내려 안전한 곳에서 신고해요."
+    },
+    scam: {
+      before: "공식 영업시간과 티켓 경로를 먼저 저장해요.",
+      at: "서명, 기부, 투어, 사진 요청은 멈추지 않고 짧게 거절해요.",
+      after: "결제했다면 영수증과 카드 내역을 캡처하고 추가 요구는 거절해요."
+    },
+    night: {
+      before: "귀가 경로와 호출앱 목적지를 미리 저장하고 동행과 확인 규칙을 정해요.",
+      at: "술자리 후 카드·여권·휴대폰 3가지만 서로 확인해요.",
+      after: "사람이 많은 곳으로 이동한 뒤 결제수단과 위치 공유를 정리해요."
+    }
+  };
+  const en = {
+    pickpocket: {
+      before: "Separate wallet and passport, and keep outer pockets empty.",
+      at: "Before photos or navigation, zip the bag and move it to the front.",
+      after: "Freeze cards, record time/place for police, then prepare insurance notes."
+    },
+    phone: {
+      before: "Check Find My Phone, remote lock, and eSIM recovery before travel.",
+      at: "Do not hold the phone street-side; stop wall-side for map checks.",
+      after: "Lock accounts, suspend SIM, and log out payment apps before chasing."
+    },
+    bag: {
+      before: "Keep passport/cards inside and reduce loose shopping bags.",
+      at: "Do not leave bags behind chairs or on floors; loop the strap around you.",
+      after: "Plan a safe return, freeze cards, and list lost items immediately."
+    },
+    transit: {
+      before: "Check ticket and destination before entering to avoid stopping in crowds.",
+      at: "Stand wall-side, not door-side, and touch-check passport/wallet before boarding.",
+      after: "Do not chase inside transit; exit next stop and report from a safe place."
+    },
+    scam: {
+      before: "Save official hours, ticket routes, and app prices before arriving.",
+      at: "Decline petitions, donations, tours, or photo requests without stopping.",
+      after: "Capture receipt and card history, then refuse extra payment pressure."
+    },
+    night: {
+      before: "Save your return route and ride-app destination with companions.",
+      at: "After drinks, cross-check cards, passport, and phone with companions.",
+      after: "Move to a crowded place first, then handle payment locks and location sharing."
+    }
+  };
+  return (state.lang === "en" ? en : ko)[spot.risk] || (state.lang === "en" ? en.pickpocket : ko.pickpocket);
 }
 
 function rememberSpot(id) {
@@ -1445,6 +1692,38 @@ function locateUser() {
 function copyPanicSteps() {
   const text = panicSteps.map((step, index) => `${index + 1}. ${tr(step.key)} - ${step.body[state.lang]}`).join("\n");
   copyText(text).then(() => showToast(tr("copied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+function saveIncidentNote(form) {
+  const data = new FormData(form);
+  state.incident = {
+    time: String(data.get("time") || "").trim(),
+    place: String(data.get("place") || "").trim(),
+    items: String(data.get("items") || "").trim(),
+    memo: String(data.get("memo") || "").trim()
+  };
+  writeJson("saferoute:incident", state.incident);
+  showToast(tr("incidentSaved"));
+}
+
+function copyIncidentNote() {
+  const text = incidentNoteText();
+  if (!text) {
+    showToast(tr("incidentEmpty"));
+    return;
+  }
+  copyText(text).then(() => showToast(tr("copied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+function incidentNoteText() {
+  const incident = state.incident || {};
+  const rows = [
+    [tr("incidentTime"), incident.time],
+    [tr("incidentPlace"), incident.place],
+    [tr("incidentItems"), incident.items],
+    [tr("incidentMemo"), incident.memo]
+  ].filter(([, value]) => value);
+  return rows.map(([label, value]) => `${label}: ${value}`).join("\n");
 }
 
 async function copyText(text) {

@@ -40,7 +40,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -148,7 +149,9 @@ a {
 .chip,
 .text-button,
 .sheet-mini-action,
-.mini-spot {
+.mini-spot,
+.signal-strip button,
+.compare-list button {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -584,7 +587,11 @@ button.spot-card {
 }
 
 .routine-card,
-.progress-card {
+.progress-card,
+.brief-card,
+.compare-card,
+.incident-card,
+.playbook-card {
   margin-top: 10px;
   padding: 13px;
   border: 1px solid #d5ece4;
@@ -594,6 +601,10 @@ button.spot-card {
 
 .routine-copy span,
 .progress-card span,
+.brief-card span,
+.compare-card span,
+.incident-card span,
+.playbook-card span,
 .mini-spot span,
 .section-label,
 .related-block > strong {
@@ -603,14 +614,19 @@ button.spot-card {
 }
 
 .routine-copy strong,
-.progress-card strong {
+.progress-card strong,
+.brief-head strong,
+.playbook-card > strong {
   display: block;
   margin-top: 4px;
   font-size: 17px;
 }
 
 .routine-copy p,
-.progress-card p {
+.progress-card p,
+.compare-card p,
+.incident-card p,
+.playbook-card p {
   margin: 6px 0 0;
   color: var(--muted);
   line-height: 1.48;
@@ -656,6 +672,137 @@ button.spot-card {
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #178a70, #52c29e);
+}
+
+.brief-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.brief-grid,
+.playbook-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.brief-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.brief-grid div,
+.playbook-grid div {
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.brief-grid strong {
+  display: block;
+  margin-top: 5px;
+  line-height: 1.35;
+}
+
+.signal-strip,
+.brief-actions {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  margin-top: 10px;
+  padding-bottom: 3px;
+  scrollbar-width: none;
+}
+
+.signal-strip::-webkit-scrollbar,
+.brief-actions::-webkit-scrollbar,
+.compare-list::-webkit-scrollbar {
+  display: none;
+}
+
+.signal-strip button {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: #244249;
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.compare-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(174px, 62%);
+  gap: 8px;
+  overflow-x: auto;
+  margin-top: 10px;
+  padding-bottom: 3px;
+  scrollbar-width: none;
+}
+
+.compare-list button {
+  display: grid;
+  gap: 5px;
+  min-height: 86px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface);
+  text-align: left;
+}
+
+.compare-list button strong,
+.compare-list button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.incident-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.incident-grid label {
+  display: grid;
+  gap: 5px;
+}
+
+.incident-grid label.is-wide {
+  grid-column: 1 / -1;
+}
+
+.incident-grid input,
+.incident-grid textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  outline: 0;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.incident-grid input {
+  min-height: 42px;
+  padding: 0 11px;
+}
+
+.incident-grid textarea {
+  min-height: 76px;
+  padding: 10px 11px;
+  resize: vertical;
+}
+
+.playbook-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .related-block {
@@ -993,6 +1140,10 @@ button.spot-card {
   .bottom-sheet.is-collapsed .filter-row,
   .bottom-sheet.is-collapsed .decision-card,
   .bottom-sheet.is-collapsed .routine-card,
+  .bottom-sheet.is-collapsed .brief-card,
+  .bottom-sheet.is-collapsed .compare-card,
+  .bottom-sheet.is-collapsed .incident-card,
+  .bottom-sheet.is-collapsed .playbook-card,
   .bottom-sheet.is-collapsed .progress-card,
   .bottom-sheet.is-collapsed .spot-card,
   .bottom-sheet.is-collapsed .spot-list,
@@ -1006,6 +1157,10 @@ button.spot-card {
 
   .bottom-sheet.is-expanded {
     max-height: min(72dvh, 660px);
+  }
+
+  .playbook-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1068,6 +1223,11 @@ button.spot-card {
   .sheet-head h1,
   .sheet-head h2 {
     font-size: 20px;
+  }
+
+  .brief-grid,
+  .incident-grid {
+    grid-template-columns: 1fr;
   }
 }
 
