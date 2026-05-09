@@ -1174,13 +1174,13 @@ function init() {
   renderMarkers();
   refreshStatus();
   registerServiceWorkerWhenIdle();
-  runAfterFirstPaint(startReportSync, 1200, 2200);
+  runAfterFirstPaint(startReportSync, 1800, 3200);
 }
 
 function registerServiceWorkerWhenIdle() {
   if (!("serviceWorker" in navigator)) return;
   const register = () => navigator.serviceWorker.register("/sw.js").catch(() => {});
-  runAfterFirstPaint(register, 1600, 3500);
+  runAfterFirstPaint(register, 2400, 5200);
 }
 
 function runWhenIdle(callback, timeout = 2000) {
