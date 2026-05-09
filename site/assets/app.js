@@ -149,7 +149,7 @@ const dictionary = {
     compareTitle: "도시별 위험 비교",
     compareDesc: "여행 전에는 도시별 평균 위험도와 스팟 수를 훑어보면 동선 감각이 빨리 잡혀요.",
     latestUpdateTitle: "최신 보강 요약",
-    latestUpdateDesc: "2026년 5월 공식 여행안전 안내와 반복적으로 알려진 여행자 피해 장면을 기준으로 도시별 확인 지점을 늘렸어요.",
+    latestUpdateDesc: "2026년 5월 공식 여행안전 안내를 다시 대조하고, 여행자가 많이 들르는 도시와 환승·야간·관광지 확인 지점을 크게 늘렸어요.",
     latestUpdateDate: "2026.05 갱신",
     updateSourceBadge: "공식 안내 기반",
     expandedSpotLabel: "추가 스팟",
@@ -348,7 +348,7 @@ const dictionary = {
     compareTitle: "Compare city risk",
     compareDesc: "Before a trip, scanning average risk and spot count helps you understand the route faster.",
     latestUpdateTitle: "Latest coverage update",
-    latestUpdateDesc: "Coverage was expanded in May 2026 using official travel-safety guidance and repeatedly reported traveler-risk patterns.",
+    latestUpdateDesc: "Coverage was expanded in May 2026 after checking official travel-safety guidance again, with more cities and more transit, night, and tourist-site checkpoints.",
     latestUpdateDate: "Updated 2026.05",
     updateSourceBadge: "Official guidance based",
     expandedSpotLabel: "Added spots",
@@ -498,6 +498,66 @@ const cities = {
     summary: {
       ko: "중앙역, 운하 주변, 야간 골목, 자전거 동선이 겹칠 때 휴대폰과 가방 위치를 먼저 확인해요.",
       en: "Check phone and bag position around Central Station, canals, night alleys, and bicycle-heavy routes."
+    }
+  },
+  madrid: {
+    label: { ko: "마드리드", en: "Madrid" },
+    country: { ko: "스페인", en: "Spain" },
+    center: [40.4168, -3.7038],
+    zoom: 12,
+    summary: {
+      ko: "광장, 미술관, 환승역, 야간 번화가에서 지갑·여권·휴대폰이 따로 움직이는 순간을 줄여야 해요.",
+      en: "Around plazas, museums, transfer stations, and nightlife streets, reduce moments when wallet, passport, and phone move separately."
+    }
+  },
+  lisbon: {
+    label: { ko: "리스본", en: "Lisbon" },
+    country: { ko: "포르투갈", en: "Portugal" },
+    center: [38.7223, -9.1393],
+    zoom: 12,
+    summary: {
+      ko: "전차, 전망대, 강변 광장, 야간 귀가 동선에서 소매치기와 가방 날치기 신호를 빠르게 확인해요.",
+      en: "On trams, viewpoints, riverside plazas, and night return routes, check pickpocket and bag-snatching signals quickly."
+    }
+  },
+  athens: {
+    label: { ko: "아테네", en: "Athens" },
+    country: { ko: "그리스", en: "Greece" },
+    center: [37.9838, 23.7275],
+    zoom: 12,
+    summary: {
+      ko: "중심부 지하철, 유적지 대기줄, 광장, 항구 이동에서 여권·지갑·가방 위치를 자주 확인해요.",
+      en: "In central metro routes, ruin queues, plazas, and port moves, check passport, wallet, and bag position often."
+    }
+  },
+  prague: {
+    label: { ko: "프라하", en: "Prague" },
+    country: { ko: "체코", en: "Czechia" },
+    center: [50.0755, 14.4378],
+    zoom: 12,
+    summary: {
+      ko: "구시가지, 성 방향 트램, 공항 이동, 환전·택시 제안처럼 말이 길어지는 상황을 짧게 끊어요.",
+      en: "Around the old town, castle trams, airport transfers, and exchange or taxi offers, keep conversations short and verifiable."
+    }
+  },
+  budapest: {
+    label: { ko: "부다페스트", en: "Budapest" },
+    country: { ko: "헝가리", en: "Hungary" },
+    center: [47.4979, 19.0402],
+    zoom: 12,
+    summary: {
+      ko: "온천·시장·강변 야경·축제 동선에서 가방과 결제수단을 분리 보관하고 야간 이동을 단순화해요.",
+      en: "Around baths, markets, river night views, and festival routes, separate bags and payment tools and simplify late-night movement."
+    }
+  },
+  mexicocity: {
+    label: { ko: "멕시코시티", en: "Mexico City" },
+    country: { ko: "멕시코", en: "Mexico" },
+    center: [19.4326, -99.1332],
+    zoom: 11,
+    summary: {
+      ko: "공항·메트로·역사지구·차량 이동에서 공식 택시와 결제·위치 공유 확인을 먼저 잡아야 해요.",
+      en: "Around airport, metro, historic center, and car moves, prioritize official transport, payment checks, and location sharing."
     }
   }
 };
@@ -1300,7 +1360,420 @@ const supplementalSpots = [
   }
 ];
 
-spots.push(...supplementalSpots);
+const latestExpansionSpots = [
+  {
+    id: "madrid-sol-gran-via",
+    city: "madrid",
+    risk: "pickpocket",
+    level: 79,
+    lat: 40.4180,
+    lng: -3.7038,
+    name: { ko: "솔 광장·그란비아 보행 동선", en: "Puerta del Sol and Gran Via walking route" },
+    area: { ko: "마드리드 중심부", en: "Central Madrid" },
+    type: { ko: "광장·상점가·사진 명소", en: "Plaza, shopping street, and photo zone" },
+    time: { ko: "오후 쇼핑·주말 저녁", en: "Afternoon shopping and weekend evening" },
+    pattern: { ko: "길찾기, 사진, 쇼핑백 정리가 겹치면 지갑과 휴대폰 위치 확인이 느려져요.", en: "Navigation, photos, and shopping bags can slow checks on wallet and phone position." },
+    action: { ko: "사진 전 지퍼를 몸쪽으로 돌리고, 결제 후 영수증보다 지갑 위치를 먼저 확인해요.", en: "Turn zippers toward your body before photos, and after paying check wallet position before receipts." },
+    after: { ko: "피해가 의심되면 광장 안에서 오래 찾지 말고 밝은 매장 안에서 카드와 여권을 확인해요.", en: "If loss is suspected, do not search the plaza for long; step into a bright shop to check cards and passport." },
+    tags: ["pickpocket", "photo", "crowd"],
+    source: { ko: "FCDO 스페인 거리 범죄·주의 분산 수법 안내", en: "FCDO Spain street-crime and distraction-theft guidance" }
+  },
+  {
+    id: "madrid-atocha-station",
+    city: "madrid",
+    risk: "transit",
+    level: 82,
+    lat: 40.4067,
+    lng: -3.6907,
+    name: { ko: "아토차역 고속열차·지하철 환승", en: "Atocha rail and metro transfer" },
+    area: { ko: "아토차", en: "Atocha" },
+    type: { ko: "기차역·캐리어 이동", en: "Rail station and luggage movement" },
+    time: { ko: "출발 전·도착 직후", en: "Before departure and after arrival" },
+    pattern: { ko: "전광판, 플랫폼, 캐리어, 여권 확인이 한 번에 몰리면 가방이 뒤로 밀려요.", en: "Boards, platforms, luggage, and passport checks can push bags behind attention." },
+    action: { ko: "플랫폼을 찾기 전 여권과 지갑을 안쪽에 넣고, 캐리어 손잡이에 보조가방 끈을 감아요.", en: "Before finding the platform, move passport and wallet inside and loop small-bag straps around luggage." },
+    after: { ko: "기차를 놓치더라도 카드 정지와 경찰 신고 준비를 먼저 하면 피해가 커지는 걸 막을 수 있어요.", en: "Even if a train is missed, card blocking and report preparation prevent wider damage." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "FCDO 스페인 공항·수하물·개인 소지품 주의 안내", en: "FCDO Spain luggage and belongings safety guidance" }
+  },
+  {
+    id: "madrid-prado-retiro",
+    city: "madrid",
+    risk: "bag",
+    level: 74,
+    lat: 40.4148,
+    lng: -3.6921,
+    name: { ko: "프라도 미술관·레티로 공원 입장 동선", en: "Prado Museum and Retiro Park entry route" },
+    area: { ko: "프라도·레티로", en: "Prado and Retiro" },
+    type: { ko: "미술관·공원·대기줄", en: "Museum, park, and queue" },
+    time: { ko: "입장 전후·해질녘", en: "Before entry and around sunset" },
+    pattern: { ko: "입장권, 물병, 카메라를 번갈아 꺼내며 가방 입구가 오래 열려 있을 수 있어요.", en: "Tickets, water, and cameras being taken out repeatedly can leave bags open too long." },
+    action: { ko: "대기줄에서는 한 손은 가방 지퍼에 두고, 벤치에 앉을 때 가방을 등 뒤에 두지 않아요.", en: "In queues, keep one hand near zippers and do not place bags behind you on benches." },
+    after: { ko: "분실이 보이면 입장권보다 여권·카드·숙소키 노출 여부를 먼저 줄여요.", en: "If something is missing, reduce passport, card, and room-key exposure before focusing on tickets." },
+    tags: ["bag", "queue", "photo"],
+    source: { ko: "FCDO 스페인 관광지 소지품 보호 안내", en: "FCDO Spain tourist-area belongings guidance" }
+  },
+  {
+    id: "madrid-malasana-night",
+    city: "madrid",
+    risk: "night",
+    level: 73,
+    lat: 40.4260,
+    lng: -3.7040,
+    name: { ko: "말라사냐 야간 귀가 동선", en: "Malasana night return route" },
+    area: { ko: "말라사냐", en: "Malasana" },
+    type: { ko: "야간 번화가·좁은 골목", en: "Nightlife streets and narrow lanes" },
+    time: { ko: "밤~새벽 귀가", en: "Night to early-morning return" },
+    pattern: { ko: "술자리 후 지도 확인과 택시 호출이 늦어지면 휴대폰과 결제수단이 오래 노출돼요.", en: "After drinks, delayed navigation and ride-hailing can expose phones and payment tools for too long." },
+    action: { ko: "마지막 장소를 나가기 전 숙소 경로를 저장하고, 길 위에서는 결제 앱을 열어두지 않아요.", en: "Save the lodging route before leaving the last venue and avoid leaving payment apps open on the street." },
+    after: { ko: "불편한 접근을 받으면 설명을 길게 하지 말고 영업 중인 매장이나 큰길로 바로 이동해요.", en: "If approached uncomfortably, do not explain for long; move to an open business or main street." },
+    tags: ["night", "phone", "scam"],
+    source: { ko: "FCDO 스페인 야간·음주 후 주의 안내", en: "FCDO Spain alcohol and night-safety guidance" }
+  },
+  {
+    id: "lisbon-tram-28",
+    city: "lisbon",
+    risk: "transit",
+    level: 83,
+    lat: 38.7169,
+    lng: -9.1339,
+    name: { ko: "28번 전차 승하차 구간", en: "Tram 28 boarding and standing section" },
+    area: { ko: "바이샤·알파마", en: "Baixa and Alfama" },
+    type: { ko: "전차·관광 환승", en: "Tram and tourist transit" },
+    time: { ko: "오전 관광·오후 혼잡", en: "Morning sightseeing and afternoon crowds" },
+    pattern: { ko: "좁은 전차 안에서 몸이 붙고, 사진과 노선 확인이 겹치면 주머니가 쉽게 노출돼요.", en: "Inside narrow trams, close contact plus photos and route checks expose pockets quickly." },
+    action: { ko: "탑승 전 소액권만 꺼내고, 휴대폰은 손목 스트랩이나 양손으로 짧게만 확인해요.", en: "Before boarding, keep only small cash ready and check phones briefly with a strap or both hands." },
+    after: { ko: "내린 뒤 바로 이동하지 말고 정류장 가장자리에서 지갑·카드·여권 위치를 확인해요.", en: "After getting off, pause by the stop edge to check wallet, cards, and passport." },
+    tags: ["transit", "pickpocket", "photo"],
+    source: { ko: "FCDO 포르투갈 대중교통·혼잡 정류장 소매치기 주의", en: "FCDO Portugal public-transport and crowded-stop pickpocket advice" }
+  },
+  {
+    id: "lisbon-rossio-baixa",
+    city: "lisbon",
+    risk: "pickpocket",
+    level: 78,
+    lat: 38.7139,
+    lng: -9.1394,
+    name: { ko: "호시우·바이샤 광장 보행", en: "Rossio and Baixa plaza walk" },
+    area: { ko: "리스본 중심부", en: "Central Lisbon" },
+    type: { ko: "광장·상점가·카페", en: "Plazas, shops, and cafes" },
+    time: { ko: "점심 이후·주말", en: "After lunch and weekends" },
+    pattern: { ko: "광장 공연, 야외 좌석, 상점가 이동이 겹치면 가방을 계속 볼 수 없어요.", en: "Street performances, terrace seats, and shopping movement make it hard to keep bags in sight." },
+    action: { ko: "카페에서는 가방끈을 의자 다리에 감고, 계산할 때 메인 지갑을 오래 꺼내두지 않아요.", en: "At cafes, loop bag straps around chair legs and avoid leaving the main wallet out while paying." },
+    after: { ko: "물건이 사라지면 광장 한가운데서 찾지 말고 밝은 매장 안에서 카드 앱부터 잠가요.", en: "If an item disappears, step into a bright shop and lock card apps before searching the square." },
+    tags: ["pickpocket", "bag", "crowd"],
+    source: { ko: "FCDO 포르투갈 주요 관광지 소매치기·가방 날치기 안내", en: "FCDO Portugal tourist-area pickpocketing and bag-snatching advice" }
+  },
+  {
+    id: "lisbon-miradouro-night",
+    city: "lisbon",
+    risk: "night",
+    level: 72,
+    lat: 38.7157,
+    lng: -9.1316,
+    name: { ko: "전망대·언덕길 야간 이동", en: "Viewpoint and hill-route night movement" },
+    area: { ko: "알파마·그라사", en: "Alfama and Graca" },
+    type: { ko: "전망대·계단길·야경", en: "Viewpoint, stairs, and night view" },
+    time: { ko: "해질녘~밤", en: "Sunset to night" },
+    pattern: { ko: "야경 사진과 내리막 계단이 겹치면 휴대폰을 손에 오래 들고 걷게 돼요.", en: "Night photos and downhill stairs can keep the phone in hand for too long." },
+    action: { ko: "사진은 난간에서 한 번만 찍고, 이동할 때는 휴대폰을 안쪽 주머니에 넣어요.", en: "Take photos once at the rail, then put the phone in an inner pocket while moving." },
+    after: { ko: "길이 불안하면 골목으로 줄이지 말고 조명이 있는 큰길이나 전차 정류장 쪽으로 돌아가요.", en: "If the route feels uneasy, do not shortcut through alleys; return via lit main streets or tram stops." },
+    tags: ["night", "phone", "photo"],
+    source: { ko: "FCDO 포르투갈 야간 이동·음주 후 주의 안내", en: "FCDO Portugal night-movement and alcohol-safety guidance" }
+  },
+  {
+    id: "lisbon-cais-do-sodre",
+    city: "lisbon",
+    risk: "bag",
+    level: 75,
+    lat: 38.7064,
+    lng: -9.1447,
+    name: { ko: "카이스두소드레 역·강변 귀가", en: "Cais do Sodre station and riverside return" },
+    area: { ko: "강변 환승 구간", en: "Riverside transfer area" },
+    type: { ko: "역·바·강변 보행", en: "Station, bars, and riverside walk" },
+    time: { ko: "저녁~막차 전후", en: "Evening to around last transport" },
+    pattern: { ko: "바에서 역으로 이동할 때 결제, 지도, 교통카드를 동시에 꺼내며 가방이 열려요.", en: "Moving from bars to the station, payment, maps, and transit cards can open bags at the same time." },
+    action: { ko: "바를 나가기 전 교통카드와 숙소 경로를 준비하고, 강변에서는 가방을 몸 앞으로 둬요.", en: "Before leaving the bar, prepare transit card and lodging route, and keep bags in front by the riverside." },
+    after: { ko: "분실이 의심되면 강변을 따라 찾지 말고 역 내부 밝은 곳에서 결제수단을 정리해요.", en: "If loss is suspected, do not search along the river; sort payment tools inside the lit station." },
+    tags: ["bag", "night", "transit"],
+    source: { ko: "FCDO 포르투갈 대중교통·야간 귀가 안전 안내", en: "FCDO Portugal public-transport and night-return safety advice" }
+  },
+  {
+    id: "athens-syntagma-metro",
+    city: "athens",
+    risk: "transit",
+    level: 84,
+    lat: 37.9755,
+    lng: 23.7348,
+    name: { ko: "신타그마역 메트로 환승", en: "Syntagma metro transfer" },
+    area: { ko: "아테네 중심부", en: "Central Athens" },
+    type: { ko: "지하철·광장 환승", en: "Metro and plaza transfer" },
+    time: { ko: "출퇴근·관광 피크", en: "Commute and tourist peak" },
+    pattern: { ko: "개찰구, 에스컬레이터, 노선 확인이 겹치면 여권과 지갑이 들어 있는 주머니가 취약해져요.", en: "Gates, escalators, and line checks expose pockets holding passport and wallet." },
+    action: { ko: "개찰구 전 여권과 지갑을 안쪽으로 넣고, 백팩은 앞쪽으로 돌린 뒤 탑승해요.", en: "Before gates, move passport and wallet inside, then rotate backpacks to the front before boarding." },
+    after: { ko: "플랫폼에서 추격하지 말고 역무 공간이나 밝은 출구에서 카드와 여권 피해를 확인해요.", en: "Do not chase on platforms; check card and passport damage near staff areas or bright exits." },
+    tags: ["transit", "pickpocket", "crowd"],
+    source: { ko: "FCDO 그리스 중심부 지하철·관광지 도난 안내", en: "FCDO Greece central Athens metro and tourist-site theft advice" }
+  },
+  {
+    id: "athens-acropolis-queue",
+    city: "athens",
+    risk: "bag",
+    level: 79,
+    lat: 37.9715,
+    lng: 23.7257,
+    name: { ko: "아크로폴리스 입장 대기·사진 구간", en: "Acropolis queue and photo section" },
+    area: { ko: "아크로폴리스", en: "Acropolis" },
+    type: { ko: "유적지·대기줄·사진 명소", en: "Historic site, queue, and photo point" },
+    time: { ko: "오전 입장·해질녘", en: "Morning entry and sunset" },
+    pattern: { ko: "물, 티켓, 카메라를 반복해서 꺼내면 가방 입구가 오래 열려 있고 뒤쪽으로 밀려요.", en: "Water, tickets, and cameras being taken out repeatedly leave bags open and behind the body." },
+    action: { ko: "입장 전 필요한 것만 작은 파우치에 옮기고, 대기 중에는 가방을 난간 쪽에 기대지 않아요.", en: "Before entry, move essentials to a small pouch and avoid resting bags against rails while waiting." },
+    after: { ko: "소지품이 사라졌다면 입장 진행보다 결제수단과 여권 노출 여부를 먼저 확인해요.", en: "If belongings disappear, check payment tools and passport exposure before continuing entry." },
+    tags: ["bag", "queue", "photo"],
+    source: { ko: "FCDO 그리스 혼잡 관광지 도난 주의", en: "FCDO Greece crowded tourist-place theft guidance" }
+  },
+  {
+    id: "athens-monastiraki-market",
+    city: "athens",
+    risk: "pickpocket",
+    level: 80,
+    lat: 37.9767,
+    lng: 23.7257,
+    name: { ko: "모나스티라키 시장·골목 이동", en: "Monastiraki market and lane walk" },
+    area: { ko: "모나스티라키", en: "Monastiraki" },
+    type: { ko: "시장·골목·역 주변", en: "Market, lanes, and station area" },
+    time: { ko: "오후 쇼핑·저녁", en: "Afternoon shopping and evening" },
+    pattern: { ko: "흥정, 기념품, 역 이동이 겹치면 메인 지갑을 꺼낸 위치가 반복 노출돼요.", en: "Bargaining, souvenirs, and station movement repeatedly reveal where the main wallet is kept." },
+    action: { ko: "소액 현금만 따로 두고, 메인 카드와 여권은 시장 안에서 꺼내지 않아요.", en: "Keep small cash separate and do not take out main cards or passport inside the market." },
+    after: { ko: "분실이 보이면 같은 골목을 맴돌지 말고 넓은 광장 쪽에서 결제 내역을 확인해요.", en: "If loss appears, stop circling the same lane and check payment history from a wider plaza." },
+    tags: ["pickpocket", "market", "transit"],
+    source: { ko: "FCDO 그리스 중심부 도난·여권 피해 주의", en: "FCDO Greece central theft and passport-loss guidance" }
+  },
+  {
+    id: "athens-piraeus-port",
+    city: "athens",
+    risk: "transit",
+    level: 76,
+    lat: 37.9442,
+    lng: 23.6409,
+    name: { ko: "피레우스 항구 페리 환승", en: "Piraeus port ferry transfer" },
+    area: { ko: "피레우스", en: "Piraeus" },
+    type: { ko: "항구·페리·캐리어 이동", en: "Port, ferry, and luggage movement" },
+    time: { ko: "이른 아침 출항·도착 직후", en: "Early departures and after arrival" },
+    pattern: { ko: "출항 시간 압박과 게이트 확인이 겹치면 캐리어 위 가방과 휴대폰이 따로 움직여요.", en: "Departure pressure and gate checks can separate bags on luggage from phones." },
+    action: { ko: "페리 게이트를 찾기 전 지갑과 여권을 안쪽에 넣고, 캐리어 위 가방끈을 손목에 감아요.", en: "Before finding the ferry gate, move wallet and passport inside and loop luggage-bag straps around your wrist." },
+    after: { ko: "탑승 직전 분실이 의심되면 배를 타기 전 항구 직원이 있는 곳에서 피해 범위를 줄여요.", en: "If loss is suspected just before boarding, reduce damage near port staff before getting on the ferry." },
+    tags: ["transit", "bag", "queue"],
+    source: { ko: "FCDO 그리스 대중교통·혼잡 이동 도난 주의", en: "FCDO Greece transit and crowded-movement theft guidance" }
+  },
+  {
+    id: "prague-charles-bridge",
+    city: "prague",
+    risk: "pickpocket",
+    level: 81,
+    lat: 50.0865,
+    lng: 14.4114,
+    name: { ko: "카를교 사진·보행 혼잡", en: "Charles Bridge photo and walking crowd" },
+    area: { ko: "구시가지·말라스트라나 연결", en: "Old Town to Mala Strana" },
+    type: { ko: "다리·사진 명소·공연", en: "Bridge, photo spot, and performances" },
+    time: { ko: "오후~해질녘", en: "Afternoon to sunset" },
+    pattern: { ko: "다리 위에서는 멈춤과 이동이 반복되어 가방이 열려도 바로 알아차리기 어려워요.", en: "On the bridge, repeated stopping and moving makes open bags hard to notice quickly." },
+    action: { ko: "사진을 찍기 전 가방을 앞쪽으로 돌리고, 공연을 볼 때는 지갑을 꺼내지 않아요.", en: "Before photos, rotate bags to the front, and avoid taking out wallets while watching performances." },
+    after: { ko: "피해가 의심되면 다리 위에서 오래 찾지 말고 구시가지 쪽 밝은 장소에서 정리해요.", en: "If loss is suspected, leave the bridge and regroup in a brighter Old Town spot." },
+    tags: ["pickpocket", "photo", "crowd"],
+    source: { ko: "FCDO 체코 프라하 주요 관광지 소매치기 안내", en: "FCDO Czechia Prague tourist-area pickpocket advice" }
+  },
+  {
+    id: "prague-airport-bus-metro",
+    city: "prague",
+    risk: "transit",
+    level: 80,
+    lat: 50.1003,
+    lng: 14.2632,
+    name: { ko: "공항버스·메트로 도심 이동", en: "Airport bus and metro route to the city" },
+    area: { ko: "공항~도심 환승", en: "Airport to city transfer" },
+    type: { ko: "버스·메트로·캐리어 이동", en: "Bus, metro, and luggage movement" },
+    time: { ko: "도착 직후·출발 전", en: "After arrival and before departure" },
+    pattern: { ko: "공항버스와 메트로 환승 중 캐리어, 교통권, 지도 확인이 한꺼번에 겹쳐요.", en: "During airport bus and metro transfers, luggage, tickets, and map checks collide." },
+    action: { ko: "교통권을 따로 준비하고, 백팩은 앞으로 돌린 뒤 캐리어 위 보조가방을 손목에 걸어요.", en: "Prepare tickets separately, rotate backpacks to the front, and loop bags on luggage around your wrist." },
+    after: { ko: "분실이 있으면 24시간 안에 경찰 신고 번호를 받아 보험 기록으로 남겨요.", en: "If theft occurs, get a police report number within 24 hours for insurance records." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "FCDO 체코 공항~도심 교통 소매치기·경찰 신고 안내", en: "FCDO Czechia airport-route pickpocket and police-report guidance" }
+  },
+  {
+    id: "prague-castle-tram",
+    city: "prague",
+    risk: "transit",
+    level: 78,
+    lat: 50.0909,
+    lng: 14.4005,
+    name: { ko: "프라하성 방향 트램", en: "Trams toward Prague Castle" },
+    area: { ko: "말라스트라나·프라하성", en: "Mala Strana and Prague Castle" },
+    type: { ko: "트램·관광 환승", en: "Tram and tourist transfer" },
+    time: { ko: "오전 입장·오후 하산", en: "Morning entry and afternoon return" },
+    pattern: { ko: "트램 안 계단과 손잡이 때문에 한 손이 묶이며 백팩 지퍼가 뒤쪽으로 노출돼요.", en: "Tram steps and handrails occupy one hand, exposing backpack zippers behind you." },
+    action: { ko: "탑승 전 백팩을 앞으로 돌리고, 휴대폰 지도는 정류장에 서 있을 때만 확인해요.", en: "Before boarding, move backpacks front and check phone maps only while standing at stops." },
+    after: { ko: "의심되면 성 방향으로 계속 올라가지 말고 넓은 정류장 주변에서 지갑과 여권을 확인해요.", en: "If suspicious, pause near a wider stop instead of continuing uphill and check wallet and passport." },
+    tags: ["transit", "pickpocket", "queue"],
+    source: { ko: "FCDO 체코 프라하성 트램·관광지 소매치기 안내", en: "FCDO Czechia Prague Castle tram and tourist-site pickpocket advice" }
+  },
+  {
+    id: "prague-old-town-exchange",
+    city: "prague",
+    risk: "scam",
+    level: 76,
+    lat: 50.0870,
+    lng: 14.4208,
+    name: { ko: "구시가지 환전·택시 제안 구간", en: "Old Town exchange and taxi-offer area" },
+    area: { ko: "구시가지 광장 주변", en: "Around Old Town Square" },
+    type: { ko: "환전·택시·야간 상권", en: "Exchange, taxi, and evening shops" },
+    time: { ko: "오후~밤", en: "Afternoon to night" },
+    pattern: { ko: "비공식 환전, 사복 경찰 사칭, 미터 없는 차량 제안처럼 대화가 길어지면 판단이 흐려져요.", en: "Unofficial exchange, plainclothes-police claims, and unmarked ride offers blur judgment when conversations get long." },
+    action: { ko: "거리 환전은 피하고, 지갑 확인 요구를 받으면 가까운 경찰서 동행만 제안해요.", en: "Avoid street exchange, and if asked to show a wallet, offer only to go to the nearest police station." },
+    after: { ko: "결제나 현금 피해가 있으면 위치, 상호, 영수증, 대화 내용을 즉시 기록해요.", en: "If payment or cash loss happens, record location, shop name, receipt, and conversation immediately." },
+    tags: ["scam", "night", "money"],
+    source: { ko: "FCDO 체코 환전·사칭 경찰·택시 과다요금 안내", en: "FCDO Czechia exchange, fake police, and taxi-overcharge guidance" }
+  },
+  {
+    id: "budapest-keleti-station",
+    city: "budapest",
+    risk: "transit",
+    level: 80,
+    lat: 47.5003,
+    lng: 19.0837,
+    name: { ko: "켈레티역 장거리 열차 환승", en: "Keleti station long-distance transfer" },
+    area: { ko: "켈레티역", en: "Keleti Station" },
+    type: { ko: "기차역·캐리어 이동", en: "Rail station and luggage movement" },
+    time: { ko: "도착 직후·출발 전", en: "After arrival and before departure" },
+    pattern: { ko: "플랫폼과 숙소 방향을 동시에 확인하면 캐리어 위 보조가방이 시야 밖으로 가요.", en: "Checking platforms and lodging direction together can move small bags on luggage out of sight." },
+    action: { ko: "역 밖으로 나가기 전 가방끈을 손목에 감고, 여권과 지갑을 겉주머니에서 빼요.", en: "Before leaving the station, loop bag straps around your wrist and remove passport and wallet from outer pockets." },
+    after: { ko: "피해가 의심되면 택시를 잡기 전 카드와 여권부터 확인하고 공식 승강장만 이용해요.", en: "If loss is suspected, check cards and passport before taking a taxi and use only official stands." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "FCDO 헝가리 부다페스트 소매치기·가방 날치기 안내", en: "FCDO Hungary Budapest pickpocketing and bag-snatching advice" }
+  },
+  {
+    id: "budapest-great-market-hall",
+    city: "budapest",
+    risk: "pickpocket",
+    level: 75,
+    lat: 47.4870,
+    lng: 19.0582,
+    name: { ko: "중앙시장 식료품·기념품 동선", en: "Great Market Hall food and souvenir route" },
+    area: { ko: "중앙시장", en: "Great Market Hall" },
+    type: { ko: "시장·계단·기념품", en: "Market, stairs, and souvenirs" },
+    time: { ko: "점심 전후·주말", en: "Around lunch and weekends" },
+    pattern: { ko: "음식 주문, 현금 결제, 기념품 확인이 이어지면 지갑 위치가 반복적으로 노출돼요.", en: "Food orders, cash payments, and souvenir checks repeatedly reveal wallet position." },
+    action: { ko: "소액 현금만 따로 들고, 메인 카드와 여권은 시장 내부에서 꺼내지 않아요.", en: "Carry small cash separately and avoid taking out main cards or passport inside the market." },
+    after: { ko: "분실이 의심되면 같은 매대를 되짚기보다 넓은 통로에서 결제수단부터 잠가요.", en: "If loss is suspected, lock payment tools from a wide aisle before retracing stalls." },
+    tags: ["pickpocket", "market", "bag"],
+    source: { ko: "FCDO 헝가리 도시권 소매치기 주의 안내", en: "FCDO Hungary urban pickpocketing guidance" }
+  },
+  {
+    id: "budapest-ruin-bars-night",
+    city: "budapest",
+    risk: "night",
+    level: 77,
+    lat: 47.4978,
+    lng: 19.0649,
+    name: { ko: "루인바 거리 야간 귀가", en: "Ruin-bar district night return" },
+    area: { ko: "유대인지구", en: "Jewish Quarter" },
+    type: { ko: "야간 번화가·바·골목", en: "Nightlife, bars, and lanes" },
+    time: { ko: "밤~새벽", en: "Night to early morning" },
+    pattern: { ko: "술자리 후 결제 확인과 길찾기를 동시에 하면 휴대폰과 카드가 오래 노출돼요.", en: "After drinks, checking payments and directions together exposes phones and cards for too long." },
+    action: { ko: "가게를 나가기 전 택시 앱 목적지를 저장하고, 골목에서는 결제 앱을 열어두지 않아요.", en: "Before leaving, save the ride-app destination and avoid keeping payment apps open in lanes." },
+    after: { ko: "불안하면 골목에서 멈춰 설명하지 말고 큰길이나 영업 중인 매장으로 바로 이동해요.", en: "If uneasy, do not stop to explain in lanes; move to a main street or open business." },
+    tags: ["night", "phone", "scam"],
+    source: { ko: "FCDO 헝가리 야간·축제 이동 주의 안내", en: "FCDO Hungary night and festival movement guidance" }
+  },
+  {
+    id: "budapest-danube-view",
+    city: "budapest",
+    risk: "bag",
+    level: 72,
+    lat: 47.5021,
+    lng: 19.0437,
+    name: { ko: "다뉴브 강변 야경·사진 구간", en: "Danube riverside night-view photo route" },
+    area: { ko: "국회의사당·강변", en: "Parliament and riverside" },
+    type: { ko: "야경·강변 산책·사진", en: "Night view, riverside walk, and photos" },
+    time: { ko: "해질녘~밤", en: "Sunset to night" },
+    pattern: { ko: "삼각대, 카메라, 휴대폰을 번갈아 쓰면 가방이 바닥이나 벤치에 오래 놓여요.", en: "Tripod, camera, and phone swaps can leave bags on benches or ground for too long." },
+    action: { ko: "가방끈을 몸에 걸고 촬영하고, 강변 가장자리에서는 휴대폰 확인을 멈춰요.", en: "Shoot with bag straps on your body and pause phone checks near the river edge." },
+    after: { ko: "무언가 사라졌다면 강변을 따라 찾지 말고 밝은 대로 쪽에서 결제수단을 정리해요.", en: "If something disappears, do not search along the river; regroup on a lit boulevard and sort payment tools." },
+    tags: ["bag", "night", "photo"],
+    source: { ko: "FCDO 헝가리 소지품·야간 이동 주의 안내", en: "FCDO Hungary belongings and night-movement guidance" }
+  },
+  {
+    id: "mexicocity-airport-arrivals",
+    city: "mexicocity",
+    risk: "transit",
+    level: 82,
+    lat: 19.4363,
+    lng: -99.0721,
+    name: { ko: "멕시코시티 공항 도착·차량 이동", en: "Mexico City airport arrival and ride transfer" },
+    area: { ko: "베니토 후아레스 공항", en: "Benito Juarez International Airport" },
+    type: { ko: "공항·택시·캐리어 이동", en: "Airport, taxi, and luggage movement" },
+    time: { ko: "도착 직후·야간 항공편", en: "After arrival and late flights" },
+    pattern: { ko: "환전, 유심, 차량 호출이 겹치면 여권·지갑·휴대폰이 따로 움직이고 시야가 분산돼요.", en: "Exchange, SIM setup, and ride booking split attention across passport, wallet, and phone." },
+    action: { ko: "공식 차량이나 앱 호출을 먼저 정하고, 탑승 전 차량번호와 목적지를 동행자에게 공유해요.", en: "Choose official transport or app rides first, then share plate number and destination before boarding." },
+    after: { ko: "불편한 제안이 있으면 공항 내부 밝은 구역으로 돌아와 결제와 위치 공유를 다시 확인해요.", en: "If an offer feels wrong, return to a lit airport area and recheck payment and location sharing." },
+    tags: ["transit", "bag", "scam"],
+    source: { ko: "FCDO 멕시코 주요 도시·공항 이동 안전 안내", en: "FCDO Mexico major-city and airport-transfer safety guidance" }
+  },
+  {
+    id: "mexicocity-zocalo-historic",
+    city: "mexicocity",
+    risk: "pickpocket",
+    level: 79,
+    lat: 19.4326,
+    lng: -99.1332,
+    name: { ko: "소칼로·역사지구 보행", en: "Zocalo and historic-center walk" },
+    area: { ko: "센트로 이스토리코", en: "Centro Historico" },
+    type: { ko: "광장·상점가·사진 명소", en: "Plaza, shops, and photo zone" },
+    time: { ko: "낮 관광·행사 전후", en: "Day sightseeing and around events" },
+    pattern: { ko: "광장 사진, 노점, 길찾기가 겹치면 주머니와 작은 가방 위치를 놓치기 쉬워요.", en: "Plaza photos, street stalls, and navigation make pockets and small bags easy to lose track of." },
+    action: { ko: "사진 전 가방을 몸 앞으로 당기고, 노점 결제는 소액 현금만 따로 사용해요.", en: "Before photos, pull bags to the front and use only separated small cash at stalls." },
+    after: { ko: "분실이 의심되면 광장 한가운데서 오래 찾지 말고 카드 앱과 위치 기록부터 확인해요.", en: "If loss is suspected, do not search the plaza for long; check card apps and location history first." },
+    tags: ["pickpocket", "photo", "market"],
+    source: { ko: "FCDO 멕시코 주요 도시 공공장소 도난 안내", en: "FCDO Mexico public-place theft guidance for major cities" }
+  },
+  {
+    id: "mexicocity-metro-transfer",
+    city: "mexicocity",
+    risk: "transit",
+    level: 81,
+    lat: 19.4270,
+    lng: -99.1426,
+    name: { ko: "중심부 메트로 환승·혼잡 승강장", en: "Central metro transfer and crowded platforms" },
+    area: { ko: "도심 메트로", en: "Central metro network" },
+    type: { ko: "지하철·환승·승강장", en: "Metro, transfer, and platform" },
+    time: { ko: "출퇴근·저녁 이동", en: "Commute and evening movement" },
+    pattern: { ko: "혼잡 승강장에서 노선 확인과 탑승 압박이 겹치면 휴대폰과 지갑이 외부로 노출돼요.", en: "Crowded platforms and boarding pressure expose phones and wallets during route checks." },
+    action: { ko: "노선은 개찰구 전 확인하고, 탑승 중에는 백팩을 앞으로 돌리고 휴대폰을 짧게만 꺼내요.", en: "Check routes before gates, wear backpacks in front, and take phones out only briefly while riding." },
+    after: { ko: "의심 상황이면 다음 역 밝은 출구에서 내려 결제수단과 여권·숙소키를 확인해요.", en: "If suspicious, exit at a bright station area and check payment tools, passport, and room key." },
+    tags: ["transit", "pickpocket", "phone"],
+    source: { ko: "FCDO 멕시코 대중교통 소매치기·도난 주의", en: "FCDO Mexico public-transport pickpocketing and theft advice" }
+  },
+  {
+    id: "mexicocity-roma-condesa-night",
+    city: "mexicocity",
+    risk: "night",
+    level: 76,
+    lat: 19.4187,
+    lng: -99.1666,
+    name: { ko: "로마·콘데사 야간 귀가", en: "Roma and Condesa night return" },
+    area: { ko: "로마·콘데사", en: "Roma and Condesa" },
+    type: { ko: "식당가·바·주거 골목", en: "Restaurants, bars, and residential lanes" },
+    time: { ko: "저녁~늦은 밤", en: "Evening to late night" },
+    pattern: { ko: "식사 후 결제 확인, 차량 호출, 동행자 위치 공유가 늦어지면 판단이 분산돼요.", en: "After dinner, delayed payment checks, ride hailing, and location sharing split attention." },
+    action: { ko: "가게 안에서 차량을 확정하고, 탑승 전 번호판·기사명·목적지를 화면으로 대조해요.", en: "Confirm the ride inside the venue and match plate, driver name, and destination before boarding." },
+    after: { ko: "차량이나 길이 이상하면 설명을 길게 하지 말고 밝은 매장 앞에서 하차·재호출을 선택해요.", en: "If a ride or route feels wrong, keep explanations short and choose to exit or rebook near a bright business." },
+    tags: ["night", "transit", "phone"],
+    source: { ko: "FCDO 멕시코 도시 이동·택시 안전 주의", en: "FCDO Mexico urban transport and taxi-safety guidance" }
+  }
+];
+
+const coverageExpansionCount = supplementalSpots.length + latestExpansionSpots.length;
+
+spots.push(...supplementalSpots, ...latestExpansionSpots);
 
 const officialLinks = [
   { label: { ko: "외교부 해외안전여행", en: "Korean MOFA Safe Travel" }, url: "https://www.0404.go.kr/" },
@@ -1308,7 +1781,12 @@ const officialLinks = [
   { label: { ko: "영국 FCDO 여행 안전", en: "UK FCDO Travel Advice" }, url: "https://www.gov.uk/foreign-travel-advice" },
   { label: { ko: "Police.uk 소매치기 예방", en: "Police.uk Pickpocketing Prevention" }, url: "https://www.police.uk/cp/crime-prevention/personal-safety-how-to-stay-safe/pickpocketing/" },
   { label: { ko: "호주 Smartraveller 스캠 안내", en: "Smartraveller Scam Advice" }, url: "https://www.smartraveller.gov.au/before-you-go/safety/scams" },
-  { label: { ko: "미국 국무부 프랑스 안내", en: "U.S. State Department France Advisory" }, url: "https://travel.state.gov/en/international-travel/travel-advisories/france.html" }
+  { label: { ko: "미국 국무부 프랑스 안내", en: "U.S. State Department France Advisory" }, url: "https://travel.state.gov/en/international-travel/travel-advisories/france.html" },
+  { label: { ko: "FCDO 포르투갈 안전", en: "FCDO Portugal Safety" }, url: "https://www.gov.uk/foreign-travel-advice/portugal/safety-and-security" },
+  { label: { ko: "FCDO 그리스 안전", en: "FCDO Greece Safety" }, url: "https://www.gov.uk/foreign-travel-advice/greece/safety-and-security" },
+  { label: { ko: "FCDO 체코 안전", en: "FCDO Czechia Safety" }, url: "https://www.gov.uk/foreign-travel-advice/czechia/safety-and-security" },
+  { label: { ko: "FCDO 헝가리 안전", en: "FCDO Hungary Safety" }, url: "https://www.gov.uk/foreign-travel-advice/hungary/safety-and-security" },
+  { label: { ko: "FCDO 멕시코 안전", en: "FCDO Mexico Safety" }, url: "https://www.gov.uk/foreign-travel-advice/mexico/safety-and-security" }
 ];
 
 const panicSteps = [
@@ -2073,7 +2551,7 @@ function renderMapPanel() {
       <div>
         <h1>${tr("mapFirstTitle")}</h1>
         <p>${tr("mapFirstDesc")}</p>
-        <span class="update-pill">${tr("latestUpdateDate")} · ${tr("expandedSpotLabel")} +${supplementalSpots.length}</span>
+        <span class="update-pill">${tr("latestUpdateDate")} · ${tr("expandedSpotLabel")} +${coverageExpansionCount}</span>
       </div>
       <div class="sheet-head-actions">
         <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
@@ -2589,7 +3067,7 @@ function renderLatestUpdate(list) {
       </div>
       <div class="update-metrics">
         <span>${tr("updateSourceBadge")}</span>
-        <strong>${tr("expandedSpotLabel")} +${supplementalSpots.length}</strong>
+        <strong>${tr("expandedSpotLabel")} +${coverageExpansionCount}</strong>
         <em>${cityCount} ${state.lang === "ko" ? "도시" : "cities"} · ${topRisks.map((item) => `${riskEmoji(item.key)} ${riskLabel(item.key)}`).join(" · ")}</em>
       </div>
     </div>
