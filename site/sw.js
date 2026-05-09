@@ -1,4 +1,4 @@
-const CACHE_NAME = "saferoute-v22-sibling";
+const CACHE_NAME = "saferoute-v23-tripmarking-icon";
 const LOCAL_ASSETS = [
   "/",
   "/assets/styles.css?v=20260509-sibling1",
@@ -10,7 +10,7 @@ const LOCAL_ASSETS = [
   "/assets/vendor/leaflet/images/marker-icon.png",
   "/assets/vendor/leaflet/images/marker-icon-2x.png",
   "/assets/vendor/leaflet/images/marker-shadow.png",
-  "/assets/icon.svg",
+  "/assets/icon.svg?v=20260509-tripmarking1",
   "/manifest.webmanifest"
 ];
 
