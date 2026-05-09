@@ -33,7 +33,7 @@ export async function onRequestPost({ request, env }) {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')
   `).bind(
     id,
-    "saferoute",
+    "tripmarking",
     kind,
     message,
     cleanText(body.contact, 180),

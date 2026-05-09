@@ -1,8 +1,8 @@
 const dictionary = {
   ko: {
-    brand: "세이프루트",
+    brand: "트립마킹",
     tagline: "여행자 주의 지도",
-    title: "세이프루트 - 해외여행 도난·스캠 주의 지도",
+    title: "트립마킹 - 해외여행 도난·스캠 주의 지도",
     description: "한국인 해외여행자를 위한 소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠 주의 지도와 현장 대처 가이드.",
     mapPanelTitle: "지금 조심할 여행 스팟",
     mapPanelDesc: "소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠을 장소별 행동요령으로 봐요.",
@@ -183,9 +183,9 @@ const dictionary = {
     loopPanic: "대처 순서 보기"
   },
   en: {
-    brand: "SafeRoute",
+    brand: "TripMarking",
     tagline: "Traveler risk map",
-    title: "SafeRoute - Travel Theft and Scam Risk Map",
+    title: "TripMarking - Travel Theft and Scam Risk Map",
     description: "A map for Korean travelers to check pickpocketing, phone snatching, bag theft, tourist scams, and what to do on the spot.",
     mapPanelTitle: "Travel Spots To Watch Now",
     mapPanelDesc: "Check pickpocketing, phone snatching, bag theft, and tourist scams with simple on-site actions.",
@@ -482,9 +482,9 @@ const riskTypes = [
 
 const reportTypes = riskTypes.filter((risk) => risk.key !== "all");
 const allowedReportKeys = new Set(reportTypes.map((risk) => risk.key));
-const reportClientStorageKey = "saferoute:reportClientId";
-const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://saferoute.kr/api/reports" : "/api/reports";
-const feedbackApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://saferoute.kr/api/feedback" : "/api/feedback";
+const reportClientStorageKey = "tripmarking:reportClientId";
+const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://tripmarking.com/api/reports" : "/api/reports";
+const feedbackApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://tripmarking.com/api/feedback" : "/api/feedback";
 const reportSyncIntervalMs = 2000;
 const reportRetryIntervalMs = 15000;
 const reportClientId = readStableClientId(reportClientStorageKey);
@@ -562,7 +562,7 @@ const spots = [
     time: { ko: "해질녘~야간", en: "Sunset to night" },
     pattern: { ko: "짐을 의자 뒤나 모래 위에 두고 물건을 보는 순간 가방·휴대폰이 사라질 수 있어요.", en: "Bags or phones can disappear when left behind chairs or on sand while distracted." },
     action: { ko: "가방끈을 다리나 의자에 걸고, 테이블 위 휴대폰은 내려놓지 않아요.", en: "Loop bag straps around your leg or chair and never leave the phone on the table." },
-    after: { ko: "위치 추적보다 카드 정지와 숙소 복귀 동선을 먼저 잡아요.", en: "Prioritize card freezing and a safe route back before chasing location tracking." },
+    after: { ko: "위치 추적보다 카드 정지와 숙소 복귀 동선을 먼저 잡아요.", en: "Prioritize card freezing and a safe way back before chasing location tracking." },
     tags: ["bag", "phone", "night"],
     source: { ko: "바르셀로나 시청 여행자 안전 안내", en: "Barcelona City Council traveler safety advice" }
   },
@@ -1100,13 +1100,13 @@ const state = {
   query: "",
   selectedId: "",
   userPosition: null,
-  saved: readJson("saferoute:saved", []),
-  recent: readJson("saferoute:recent", []),
-  viewed: readJson("saferoute:viewed", []),
-  incident: readJson("saferoute:incident", {}),
-  drill: readJson("saferoute:drill", {}),
-  checks: readJson("saferoute:checks", {}),
-  reports: normalizeReports(readJson("saferoute:reports", []))
+  saved: readJson("tripmarking:saved", []),
+  recent: readJson("tripmarking:recent", []),
+  viewed: readJson("tripmarking:viewed", []),
+  incident: readJson("tripmarking:incident", {}),
+  drill: readJson("tripmarking:drill", {}),
+  checks: readJson("tripmarking:checks", {}),
+  reports: normalizeReports(readJson("tripmarking:reports", []))
 };
 
 const riskByKey = new Map(riskTypes.map((risk) => [risk.key, risk]));
@@ -1453,7 +1453,7 @@ function bindEvents() {
     const check = event.target.closest("[data-check]");
     if (check) {
       state.checks[check.dataset.check] = !state.checks[check.dataset.check];
-      writeJson("saferoute:checks", state.checks);
+      writeJson("tripmarking:checks", state.checks);
       renderSheet();
       return;
     }
@@ -1485,7 +1485,7 @@ function bindEvents() {
     const drillAnswer = event.target.closest("[data-drill-answer]");
     if (drillAnswer) {
       state.drill[drillAnswer.dataset.drill] = drillAnswer.dataset.drillAnswer;
-      writeJson("saferoute:drill", state.drill);
+      writeJson("tripmarking:drill", state.drill);
       renderSheet();
       return;
     }
@@ -1567,7 +1567,7 @@ function focusSpotList() {
 
 function toggleLanguage() {
   state.lang = state.lang === "ko" ? "en" : "ko";
-  writeJson("saferoute:lang", state.lang);
+  writeJson("tripmarking:lang", state.lang);
   applyLanguage();
   setBaseMapLanguage(state.lang);
   renderQuickRail();
@@ -2270,20 +2270,20 @@ function renderReportFeed(reports) {
 
 function siblingCopy(key) {
   const ko = {
-    kicker: "세이프루트 패밀리",
+    kicker: "트립마킹 패밀리",
     title: "스미맵",
     desc: "일본에서 충전, 화장실, 쉬기, 비 피하기, 한국어 대응처럼 생활 중 바로 필요한 장소 신호를 사용자 제보로 빠르게 확인하는 형제 지도입니다.",
     badge: "일본 생활 제보 지도",
-    note: "세이프루트가 해외 치안 주의와 대처 루틴을 맡고, 스미맵은 일본 생활 편의 신호를 맡습니다.",
+    note: "트립마킹이 해외 치안 주의와 대처 루틴을 맡고, 스미맵은 일본 생활 편의 신호를 맡습니다.",
     cta: "스미맵 열기",
     close: "닫기"
   };
   const en = {
-    kicker: "SafeRoute Family",
+    kicker: "TripMarking Family",
     title: "Sumimap",
     desc: "A sibling map for Korean users in Japan: charging, restrooms, short rest spots, rain shelter, Korean-language support, and comfort signals from user reports.",
     badge: "Japan daily-life report map",
-    note: "SafeRoute handles travel safety signals and response routines; Sumimap handles everyday living spots in Japan.",
+    note: "TripMarking handles travel safety signals and response routines; Sumimap handles everyday living spots in Japan.",
     cta: "Open Sumimap",
     close: "Close"
   };
@@ -2432,7 +2432,7 @@ async function submitFeedback(form) {
   submit.disabled = true;
   const payload = {
     id: createId(),
-    app: "saferoute",
+    app: "tripmarking",
     kind,
     message: message.slice(0, 1200),
     contact: contact.slice(0, 180),
@@ -2465,7 +2465,7 @@ async function submitFeedback(form) {
 }
 
 function saveLocalFeedback(payload) {
-  const key = "saferoute:feedbackOutbox";
+  const key = "tripmarking:feedbackOutbox";
   const current = Array.isArray(readJson(key, [])) ? readJson(key, []) : [];
   writeJson(key, [payload, ...current].slice(0, 20));
 }
@@ -3106,7 +3106,7 @@ function invalidateReports() {
 }
 
 function persistReports() {
-  writeJson("saferoute:reports", state.reports.slice(0, 160));
+  writeJson("tripmarking:reports", state.reports.slice(0, 160));
 }
 
 function snapshotSpotForReport(spot) {
@@ -3129,8 +3129,8 @@ function snapshotSpotForReport(spot) {
 function rememberSpot(id) {
   state.recent = [id, ...state.recent.filter((item) => item !== id)].slice(0, 18);
   state.viewed = [id, ...state.viewed.filter((item) => item !== id)].slice(0, 120);
-  writeJson("saferoute:recent", state.recent);
-  writeJson("saferoute:viewed", state.viewed);
+  writeJson("tripmarking:recent", state.recent);
+  writeJson("tripmarking:viewed", state.viewed);
 }
 
 function selectSpot(id, move) {
@@ -3242,7 +3242,7 @@ function toggleSave(id) {
     showToast(tr("savedToast"));
   }
   state.saved = [...new Set(state.saved)].slice(0, 60);
-  writeJson("saferoute:saved", state.saved);
+  writeJson("tripmarking:saved", state.saved);
   renderSheet();
 }
 
@@ -3291,13 +3291,13 @@ function saveIncidentNote(form) {
     items: String(data.get("items") || "").trim(),
     memo: String(data.get("memo") || "").trim()
   };
-  writeJson("saferoute:incident", state.incident);
+  writeJson("tripmarking:incident", state.incident);
   showToast(tr("incidentSaved"));
 }
 
 function clearIncidentNote() {
   state.incident = {};
-  writeJson("saferoute:incident", state.incident);
+  writeJson("tripmarking:incident", state.incident);
   renderSheet();
   showToast(tr("incidentCleared"));
 }
@@ -3428,7 +3428,7 @@ function tr(key) {
 }
 
 function readLanguage() {
-  const value = readJson("saferoute:lang", "ko");
+  const value = readJson("tripmarking:lang", "ko");
   return value === "en" ? "en" : "ko";
 }
 

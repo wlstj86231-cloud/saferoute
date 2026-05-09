@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>SafeRoute</title>
-    <link>https://saferoute.kr/</link>
+    <title>TripMarking</title>
+    <link>https://tripmarking.com/</link>
     <description>Travel theft and scam prevention map for Korean travelers.</description>
     <language>ko-KR</language>
     <lastBuildDate>Fri, 08 May 2026 00:00:00 +0900</lastBuildDate>
     <item>
-      <title>SafeRoute Travel Safety Map</title>
-      <link>https://saferoute.kr/</link>
-      <guid>https://saferoute.kr/</guid>
+      <title>TripMarking Travel Safety Map</title>
+      <link>https://tripmarking.com/</link>
+      <guid>https://tripmarking.com/</guid>
       <pubDate>Fri, 08 May 2026 00:00:00 +0900</pubDate>
       <description>Mobile-first travel map for theft, phone snatch, bag safety, and tourist scam prevention scenes.</description>
     </item>
     <item>
       <title>Travel Theft and Scam Prevention Guide</title>
-      <link>https://saferoute.kr/guide/</link>
-      <guid>https://saferoute.kr/guide/</guid>
+      <link>https://tripmarking.com/guide/</link>
+      <guid>https://tripmarking.com/guide/</guid>
       <pubDate>Fri, 08 May 2026 00:00:00 +0900</pubDate>
       <description>Practical checklist for stations, photo spots, cafes, night movement, and first response after a travel theft.</description>
     </item>
     <item>
-      <title>SafeRoute Field Notes</title>
-      <link>https://saferoute.kr/field-notes/</link>
-      <guid>https://saferoute.kr/field-notes/</guid>
+      <title>TripMarking Field Notes</title>
+      <link>https://tripmarking.com/field-notes/</link>
+      <guid>https://tripmarking.com/field-notes/</guid>
       <pubDate>Fri, 08 May 2026 00:00:00 +0900</pubDate>
-      <description>How SafeRoute interprets theft and scam risk through hands, attention, fatigue, approach proposals, and first-response routines.</description>
+      <description>How TripMarking interprets theft and scam risk through hands, attention, fatigue, approach proposals, and first-response routines.</description>
     </item>
     <item>
       <title>City Risk Context</title>
-      <link>https://saferoute.kr/cities/</link>
-      <guid>https://saferoute.kr/cities/</guid>
+      <link>https://tripmarking.com/cities/</link>
+      <guid>https://tripmarking.com/cities/</guid>
       <pubDate>Fri, 08 May 2026 00:00:00 +0900</pubDate>
       <description>City-level travel safety context for Barcelona, Paris, Rome, London, Bangkok, Ho Chi Minh City, Tokyo, New York, Istanbul, and Amsterdam.</description>
     </item>
     <item>
-      <title>About SafeRoute</title>
-      <link>https://saferoute.kr/about/</link>
-      <guid>https://saferoute.kr/about/</guid>
+      <title>About TripMarking</title>
+      <link>https://tripmarking.com/about/</link>
+      <guid>https://tripmarking.com/about/</guid>
       <pubDate>Fri, 08 May 2026 00:00:00 +0900</pubDate>
-      <description>SafeRoute service purpose, editorial boundaries, and operating principles.</description>
+      <description>TripMarking service purpose, editorial boundaries, and operating principles.</description>
     </item>
   </channel>
 </rss>

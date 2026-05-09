@@ -1,6 +1,6 @@
 {
-  "name": "세이프루트",
-  "short_name": "세이프루트",
+  "name": "트립마킹",
+  "short_name": "트립마킹",
   "description": "해외여행 도난·스캠 주의 지도",
   "start_url": "/",
   "display": "standalone",
@@ -8,7 +8,7 @@
   "theme_color": "#f5f2e9",
   "icons": [
     {
-      "src": "/assets/icon.svg?v=20260509-tripmarking1",
+      "src": "/assets/icon.svg?v=20260509-tripmarking2",
       "sizes": "any",
       "type": "image/svg+xml"
     }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://saferoute.kr/</loc><lastmod>2026-05-08</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://saferoute.kr/guide/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://saferoute.kr/field-notes/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://saferoute.kr/cities/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.82</priority></url>
-  <url><loc>https://saferoute.kr/about/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://saferoute.kr/privacy/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://saferoute.kr/contact/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://tripmarking.com/</loc><lastmod>2026-05-08</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://tripmarking.com/guide/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://tripmarking.com/field-notes/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tripmarking.com/cities/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.82</priority></url>
+  <url><loc>https://tripmarking.com/about/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://tripmarking.com/privacy/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://tripmarking.com/contact/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

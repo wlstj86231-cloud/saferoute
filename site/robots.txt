@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saferoute.kr/sitemap.xml
+Sitemap: https://tripmarking.com/sitemap.xml
