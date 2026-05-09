@@ -484,7 +484,7 @@ const reportTypes = riskTypes.filter((risk) => risk.key !== "all");
 const allowedReportKeys = new Set(reportTypes.map((risk) => risk.key));
 const reportClientStorageKey = "saferoute:reportClientId";
 const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://saferoute.kr/api/reports" : "/api/reports";
-const reportSyncIntervalMs = 3500;
+const reportSyncIntervalMs = 2000;
 const reportRetryIntervalMs = 15000;
 const reportClientId = readStableClientId(reportClientStorageKey);
 
