@@ -1128,12 +1128,18 @@ let markerLayer;
 let userMarker;
 let baseMapLayer;
 const markers = new Map();
+const markerHtmlCache = new Map();
 let sheetPointerStartY = null;
 let sheetPointerStartX = null;
 let sheetPointerStartMode = "";
 let sheetPointerMoved = false;
 let ignoreNextSheetToggleClick = false;
 let reportVersion = 0;
+let filteredSpotsCacheKey = "";
+let filteredSpotsCache = [];
+let reportDerivedVersion = -1;
+let visibleReportsBySpot = new Map();
+let liveRiskBySpot = new Map();
 let reportSyncTimer = null;
 let reportSyncInFlight = false;
 let reportSyncAvailable = true;
@@ -1163,16 +1169,29 @@ function init() {
   renderMarkers();
   refreshStatus();
   registerServiceWorkerWhenIdle();
-  startReportSync();
+  runAfterFirstPaint(startReportSync, 1200, 2200);
 }
 
 function registerServiceWorkerWhenIdle() {
   if (!("serviceWorker" in navigator)) return;
   const register = () => navigator.serviceWorker.register("/sw.js").catch(() => {});
+  runAfterFirstPaint(register, 1600, 3500);
+}
+
+function runWhenIdle(callback, timeout = 2000) {
   if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(register, { timeout: 3500 });
+    window.requestIdleCallback(callback, { timeout });
   } else {
-    window.setTimeout(register, 1600);
+    window.setTimeout(callback, Math.min(timeout, 1600));
+  }
+}
+
+function runAfterFirstPaint(callback, delay = 800, idleTimeout = 2000) {
+  const schedule = () => window.setTimeout(() => runWhenIdle(callback, idleTimeout), delay);
+  if ("requestAnimationFrame" in window) {
+    window.requestAnimationFrame(() => window.requestAnimationFrame(schedule));
+  } else {
+    schedule();
   }
 }
 
@@ -2446,9 +2465,24 @@ function routeQueue(list, selected) {
 }
 
 function filteredSpots() {
+  const positionKey = state.userPosition
+    ? `${state.userPosition.lat.toFixed(3)},${state.userPosition.lng.toFixed(3)}`
+    : "";
+  const cacheKey = [
+    state.lang,
+    state.city,
+    state.filter,
+    state.scenario,
+    state.query,
+    positionKey,
+    reportVersion
+  ].join("|");
+  if (cacheKey === filteredSpotsCacheKey) return filteredSpotsCache;
+
   const query = state.query.toLowerCase();
   const scenario = scenarios.find((item) => item.key === state.scenario);
-  return spots
+  filteredSpotsCacheKey = cacheKey;
+  filteredSpotsCache = spots
     .filter((spot) => !state.city || spot.city === state.city)
     .filter((spot) => {
       const liveRisk = getLiveRisk(spot);
@@ -2483,6 +2517,7 @@ function filteredSpots() {
       }
       return (b.level + getVisibleReportsForSpot(b.id).length * 3) - (a.level + getVisibleReportsForSpot(a.id).length * 3);
     });
+  return filteredSpotsCache;
 }
 
 function syncSelected() {
@@ -2918,19 +2953,40 @@ async function deleteRemoteReport(reportId) {
 }
 
 function getVisibleReportsForSpot(spotId) {
-  return state.reports.filter((report) => report.spotId === spotId && !isHiddenReport(report));
+  ensureReportDerivedCache();
+  return visibleReportsBySpot.get(spotId) || [];
 }
 
 function getLiveRisk(spot) {
+  ensureReportDerivedCache();
+  if (liveRiskBySpot.has(spot.id)) return liveRiskBySpot.get(spot.id);
   const reports = getVisibleReportsForSpot(spot.id);
-  if (!reports.length) return spot.risk;
+  if (!reports.length) {
+    liveRiskBySpot.set(spot.id, spot.risk);
+    return spot.risk;
+  }
   const counts = new Map();
   reports.forEach((report) => {
     report.risks.forEach((risk) => counts.set(risk, (counts.get(risk) || 0) + 1 + report.agrees - report.disputes));
   });
-  return [...counts.entries()]
+  const risk = [...counts.entries()]
     .filter(([risk]) => allowedReportKeys.has(risk))
     .sort((a, b) => b[1] - a[1])[0]?.[0] || spot.risk;
+  liveRiskBySpot.set(spot.id, risk);
+  return risk;
+}
+
+function ensureReportDerivedCache() {
+  if (reportDerivedVersion === reportVersion) return;
+  reportDerivedVersion = reportVersion;
+  visibleReportsBySpot = new Map();
+  liveRiskBySpot = new Map();
+  state.reports.forEach((report) => {
+    if (isHiddenReport(report)) return;
+    const list = visibleReportsBySpot.get(report.spotId) || [];
+    list.push(report);
+    visibleReportsBySpot.set(report.spotId, list);
+  });
 }
 
 function isHiddenReport(report) {
@@ -2943,6 +2999,8 @@ function canDeleteReport(report) {
 
 function invalidateReports() {
   reportVersion += 1;
+  reportDerivedVersion = -1;
+  filteredSpotsCacheKey = "";
 }
 
 function persistReports() {
@@ -2993,6 +3051,7 @@ function renderMarkers() {
     if (!visible.has(id)) {
       markerLayer.removeLayer(marker);
       markers.delete(id);
+      markerHtmlCache.delete(id);
     }
   });
   list.forEach((spot) => {
@@ -3000,7 +3059,10 @@ function renderMarkers() {
     const html = `<div class="sum-marker marker-${liveRisk} ${spot.id === state.selectedId ? "marker-selected" : ""}"><span>${riskEmoji(liveRisk)}</span></div>`;
     const existing = markers.get(spot.id);
     if (existing) {
-      existing.setIcon(markerIcon(html));
+      if (markerHtmlCache.get(spot.id) !== html) {
+        existing.setIcon(markerIcon(html));
+        markerHtmlCache.set(spot.id, html);
+      }
       return;
     }
     const marker = L.marker([spot.lat, spot.lng], { icon: markerIcon(html), keyboard: true });
@@ -3011,6 +3073,7 @@ function renderMarkers() {
     });
     marker.addTo(markerLayer);
     markers.set(spot.id, marker);
+    markerHtmlCache.set(spot.id, html);
   });
 }
 
