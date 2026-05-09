@@ -148,6 +148,11 @@ const dictionary = {
     cityBriefTitle: "도시 안전 브리핑",
     compareTitle: "도시별 위험 비교",
     compareDesc: "여행 전에는 도시별 평균 위험도와 스팟 수를 훑어보면 동선 감각이 빨리 잡혀요.",
+    latestUpdateTitle: "최신 보강 요약",
+    latestUpdateDesc: "2026년 5월 공식 여행안전 안내와 반복적으로 알려진 여행자 피해 장면을 기준으로 도시별 확인 지점을 늘렸어요.",
+    latestUpdateDate: "2026.05 갱신",
+    updateSourceBadge: "공식 안내 기반",
+    expandedSpotLabel: "추가 스팟",
     averageRisk: "평균 위험",
     focusTime: "주의 시간",
     strongestSignals: "강한 신호",
@@ -342,6 +347,11 @@ const dictionary = {
     cityBriefTitle: "City safety brief",
     compareTitle: "Compare city risk",
     compareDesc: "Before a trip, scanning average risk and spot count helps you understand the route faster.",
+    latestUpdateTitle: "Latest coverage update",
+    latestUpdateDesc: "Coverage was expanded in May 2026 using official travel-safety guidance and repeatedly reported traveler-risk patterns.",
+    latestUpdateDate: "Updated 2026.05",
+    updateSourceBadge: "Official guidance based",
+    expandedSpotLabel: "Added spots",
     averageRisk: "Average risk",
     focusTime: "Watch time",
     strongestSignals: "Strong signals",
@@ -947,11 +957,358 @@ const spots = [
   }
 ];
 
+const supplementalSpots = [
+  {
+    id: "barcelona-sants-station",
+    city: "barcelona",
+    risk: "transit",
+    level: 83,
+    lat: 41.3791,
+    lng: 2.1400,
+    name: { ko: "산츠역 장거리 열차 환승", en: "Barcelona Sants long-distance transfer" },
+    area: { ko: "산츠역", en: "Sants Station" },
+    type: { ko: "기차역·캐리어 이동", en: "Rail station and luggage movement" },
+    time: { ko: "출발 전·도착 직후", en: "Before departure and right after arrival" },
+    pattern: { ko: "전광판, 승강장, 캐리어, 표 확인이 겹치면 크로스백과 여권 파우치가 몸 뒤로 밀리기 쉬워요.", en: "Boards, platforms, luggage, and ticket checks can push crossbody bags and passport pouches behind you." },
+    action: { ko: "플랫폼을 찾기 전에 여권·지갑을 안쪽으로 넣고, 캐리어 위 가방은 손목에 한 번 감아요.", en: "Before finding the platform, move passport and wallet inside and loop the bag on your luggage around your wrist." },
+    after: { ko: "분실이 의심되면 열차 탑승보다 카드 정지, 경찰 신고서, 예약 변경 가능성을 먼저 정리해요.", en: "If loss is suspected, sort card freezing, police report, and rebooking before boarding." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "FCDO 스페인 도난 신고·대중교통 주의 안내", en: "FCDO Spain theft reporting and transit safety advice" }
+  },
+  {
+    id: "barcelona-gothic-quarter-lanes",
+    city: "barcelona",
+    risk: "pickpocket",
+    level: 80,
+    lat: 41.3839,
+    lng: 2.1763,
+    name: { ko: "고딕지구 좁은 골목 동선", en: "Gothic Quarter narrow lanes" },
+    area: { ko: "바리 고틱", en: "Barri Gotic" },
+    type: { ko: "구시가지 골목·상점가", en: "Old-town lanes and shops" },
+    time: { ko: "오후 산책·저녁 식사 전후", en: "Afternoon walk and around dinner" },
+    pattern: { ko: "길이 좁아 몸이 스치기 쉽고, 가게 간판과 골목 사진을 보느라 가방 지퍼 확인이 느려져요.", en: "Narrow lanes make close contact easy, while shop signs and photos slow bag checks." },
+    action: { ko: "골목으로 들어가기 전 가방 지퍼를 몸쪽으로 돌리고, 사진은 벽에 붙어 잠깐 멈춰서 찍어요.", en: "Before entering lanes, turn zippers toward your body and take photos while briefly stopped by a wall." },
+    after: { ko: "동선을 계속 헤매지 말고 넓은 광장이나 상점 안에서 소지품과 결제수단을 다시 확인해요.", en: "Do not keep wandering; regroup in a wider plaza or shop and recheck belongings and payment tools." },
+    tags: ["pickpocket", "photo", "crowd"],
+    source: { ko: "공식 여행안전 안내와 구시가지 혼잡 패턴", en: "Official travel safety guidance and old-town crowd patterns" }
+  },
+  {
+    id: "paris-gare-du-nord-rer",
+    city: "paris",
+    risk: "transit",
+    level: 87,
+    lat: 48.8809,
+    lng: 2.3553,
+    name: { ko: "북역·RER B 환승 구간", en: "Gare du Nord and RER B transfer" },
+    area: { ko: "파리 북역", en: "Gare du Nord" },
+    type: { ko: "공항·기차·지하철 환승", en: "Airport, rail, and metro transfer" },
+    time: { ko: "공항 이동·유로스타 도착 직후", en: "Airport transfer and after Eurostar arrival" },
+    pattern: { ko: "짐이 많고 노선 확인이 급할 때 여권, 현금, 휴대폰이 따로 움직이며 노출돼요.", en: "With luggage and urgent line checks, passport, cash, and phone move separately and become exposed." },
+    action: { ko: "개찰구 전 노선을 정하고, 백팩은 앞으로 돌린 뒤 벽 쪽에서 폰을 짧게 확인해요.", en: "Decide the line before gates, move backpack to the front, and check the phone briefly wall-side." },
+    after: { ko: "플랫폼에서 추격하지 말고 다음 안전 지점에서 카드 정지와 경찰 신고 준비를 해요.", en: "Do not chase on platforms; prepare card freezing and police reporting at the next safe point." },
+    tags: ["transit", "pickpocket", "bag"],
+    source: { ko: "FCDO 프랑스 지하철·RER 소매치기 안내", en: "FCDO France metro and RER pickpocket advice" }
+  },
+  {
+    id: "paris-louvre-tuileries",
+    city: "paris",
+    risk: "pickpocket",
+    level: 82,
+    lat: 48.8606,
+    lng: 2.3376,
+    name: { ko: "루브르·튈르리 정원 입장 동선", en: "Louvre and Tuileries entry route" },
+    area: { ko: "루브르 주변", en: "Around the Louvre" },
+    type: { ko: "박물관·정원·대기줄", en: "Museum, gardens, and queue" },
+    time: { ko: "개장 직후·폐장 전", en: "Right after opening and before closing" },
+    pattern: { ko: "입장권, 보안검색, 사진이 겹치면 가방이 열린 채 오래 유지될 수 있어요.", en: "Tickets, security checks, and photos can leave bags open for too long." },
+    action: { ko: "입장권은 한 명만 열고, 나머지는 지퍼와 여권 위치를 확인하는 역할을 나눠요.", en: "Have one person open tickets while others check zippers and passport location." },
+    after: { ko: "입장 전 피해가 생기면 예약보다 결제수단과 여권 피해 범위를 먼저 줄여요.", en: "If loss happens before entry, reduce card and passport damage before focusing on reservations." },
+    tags: ["pickpocket", "queue", "photo"],
+    source: { ko: "미국 국무부 프랑스 혼잡 관광지 도난 주의", en: "U.S. State Department France crowded tourist theft advice" }
+  },
+  {
+    id: "rome-colosseum-queue",
+    city: "rome",
+    risk: "pickpocket",
+    level: 83,
+    lat: 41.8902,
+    lng: 12.4922,
+    name: { ko: "콜로세움 입장 대기·사진 구간", en: "Colosseum queue and photo zone" },
+    area: { ko: "콜로세움·포로 로마노", en: "Colosseum and Roman Forum" },
+    type: { ko: "유적지·대기줄·사진 명소", en: "Historic site, queue, and photo spot" },
+    time: { ko: "오전 입장 피크·해질녘", en: "Morning entry peak and sunset" },
+    pattern: { ko: "사진, 입장권, 보안검색이 겹치며 가방과 주머니가 뒤로 밀려요.", en: "Photos, tickets, and security checks can push bags and pockets behind attention." },
+    action: { ko: "사진 전 여권과 지갑을 안쪽으로 넣고, 줄에서는 백팩을 앞쪽으로 돌려요.", en: "Before photos, move passport and wallet inside; in line, wear backpacks in front." },
+    after: { ko: "티켓 재구매보다 카드 정지와 경찰 신고서 준비를 먼저 해 피해 범위를 줄여요.", en: "Before buying replacement tickets, freeze cards and prepare a police report to reduce damage." },
+    tags: ["pickpocket", "queue", "photo"],
+    source: { ko: "미국 국무부 이탈리아 관광지·대중교통 도난 안내", en: "U.S. State Department Italy tourist-site and transit theft advice" }
+  },
+  {
+    id: "rome-bus-64-vatican",
+    city: "rome",
+    risk: "transit",
+    level: 86,
+    lat: 41.9020,
+    lng: 12.4750,
+    name: { ko: "로마 중심부 관광 버스 동선", en: "Central Rome tourist bus routes" },
+    area: { ko: "테르미니·바티칸 연결권", en: "Termini to Vatican corridor" },
+    type: { ko: "버스·정류장·관광 환승", en: "Bus, stop, and tourist transfer" },
+    time: { ko: "오전 이동·폐장 후 귀가", en: "Morning transfers and after closing" },
+    pattern: { ko: "혼잡 버스에서 승하차 직전 몸이 밀리고, 크로스백과 뒷주머니가 노출돼요.", en: "On crowded buses, boarding and alighting push bodies together and expose bags and back pockets." },
+    action: { ko: "탑승 전 표와 목적지를 확인하고, 버스 안에서는 백팩을 앞으로 돌린 채 문가에 오래 서지 않아요.", en: "Check ticket and destination before boarding; inside, wear backpack front and avoid standing long by doors." },
+    after: { ko: "버스 안에서 찾으려 하지 말고 다음 정류장의 밝은 공간에서 피해 물품을 정리해요.", en: "Do not search inside the bus; regroup in a bright area at the next stop." },
+    tags: ["transit", "pickpocket", "crowd"],
+    source: { ko: "이탈리아 대중교통 소매치기 예방 안내", en: "Italy public transport pickpocket prevention guidance" }
+  },
+  {
+    id: "london-kings-cross-st-pancras",
+    city: "london",
+    risk: "transit",
+    level: 79,
+    lat: 51.5308,
+    lng: -0.1238,
+    name: { ko: "킹스크로스·세인트판크라스 환승", en: "King's Cross and St Pancras transfer" },
+    area: { ko: "런던 북중심 역권", en: "North-central London station area" },
+    type: { ko: "기차역·지하철·공항 이동", en: "Rail, Underground, and airport transfer" },
+    time: { ko: "출퇴근·유로스타 이동", en: "Commute and Eurostar transfer" },
+    pattern: { ko: "플랫폼, 지하철, 짐 보관, 택시 승강장을 오가며 여권과 지갑이 외부 주머니로 밀릴 수 있어요.", en: "Moving between platforms, Tube, luggage storage, and taxi stands can push passports and wallets into outer pockets." },
+    action: { ko: "역 안에서는 목적지를 정한 뒤 움직이고, 에스컬레이터 전후로 백팩을 앞으로 돌려요.", en: "Inside the station, decide destination before moving and wear backpacks front around escalators." },
+    after: { ko: "분실이 의심되면 개찰구를 넘기 전 역무원 구역에서 카드와 여권을 확인해요.", en: "If loss is suspected, check cards and passport near staff before crossing gates." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "영국 경찰·대중교통 소지품 안전 안내", en: "UK police and public transport belongings advice" }
+  },
+  {
+    id: "london-westminster-bridge",
+    city: "london",
+    risk: "phone",
+    level: 77,
+    lat: 51.5007,
+    lng: -0.1246,
+    name: { ko: "웨스트민스터 브리지 사진 동선", en: "Westminster Bridge photo route" },
+    area: { ko: "빅벤·런던아이 주변", en: "Big Ben and London Eye area" },
+    type: { ko: "다리·사진 명소·보행 혼잡", en: "Bridge, photo landmark, and crowd" },
+    time: { ko: "일몰 전후·주말", en: "Around sunset and weekends" },
+    pattern: { ko: "다리 위에서 폰을 높게 들고 사진을 찍으면 뒤쪽 가방과 도로 쪽 손이 동시에 노출돼요.", en: "Holding the phone high on the bridge exposes both rear bags and the street-side hand." },
+    action: { ko: "사진은 난간 안쪽에서 짧게 찍고, 이동하며 화면을 확대하지 않아요.", en: "Take photos briefly on the inner side of the rail and do not zoom while walking." },
+    after: { ko: "휴대폰을 빼앗겼다면 도로로 뛰지 말고 계정 잠금과 결제앱 차단을 먼저 해요.", en: "If a phone is snatched, do not run into the road; lock accounts and block payment apps first." },
+    tags: ["phone", "photo", "crowd"],
+    source: { ko: "영국 개인 안전·휴대폰 날치기 예방 기준", en: "UK personal safety and phone-snatch prevention guidance" }
+  },
+  {
+    id: "bangkok-sukhumvit-asok",
+    city: "bangkok",
+    risk: "night",
+    level: 76,
+    lat: 13.7376,
+    lng: 100.5600,
+    name: { ko: "수쿰윗·아속 야간 이동", en: "Sukhumvit and Asok night movement" },
+    area: { ko: "수쿰윗 중심부", en: "Central Sukhumvit" },
+    type: { ko: "BTS 환승·야간 번화가", en: "BTS transfer and nightlife area" },
+    time: { ko: "저녁 식사 후·늦은 밤", en: "After dinner and late night" },
+    pattern: { ko: "BTS 출구, 쇼핑몰, 술자리 이동이 겹치면 호출앱 확인 중 폰과 지갑이 오래 노출돼요.", en: "BTS exits, malls, and nightlife moves can expose phone and wallet while checking ride apps." },
+    action: { ko: "출구에서 목적지를 먼저 저장하고, 툭툭·택시 제안은 호출앱 가격과 비교한 뒤 결정해요.", en: "Save destination at the exit and compare tuk-tuk or taxi offers with app prices before deciding." },
+    after: { ko: "요금이나 동선이 이상하면 내리기 전 위치를 공유하고 밝은 호텔·몰 입구에서 정리해요.", en: "If fare or route feels wrong, share location before exiting and regroup at a bright hotel or mall entrance." },
+    tags: ["night", "scam", "transit"],
+    source: { ko: "FCDO 태국 귀중품·오픈 교통수단 주의 안내", en: "FCDO Thailand valuables and open-transport safety advice" }
+  },
+  {
+    id: "bangkok-suvarnabhumi-arrivals",
+    city: "bangkok",
+    risk: "scam",
+    level: 74,
+    lat: 13.6900,
+    lng: 100.7501,
+    name: { ko: "수완나품 공항 도착층 이동 제안", en: "Suvarnabhumi arrivals transport offers" },
+    area: { ko: "공항 도착층", en: "Airport arrivals" },
+    type: { ko: "공항·택시·호객", en: "Airport, taxi, and touting" },
+    time: { ko: "입국 직후·심야 도착", en: "Right after arrival and late-night arrivals" },
+    pattern: { ko: "피곤한 상태에서 유심, 환전, 택시 제안을 동시에 받으면 공식 승강장 확인이 흐려져요.", en: "When tired, SIM, exchange, and taxi offers can blur official pickup checks." },
+    action: { ko: "공식 택시·호출앱·숙소 픽업 중 하나만 정하고, 길 위 제안은 설명 없이 넘겨요.", en: "Choose one of official taxi, ride app, or hotel pickup and skip corridor offers without explaining." },
+    after: { ko: "요금 분쟁이 생기면 영수증, 차량번호, 위치 기록을 남기고 숙소 도착 후 정리해요.", en: "If fare dispute occurs, keep receipt, plate, and location history, then sort it after arriving safely." },
+    tags: ["scam", "transit", "tour"],
+    source: { ko: "FCDO 태국 택시·오픈 교통수단 주의 안내", en: "FCDO Thailand taxi and open-transport caution guidance" }
+  },
+  {
+    id: "hcm-nguyen-hue-walking",
+    city: "hochiminh",
+    risk: "phone",
+    level: 81,
+    lat: 10.7741,
+    lng: 106.7039,
+    name: { ko: "응우옌후에 보행광장", en: "Nguyen Hue Walking Street" },
+    area: { ko: "1군 중심부", en: "District 1 center" },
+    type: { ko: "보행광장·사진 명소", en: "Walking street and photo spot" },
+    time: { ko: "저녁·주말", en: "Evening and weekends" },
+    pattern: { ko: "광장 사진을 찍고 도로 쪽으로 이동하는 순간 휴대폰이 오토바이 접근에 노출될 수 있어요.", en: "While taking photos and moving toward roads, phones can be exposed to motorbike approaches." },
+    action: { ko: "사진은 광장 안쪽에서 짧게 찍고, 도로 가장자리에서는 폰을 가방 안에 넣어요.", en: "Take photos briefly inside the square and put the phone away near road edges." },
+    after: { ko: "날치기라면 쫓지 말고 계정 잠금, SIM 정지, 카드앱 로그아웃을 먼저 해요.", en: "If snatched, do not chase; lock accounts, suspend SIM, and log out payment apps first." },
+    tags: ["phone", "motorbike", "photo"],
+    source: { ko: "FCDO 베트남 오토바이 날치기·소매치기 안내", en: "FCDO Vietnam motorbike snatching and pickpocketing advice" }
+  },
+  {
+    id: "hcm-airport-taxi-arrivals",
+    city: "hochiminh",
+    risk: "scam",
+    level: 75,
+    lat: 10.8188,
+    lng: 106.6519,
+    name: { ko: "떤선녓 공항 도착층 택시 이동", en: "Tan Son Nhat arrivals taxi move" },
+    area: { ko: "공항 도착층", en: "Airport arrivals" },
+    type: { ko: "공항·택시·호출앱", en: "Airport, taxi, and ride app" },
+    time: { ko: "입국 직후·비 오는 날", en: "Right after arrival and rainy days" },
+    pattern: { ko: "호출앱 차량 확인 전에 말을 거는 사람이 생기면 차량번호와 목적지 확인이 흐려져요.", en: "Approaches before ride-app vehicle checks can blur plate and destination verification." },
+    action: { ko: "차량번호, 기사명, 앱 경로가 맞을 때만 탑승하고, 여권을 보증으로 맡기지 않아요.", en: "Enter only when plate, driver, and route match the app; never leave passport as a guarantee." },
+    after: { ko: "요금 문제가 있으면 영수증과 앱 기록을 캡처하고 숙소에서 차분히 신고 경로를 정리해요.", en: "If fare issues arise, capture receipt and app records, then sort reporting from lodging." },
+    tags: ["scam", "transit", "phone"],
+    source: { ko: "FCDO 베트남 공식 택시앱·교통 주의 안내", en: "FCDO Vietnam official taxi-app and transport advice" }
+  },
+  {
+    id: "tokyo-shibuya-crossing",
+    city: "tokyo",
+    risk: "bag",
+    level: 63,
+    lat: 35.6595,
+    lng: 139.7005,
+    name: { ko: "시부야 스크램블·하치코 주변", en: "Shibuya Scramble and Hachiko area" },
+    area: { ko: "시부야역 앞", en: "Shibuya Station front" },
+    type: { ko: "대형 교차로·사진 명소", en: "Major crossing and photo spot" },
+    time: { ko: "퇴근 시간·야간", en: "Commute time and night" },
+    pattern: { ko: "사진과 이동 방향 확인이 겹치면 쇼핑백, 교통카드, 휴대폰이 손에 흩어져요.", en: "Photos and route checks scatter shopping bags, transit card, and phone across hands." },
+    action: { ko: "횡단 중에는 촬영을 멈추고, 건너기 전 가방 지퍼와 카드 위치를 정리해요.", en: "Stop filming while crossing; before crossing, settle bag zippers and card position." },
+    after: { ko: "놓고 온 물건은 역무원·매장·마지막 결제 지점을 순서대로 확인해요.", en: "For misplaced items, check station staff, shops, and last payment point in order." },
+    tags: ["bag", "photo", "crowd"],
+    source: { ko: "일본 역·혼잡지 소지품 관리 기준", en: "Japan station and crowd belongings guidance" }
+  },
+  {
+    id: "tokyo-roppongi-night",
+    city: "tokyo",
+    risk: "night",
+    level: 73,
+    lat: 35.6628,
+    lng: 139.7310,
+    name: { ko: "롯폰기 야간 유흥가·결제 주의", en: "Roppongi nightlife and payment caution" },
+    area: { ko: "롯폰기", en: "Roppongi" },
+    type: { ko: "야간 유흥가·카드 결제", en: "Nightlife and card payment" },
+    time: { ko: "늦은 밤·술자리 후", en: "Late night and after drinks" },
+    pattern: { ko: "긴 대화, 호객, 술자리 결제가 겹치면 요금과 카드 승인 내역을 놓치기 쉬워요.", en: "Long approaches, touting, and drinks can make charges and card approvals easy to miss." },
+    action: { ko: "모르는 제안은 짧게 끊고, 카드 결제는 금액과 영수증을 확인한 뒤 서명해요.", en: "Cut off unknown offers briefly and check amount and receipt before signing card payments." },
+    after: { ko: "기억이 흐리거나 결제가 이상하면 즉시 카드사 잠금과 영수증·위치 기록을 남겨요.", en: "If memory or charge feels wrong, lock the card and keep receipt and location history immediately." },
+    tags: ["night", "scam", "phone"],
+    source: { ko: "FCDO 일본 야간 유흥가·카드 사기 주의", en: "FCDO Japan nightlife and card-fraud caution" }
+  },
+  {
+    id: "newyork-penn-station-moynihan",
+    city: "newyork",
+    risk: "transit",
+    level: 79,
+    lat: 40.7506,
+    lng: -73.9935,
+    name: { ko: "펜역·모이니핸 트레인홀 환승", en: "Penn Station and Moynihan Train Hall transfer" },
+    area: { ko: "맨해튼 미드타운 서쪽", en: "West Midtown Manhattan" },
+    type: { ko: "기차역·지하철·캐리어 이동", en: "Rail station, subway, and luggage movement" },
+    time: { ko: "출퇴근·공연 전후", en: "Commute and before/after events" },
+    pattern: { ko: "플랫폼 발표를 기다리며 여러 화면을 보면 캐리어 위 가방과 주머니 확인이 느려져요.", en: "Waiting for platform announcements across screens slows checks on luggage-top bags and pockets." },
+    action: { ko: "화면 확인은 벽 쪽에서 하고, 이동 전 캐리어 위 보조가방을 손목에 걸어요.", en: "Check screens wall-side and loop any bag on luggage around your wrist before moving." },
+    after: { ko: "분실이 의심되면 기차를 쫓기보다 역무원 구역에서 카드와 여권을 먼저 확인해요.", en: "If loss is suspected, check cards and passport near staff before chasing a train." },
+    tags: ["transit", "bag", "pickpocket"],
+    source: { ko: "대도시 역·환승 혼잡 소지품 기준", en: "Major-city station and transfer belongings guidance" }
+  },
+  {
+    id: "newyork-brooklyn-bridge",
+    city: "newyork",
+    risk: "phone",
+    level: 74,
+    lat: 40.7061,
+    lng: -73.9969,
+    name: { ko: "브루클린 브리지 보행로", en: "Brooklyn Bridge pedestrian path" },
+    area: { ko: "브루클린 브리지", en: "Brooklyn Bridge" },
+    type: { ko: "다리·사진 명소·보행 혼잡", en: "Bridge, photo landmark, and pedestrian crowd" },
+    time: { ko: "오후·일몰", en: "Afternoon and sunset" },
+    pattern: { ko: "좁은 보행로에서 사진, 자전거, 방향 확인이 겹치면 휴대폰과 가방끈이 느슨해져요.", en: "On the narrow path, photos, bikes, and route checks loosen phone and bag straps." },
+    action: { ko: "사진은 멈춰서 짧게 찍고, 보행 중 지도 확대나 영상 촬영을 오래 하지 않아요.", en: "Stop for short photos and avoid long map zooming or filming while walking." },
+    after: { ko: "무언가 사라졌다면 다리 위에서 되돌아다니기보다 양끝 밝은 공간에서 정리해요.", en: "If something is missing, regroup at a bright end of the bridge rather than roaming on the bridge." },
+    tags: ["phone", "photo", "crowd"],
+    source: { ko: "대도시 관광 보행로 휴대폰 노출 예방 기준", en: "Major-city tourist walkway phone exposure guidance" }
+  },
+  {
+    id: "istanbul-taksim-istiklal",
+    city: "istanbul",
+    risk: "night",
+    level: 80,
+    lat: 41.0369,
+    lng: 28.9850,
+    name: { ko: "탁심·이스티클랄 야간 번화가", en: "Taksim and Istiklal night street" },
+    area: { ko: "베이올루", en: "Beyoglu" },
+    type: { ko: "야간 보행·상점가·바", en: "Night walk, shops, and bars" },
+    time: { ko: "저녁~늦은 밤", en: "Evening to late night" },
+    pattern: { ko: "긴 대화, 식당·바 제안, 군중 이동이 겹치며 지갑과 카드가 자주 밖으로 나와요.", en: "Long conversations, restaurant or bar offers, and crowd movement bring wallets and cards out repeatedly." },
+    action: { ko: "낯선 제안은 따라가지 말고, 현금과 카드는 소액만 밖으로 꺼내요.", en: "Do not follow unknown offers and keep only small cash or one card accessible." },
+    after: { ko: "음식·음료를 받았다면 추가 이동 전 몸 상태, 영수증, 위치 기록을 먼저 확인해요.", en: "If you accepted food or drink, check condition, receipt, and location history before moving further." },
+    tags: ["night", "scam", "pickpocket"],
+    source: { ko: "FCDO 튀르키예 이스탄불 소매치기·음식/음료 주의", en: "FCDO Turkey Istanbul pickpocketing and food/drink caution" }
+  },
+  {
+    id: "istanbul-galata-bridge",
+    city: "istanbul",
+    risk: "scam",
+    level: 75,
+    lat: 41.0200,
+    lng: 28.9730,
+    name: { ko: "갈라타 브리지·해산물 식당 접근", en: "Galata Bridge and seafood restaurant approach" },
+    area: { ko: "카라쾨이·에미뇌뉘 연결", en: "Karakoy and Eminonu link" },
+    type: { ko: "다리·식당가·사진 명소", en: "Bridge, restaurants, and photo spot" },
+    time: { ko: "일몰·저녁 식사 전후", en: "Sunset and around dinner" },
+    pattern: { ko: "사진과 식당 제안이 겹치면 가격표, 위치, 결제 방식이 흐려질 수 있어요.", en: "Photos and restaurant approaches can blur menu price, location, and payment method." },
+    action: { ko: "입장 전 가격표와 결제 방식을 확인하고, 길 위 설명만 듣고 따라가지 않아요.", en: "Check menu price and payment method before entering and do not follow only street explanations." },
+    after: { ko: "요금이 이상하면 영수증과 메뉴 사진을 남기고 추가 결제 전 동행자와 확인해요.", en: "If price feels wrong, keep receipt and menu photo and check with companions before extra payment." },
+    tags: ["scam", "photo", "night"],
+    source: { ko: "관광 식당·가격 제안 판단 기준", en: "Tourist restaurant and price-offer guidance" }
+  },
+  {
+    id: "amsterdam-dam-square",
+    city: "amsterdam",
+    risk: "pickpocket",
+    level: 76,
+    lat: 52.3731,
+    lng: 4.8922,
+    name: { ko: "담 광장·왕궁 주변", en: "Dam Square and Royal Palace area" },
+    area: { ko: "암스테르담 중심부", en: "Central Amsterdam" },
+    type: { ko: "광장·상점가·사진 명소", en: "Square, shopping street, and photo spot" },
+    time: { ko: "오후 관광·주말", en: "Afternoon sightseeing and weekends" },
+    pattern: { ko: "공연, 사진, 상점가 이동이 겹치면 가방이 열려 있어도 알아차리기 어려워요.", en: "Performances, photos, and shopping movement make open bags hard to notice." },
+    action: { ko: "광장 중앙에서는 지갑을 꺼내지 말고, 사진 전 가방 지퍼를 몸쪽으로 돌려요.", en: "Do not take out wallet in the square center; turn bag zippers toward your body before photos." },
+    after: { ko: "무언가 사라졌다면 중앙역 방향으로 이동 전 카드와 여권을 먼저 확인해요.", en: "If something is missing, check cards and passport before moving toward Centraal." },
+    tags: ["pickpocket", "photo", "crowd"],
+    source: { ko: "FCDO 네덜란드 암스테르담 소매치기·가방 날치기 안내", en: "FCDO Netherlands Amsterdam pickpocketing and bag-snatching advice" }
+  },
+  {
+    id: "amsterdam-red-light-night",
+    city: "amsterdam",
+    risk: "night",
+    level: 77,
+    lat: 52.3739,
+    lng: 4.8984,
+    name: { ko: "구시가지 야간 골목·운하 주변", en: "Old-town night lanes and canal edges" },
+    area: { ko: "데발렌 주변", en: "De Wallen area" },
+    type: { ko: "야간 골목·운하·혼잡 보행", en: "Night lanes, canals, and pedestrian crowd" },
+    time: { ko: "밤~새벽", en: "Night to early morning" },
+    pattern: { ko: "어두운 골목, 운하, 사람 많은 길이 이어지며 길찾기 중 폰과 가방끈이 느슨해져요.", en: "Dark lanes, canals, and crowds loosen phone and bag straps during navigation." },
+    action: { ko: "지도는 밝은 큰길에서 확인하고, 운하 가장자리에서는 사진과 메시지를 멈춰요.", en: "Check maps on bright main streets and stop photos or messaging near canal edges." },
+    after: { ko: "위협을 느끼면 골목 안에서 설명하지 말고 큰길·역·영업 중인 매장으로 이동해요.", en: "If uneasy, do not explain inside lanes; move to main street, station, or open business." },
+    tags: ["night", "phone", "bag"],
+    source: { ko: "FCDO 네덜란드 운하·야간 보행 안전 안내", en: "FCDO Netherlands canal and night-walking safety advice" }
+  }
+];
+
+spots.push(...supplementalSpots);
+
 const officialLinks = [
   { label: { ko: "외교부 해외안전여행", en: "Korean MOFA Safe Travel" }, url: "https://www.0404.go.kr/" },
   { label: { ko: "미국 국무부 여행경보", en: "U.S. State Department Travel Advisories" }, url: "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html/" },
   { label: { ko: "영국 FCDO 여행 안전", en: "UK FCDO Travel Advice" }, url: "https://www.gov.uk/foreign-travel-advice" },
-  { label: { ko: "Police.uk 소매치기 예방", en: "Police.uk Pickpocketing Prevention" }, url: "https://www.police.uk/cp/crime-prevention/personal-safety-how-to-stay-safe/pickpocketing/" }
+  { label: { ko: "Police.uk 소매치기 예방", en: "Police.uk Pickpocketing Prevention" }, url: "https://www.police.uk/cp/crime-prevention/personal-safety-how-to-stay-safe/pickpocketing/" },
+  { label: { ko: "호주 Smartraveller 스캠 안내", en: "Smartraveller Scam Advice" }, url: "https://www.smartraveller.gov.au/before-you-go/safety/scams" },
+  { label: { ko: "미국 국무부 프랑스 안내", en: "U.S. State Department France Advisory" }, url: "https://travel.state.gov/en/international-travel/travel-advisories/france.html" }
 ];
 
 const panicSteps = [
@@ -1716,6 +2073,7 @@ function renderMapPanel() {
       <div>
         <h1>${tr("mapFirstTitle")}</h1>
         <p>${tr("mapFirstDesc")}</p>
+        <span class="update-pill">${tr("latestUpdateDate")} · ${tr("expandedSpotLabel")} +${supplementalSpots.length}</span>
       </div>
       <div class="sheet-head-actions">
         <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
@@ -2211,10 +2569,30 @@ function renderMapFirstHint(list) {
         <div><span>${tr("details")}</span><strong>${countSpots(list.length)}</strong></div>
         <div><span>${tr("quickLabel")}</span><strong>${scenarios.slice(0, 3).map((item) => item.emoji).join(" ")}</strong></div>
       </div>
+      ${renderLatestUpdate(list)}
       <div class="filter-row compact-filter-row">
         ${riskTypes.map((risk) => filterChip(risk)).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderLatestUpdate(list) {
+  const cityCount = new Set(list.map((spot) => spot.city)).size;
+  const topRisks = cityRiskMix(list).slice(0, 3);
+  return `
+    <div class="update-card">
+      <div>
+        <span>${tr("latestUpdateDate")}</span>
+        <strong>${tr("latestUpdateTitle")}</strong>
+        <p>${tr("latestUpdateDesc")}</p>
+      </div>
+      <div class="update-metrics">
+        <span>${tr("updateSourceBadge")}</span>
+        <strong>${tr("expandedSpotLabel")} +${supplementalSpots.length}</strong>
+        <em>${cityCount} ${state.lang === "ko" ? "도시" : "cities"} · ${topRisks.map((item) => `${riskEmoji(item.key)} ${riskLabel(item.key)}`).join(" · ")}</em>
+      </div>
+    </div>
   `;
 }
 
@@ -3321,7 +3699,8 @@ function markerIcon(html) {
 
 function refreshStatus() {
   const count = filteredSpots().length;
-  statusPill.textContent = `📍 ${countSpots(count)}`;
+  const freshLabel = !state.city && !state.query && !state.scenario && state.filter === "all" ? ` · ${tr("latestUpdateDate")}` : "";
+  statusPill.textContent = `📍 ${countSpots(count)}${freshLabel}`;
 }
 
 function applyScenario(key) {
