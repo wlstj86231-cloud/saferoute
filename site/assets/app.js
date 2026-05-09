@@ -90,7 +90,28 @@ const dictionary = {
     afterLoss: "분실 후",
     officialSource: "공식·공공 안전 안내 기반",
     practicalRule: "실전 규칙",
-    reportRisk: "위험 제보는 아직 열지 않았어요. 허위·낙인 위험이 있어 초기에는 큐레이션 지도로 운영합니다.",
+    reportRisk: "위험 제보는 선택형 신호만 바로 공유돼요. 자유 텍스트 없이 동의와 허위 의심으로 균형을 맞춥니다.",
+    reportPanelTitle: "현장 위험 제보",
+    reportPanelDesc: "방금 확인한 위험 신호를 누르면 다른 사용자 지도에도 빠르게 반영돼요.",
+    reportNow: "제보",
+    submitReport: "바로 반영",
+    firstReport: "첫 제보 남기기",
+    recentReports: "최근 제보",
+    noLiveReports: "아직 실시간 제보 없음",
+    liveReports: "실시간 제보",
+    reportSynced: "공유 반영됨",
+    reportSelectOne: "위험 유형을 하나 이상 선택해줘.",
+    reportSaved: "제보가 바로 반영됐어. 다른 사람 화면에도 곧 떠요.",
+    reportLocalOnly: "제보는 이 기기에 먼저 반영했고 서버 반영은 다시 시도할게.",
+    reportDeleted: "제보를 삭제했어.",
+    reportMineOnly: "내가 남긴 제보만 삭제할 수 있어.",
+    agree: "동의",
+    dispute: "허위 의심",
+    delete: "삭제",
+    today: "오늘 확인",
+    week: "최근 1주일",
+    month: "최근 1개월",
+    old: "이전 기억",
     cityButtonLabel: "도시 빠른 이동",
     mainNav: "주요 메뉴",
     quickLabel: "상황 빠른 보기",
@@ -252,7 +273,28 @@ const dictionary = {
     afterLoss: "After loss",
     officialSource: "Based on official/public safety advice",
     practicalRule: "Practical rule",
-    reportRisk: "Public risk reports are not open yet. To avoid false claims and stigma, this starts as a curated map.",
+    reportRisk: "Public reports are shared as structured signals only. No free text; agreement and dispute signals keep it balanced.",
+    reportPanelTitle: "Report A Risk Signal",
+    reportPanelDesc: "Tap what you just checked and it will update other travelers' maps shortly.",
+    reportNow: "Report",
+    submitReport: "Publish now",
+    firstReport: "Add first report",
+    recentReports: "Recent reports",
+    noLiveReports: "No live reports yet",
+    liveReports: "Live reports",
+    reportSynced: "Shared",
+    reportSelectOne: "Select at least one risk type.",
+    reportSaved: "Report added. Other travelers will see it shortly.",
+    reportLocalOnly: "Saved on this device first; server sync will retry.",
+    reportDeleted: "Report deleted.",
+    reportMineOnly: "Only your own report can be deleted.",
+    agree: "Agree",
+    dispute: "False report",
+    delete: "Delete",
+    today: "Checked today",
+    week: "Last week",
+    month: "Last month",
+    old: "Older memory",
     cityButtonLabel: "Quick city move",
     mainNav: "Main menu",
     quickLabel: "Quick scenarios",
@@ -437,6 +479,14 @@ const riskTypes = [
   { key: "scam", emoji: "🎭", color: "amber" },
   { key: "night", emoji: "🌙", color: "dark" }
 ];
+
+const reportTypes = riskTypes.filter((risk) => risk.key !== "all");
+const allowedReportKeys = new Set(reportTypes.map((risk) => risk.key));
+const reportClientStorageKey = "saferoute:reportClientId";
+const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://saferoute.kr/api/reports" : "/api/reports";
+const reportSyncIntervalMs = 3500;
+const reportRetryIntervalMs = 15000;
+const reportClientId = readStableClientId(reportClientStorageKey);
 
 const scenarios = [
   { key: "transit", label: "quickTransit", emoji: "🚇", risks: ["transit", "pickpocket"] },
@@ -1035,7 +1085,8 @@ const icons = {
   copy: `<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
   link: `<path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/>`,
   map: `<path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/>`,
-  list: `<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>`
+  list: `<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>`,
+  plus: `<path d="M12 5v14M5 12h14"/>`
 };
 
 const state = {
@@ -1052,7 +1103,8 @@ const state = {
   viewed: readJson("saferoute:viewed", []),
   incident: readJson("saferoute:incident", {}),
   drill: readJson("saferoute:drill", {}),
-  checks: readJson("saferoute:checks", {})
+  checks: readJson("saferoute:checks", {}),
+  reports: normalizeReports(readJson("saferoute:reports", []))
 };
 
 const riskByKey = new Map(riskTypes.map((risk) => [risk.key, risk]));
@@ -1078,6 +1130,12 @@ let sheetPointerStartX = null;
 let sheetPointerStartMode = "";
 let sheetPointerMoved = false;
 let ignoreNextSheetToggleClick = false;
+let reportVersion = 0;
+let reportSyncTimer = null;
+let reportSyncInFlight = false;
+let reportSyncAvailable = true;
+let reportLastFailureAt = 0;
+let reportServerFingerprint = "";
 
 startWhenReady();
 
@@ -1102,6 +1160,7 @@ function init() {
   renderMarkers();
   refreshStatus();
   registerServiceWorkerWhenIdle();
+  startReportSync();
 }
 
 function registerServiceWorkerWhenIdle() {
@@ -1262,6 +1321,13 @@ function bindEvents() {
     clearSheetDragState();
   });
 
+  sheet.addEventListener("submit", (event) => {
+    const form = event.target.closest("#reportForm");
+    if (!form) return;
+    event.preventDefault();
+    submitReport(form);
+  });
+
   sheet.addEventListener("click", (event) => {
     const collapse = event.target.closest("[data-sheet-collapse]");
     if (collapse) {
@@ -1305,6 +1371,31 @@ function bindEvents() {
     const focusListButton = event.target.closest("[data-focus-list]");
     if (focusListButton) {
       focusSpotList();
+      return;
+    }
+
+    const reportOpenButton = event.target.closest("[data-open-report]");
+    if (reportOpenButton) {
+      setPanel("report");
+      return;
+    }
+
+    const reportRisk = event.target.closest("[data-report-risk]");
+    if (reportRisk) {
+      reportRisk.classList.toggle("is-selected");
+      reportRisk.setAttribute("aria-pressed", String(reportRisk.classList.contains("is-selected")));
+      return;
+    }
+
+    const reportVote = event.target.closest("[data-report-vote]");
+    if (reportVote) {
+      voteReport(reportVote.dataset.reportId, reportVote.dataset.reportVote);
+      return;
+    }
+
+    const reportDelete = event.target.closest("[data-report-delete]");
+    if (reportDelete) {
+      deleteReport(reportDelete.dataset.reportDelete);
       return;
     }
 
@@ -1490,6 +1581,8 @@ function renderSheet() {
     sheet.innerHTML = renderSaved();
   } else if (state.panel === "check") {
     sheet.innerHTML = renderCheck();
+  } else if (state.panel === "report") {
+    sheet.innerHTML = renderReportPanel();
   } else {
     sheet.innerHTML = renderMapPanel();
   }
@@ -1630,6 +1723,63 @@ function renderCheck() {
         `).join("")}
       </div>
     `).join("")}
+  `;
+}
+
+function renderReportPanel() {
+  const spot = spotById.get(state.selectedId) || filteredSpots()[0];
+  if (!spot) {
+    return `
+      ${sheetGrip()}
+      <section class="spot-card">
+        <h3>${tr("noResults")}</h3>
+        <p>${tr("sourceNote")}</p>
+      </section>
+    `;
+  }
+  const reports = getVisibleReportsForSpot(spot.id);
+  return `
+    ${sheetGrip()}
+    <div class="sheet-head" data-sheet-toggle>
+      <div>
+        <h2>${tr("reportPanelTitle")}</h2>
+        <p>${tr("reportPanelDesc")}</p>
+      </div>
+      <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
+    </div>
+    <form class="report-form" id="reportForm">
+      <input type="hidden" name="spotId" value="${escapeHtml(spot.id)}">
+      <section class="spot-card report-target-card">
+        <div class="spot-title-row">
+          <div>
+            <h3>${riskEmoji(getLiveRisk(spot))} ${spot.name[state.lang]}</h3>
+            <p>${spot.area[state.lang]} · ${spot.type[state.lang]}</p>
+          </div>
+          <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length ? `${reports.length}` : `${tr("level")} ${spot.level}`}</span>
+        </div>
+      </section>
+      <div class="report-grid">
+        ${reportTypes.map((risk) => `
+          <button type="button" class="chip report-chip" data-report-risk="${risk.key}" aria-pressed="false">
+            <span class="report-emoji" aria-hidden="true">${risk.emoji}</span>
+            <span>${tr(risk.key)}</span>
+          </button>
+        `).join("")}
+      </div>
+      <div class="filter-row compact-filter-row">
+        ${["today", "week", "month", "old"].map((value, index) => `
+          <label class="chip recency-chip">
+            <input type="radio" name="recency" value="${value}" ${index === 0 ? "checked" : ""}>
+            <span>${tr(value)}</span>
+          </label>
+        `).join("")}
+      </div>
+      <button class="primary-button" type="submit">
+        ${icon("plus")}
+        ${reports.length ? tr("submitReport") : tr("firstReport")}
+      </button>
+    </form>
+    ${renderReportFeed(reports)}
   `;
 }
 
@@ -1927,18 +2077,26 @@ function renderMapFirstHint(list) {
 function renderSpotBrief(spot) {
   const saved = state.saved.includes(spot.id);
   const tags = spot.tags.slice(0, 3);
+  const reports = getVisibleReportsForSpot(spot.id);
+  const liveRisk = getLiveRisk(spot);
   return `
     <section class="spot-card spot-brief-card is-selected">
       <div class="spot-title-row">
         <div>
-          <h3>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</h3>
+          <h3>${riskEmoji(liveRisk)} ${spot.name[state.lang]}</h3>
           <p>${spot.area[state.lang]} · ${spot.type[state.lang]} · ${spot.time[state.lang]}</p>
         </div>
-        <span class="badge ${badgeClass(spot.level)}">${tr("level")} ${spot.level}</span>
+        <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length ? `${reports.length} ${tr("liveReports")}` : `${tr("level")} ${spot.level}`}</span>
       </div>
       <div class="tag-row compact-tags">
         ${tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
       </div>
+      ${reports.length ? `
+        <div class="brief-line">
+          <span>${tr("recentReports")}</span>
+          <strong>${reports.slice(0, 3).map((report) => report.risks.map((risk) => `${riskEmoji(risk)} ${riskLabel(risk)}`).join(" · ")).join(" / ")}</strong>
+        </div>
+      ` : ""}
       <div class="brief-line">
         <span>${tr("oneLineRisk")}</span>
         <strong>${spot.pattern[state.lang]}</strong>
@@ -1950,6 +2108,7 @@ function renderSpotBrief(spot) {
       <div class="detail-actions brief-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+        <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
         <button class="primary-button" type="button" data-open-panel="panic">${icon("list")}${tr("panic")}</button>
       </div>
     </section>
@@ -1958,14 +2117,16 @@ function renderSpotBrief(spot) {
 
 function renderSpotDetail(spot) {
   const saved = state.saved.includes(spot.id);
+  const reports = getVisibleReportsForSpot(spot.id);
+  const liveRisk = getLiveRisk(spot);
   return `
     <section class="spot-card is-selected">
       <div class="spot-title-row">
         <div>
-          <h3>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</h3>
+          <h3>${riskEmoji(liveRisk)} ${spot.name[state.lang]}</h3>
           <p>${spot.area[state.lang]} · ${spot.type[state.lang]}</p>
         </div>
-        <span class="badge ${badgeClass(spot.level)}">${tr("level")} ${spot.level}</span>
+        <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length ? `${reports.length} ${tr("liveReports")}` : `${tr("level")} ${spot.level}`}</span>
       </div>
       <div class="tag-row">
         ${spot.tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
@@ -1974,6 +2135,7 @@ function renderSpotDetail(spot) {
       <div class="detail-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+        <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
       </div>
       <div class="detail-actions return-actions">
         <button class="text-button" type="button" data-sheet-collapse>${icon("map")}${tr("mapWide")}</button>
@@ -1995,21 +2157,59 @@ function renderSpotDetail(spot) {
       </ul>
       ${renderSpotPlaybook(spot)}
       ${renderRelatedSpots(spot)}
+      ${renderReportFeed(reports)}
     </section>
   `;
 }
 
 function renderSpotCard(spot) {
+  const liveRisk = getLiveRisk(spot);
+  const reports = getVisibleReportsForSpot(spot.id);
   return `
     <button class="spot-card ${spot.id === state.selectedId ? "is-selected" : ""}" type="button" data-spot-id="${spot.id}">
       <div class="spot-title-row">
         <div>
-          <h3>${riskEmoji(spot.risk)} ${spot.name[state.lang]}</h3>
+          <h3>${riskEmoji(liveRisk)} ${spot.name[state.lang]}</h3>
           <p>${spot.area[state.lang]} · ${riskLabel(spot.risk)} · ${spot.time[state.lang]}</p>
         </div>
-        <span class="badge ${badgeClass(spot.level)}">${spot.level}</span>
+        <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length || spot.level}</span>
       </div>
     </button>
+  `;
+}
+
+function renderReportFeed(reports) {
+  if (!reports.length) {
+    return `
+      <div class="live-feed">
+        <div class="feed-head">
+          <strong>${tr("recentReports")}</strong>
+          <span>${tr("noLiveReports")}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="live-feed">
+      <div class="feed-head">
+        <strong>${tr("recentReports")}</strong>
+        <span>${tr("reportSynced")}</span>
+      </div>
+      ${reports.map((report) => `
+        <article class="feed-item">
+          <div>
+            <p>${report.risks.map((risk) => `${riskEmoji(risk)} ${riskLabel(risk)}`).join(" · ")}</p>
+            <small>${tr(report.recency)} · ${tr("agree")} ${report.agrees} · ${tr("dispute")} ${report.disputes}</small>
+          </div>
+          <div class="feed-actions">
+            <button type="button" data-report-id="${escapeHtml(report.id)}" data-report-vote="agree">${tr("agree")}</button>
+            <button type="button" data-report-id="${escapeHtml(report.id)}" data-report-vote="dispute">${tr("dispute")}</button>
+            ${canDeleteReport(report) ? `<button type="button" class="danger-action" data-report-delete="${escapeHtml(report.id)}">${tr("delete")}</button>` : ""}
+          </div>
+        </article>
+      `).join("")}
+    </div>
   `;
 }
 
@@ -2055,10 +2255,17 @@ function filteredSpots() {
   const scenario = scenarios.find((item) => item.key === state.scenario);
   return spots
     .filter((spot) => !state.city || spot.city === state.city)
-    .filter((spot) => state.filter === "all" || spot.risk === state.filter || spot.tags.includes(state.filter))
-    .filter((spot) => !scenario || scenario.risks.includes(spot.risk) || spot.tags.some((tag) => scenario.risks.includes(tag)))
+    .filter((spot) => {
+      const liveRisk = getLiveRisk(spot);
+      return state.filter === "all" || spot.risk === state.filter || liveRisk === state.filter || spot.tags.includes(state.filter);
+    })
+    .filter((spot) => {
+      const liveRisk = getLiveRisk(spot);
+      return !scenario || scenario.risks.includes(spot.risk) || scenario.risks.includes(liveRisk) || spot.tags.some((tag) => scenario.risks.includes(tag));
+    })
     .filter((spot) => {
       if (!query) return true;
+      const reports = getVisibleReportsForSpot(spot.id);
       return [
         spot.name.ko,
         spot.name.en,
@@ -2067,9 +2274,11 @@ function filteredSpots() {
         spot.type.ko,
         spot.type.en,
         spot.tags.join(" "),
+        reports.flatMap((report) => report.risks).join(" "),
         cities[spot.city].label.ko,
         cities[spot.city].label.en,
-        riskLabel(spot.risk)
+        riskLabel(spot.risk),
+        riskLabel(getLiveRisk(spot))
       ].join(" ").toLowerCase().includes(query);
     })
     .sort((a, b) => {
@@ -2077,7 +2286,7 @@ function filteredSpots() {
         const diff = distanceTo(a) - distanceTo(b);
         if (diff) return diff;
       }
-      return b.level - a.level;
+      return (b.level + getVisibleReportsForSpot(b.id).length * 3) - (a.level + getVisibleReportsForSpot(a.id).length * 3);
     });
 }
 
@@ -2283,6 +2492,285 @@ function streetSense(spot) {
   return (state.lang === "en" ? en : ko)[spot.risk] || (state.lang === "en" ? en.pickpocket : ko.pickpocket);
 }
 
+function submitReport(form) {
+  const selected = [...form.querySelectorAll("[data-report-risk].is-selected")]
+    .map((button) => button.dataset.reportRisk)
+    .filter((risk) => allowedReportKeys.has(risk));
+  if (!selected.length) {
+    showToast(tr("reportSelectOne"));
+    return;
+  }
+
+  const data = new FormData(form);
+  const spotId = String(data.get("spotId") || "");
+  const spot = spotById.get(spotId);
+  if (!spot) return;
+
+  const createdAt = new Date().toISOString();
+  const report = {
+    id: createId(),
+    spotId,
+    placeId: spotId,
+    place: snapshotSpotForReport(spot),
+    risks: selected,
+    tags: selected,
+    recency: String(data.get("recency") || "today"),
+    createdAt,
+    updatedAt: createdAt,
+    agrees: 0,
+    disputes: 0,
+    clientId: reportClientId,
+    pending: true,
+    remote: false
+  };
+
+  state.reports.unshift(report);
+  invalidateReports();
+  persistReports();
+  state.selectedId = spot.id;
+  state.panel = "map";
+  setSheetMode("expanded");
+  showToast(tr("reportSaved"));
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  sendReportToServer(report);
+}
+
+function voteReport(reportId, vote) {
+  const report = state.reports.find((item) => item.id === reportId);
+  if (!report || !["agree", "dispute"].includes(vote)) return;
+  if (vote === "agree") report.agrees += 1;
+  if (vote === "dispute") report.disputes += 1;
+  report.updatedAt = new Date().toISOString();
+  invalidateReports();
+  persistReports();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  sendReportVote(reportId, vote);
+}
+
+function deleteReport(reportId) {
+  const target = state.reports.find((item) => item.id === reportId);
+  if (target && !canDeleteReport(target)) {
+    showToast(tr("reportMineOnly"));
+    return;
+  }
+  state.reports = state.reports.filter((item) => item.id !== reportId);
+  invalidateReports();
+  persistReports();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+  showToast(tr("reportDeleted"));
+  if (target?.remote) deleteRemoteReport(reportId);
+}
+
+function startReportSync() {
+  syncReports({ silent: true });
+  if (reportSyncTimer) window.clearInterval(reportSyncTimer);
+  reportSyncTimer = window.setInterval(() => {
+    if (document.hidden) return;
+    syncReports({ silent: true });
+  }, reportSyncIntervalMs);
+  window.addEventListener("focus", () => syncReports({ silent: true }));
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) syncReports({ silent: true });
+  });
+  window.addEventListener("online", () => syncReports({ silent: true, force: true }));
+}
+
+async function syncReports({ silent = true, force = false } = {}) {
+  if (!reportSyncAvailable || reportSyncInFlight) return;
+  if (!force && reportLastFailureAt && Date.now() - reportLastFailureAt < reportRetryIntervalMs) return;
+  reportSyncInFlight = true;
+  try {
+    const response = await fetch(reportApiUrl, {
+      headers: { Accept: "application/json" },
+      cache: "no-store"
+    });
+    if (response.status === 404 || response.status === 503) {
+      reportSyncAvailable = false;
+      return;
+    }
+    if (!response.ok) throw new Error(`reports ${response.status}`);
+    const payload = await response.json();
+    if (!payload?.ok || !Array.isArray(payload.reports)) throw new Error("invalid reports response");
+    mergeServerReports(payload.reports, true);
+    reportLastFailureAt = 0;
+    flushPendingReports();
+  } catch {
+    reportLastFailureAt = Date.now();
+    if (!silent) showToast(tr("reportLocalOnly"));
+  } finally {
+    reportSyncInFlight = false;
+  }
+}
+
+function mergeServerReports(rawReports, replaceServerSnapshot = false) {
+  if (!Array.isArray(rawReports)) return;
+  const serverReports = normalizeReports(rawReports.map((report) => ({
+    ...report,
+    spotId: report.spotId || report.placeId || report.place_id,
+    placeId: report.placeId || report.place_id,
+    risks: report.risks || report.tags,
+    createdAt: report.createdAt || report.created_at,
+    updatedAt: report.updatedAt || report.updated_at,
+    clientId: report.clientId || report.client_id,
+    remote: true,
+    pending: false
+  })));
+  const fingerprint = serverReports
+    .map((report) => `${report.id}:${report.updatedAt}:${report.agrees}:${report.disputes}`)
+    .join("|");
+  if (replaceServerSnapshot && fingerprint === reportServerFingerprint) return;
+
+  const serverIds = new Set(serverReports.map((report) => report.id));
+  const localOnly = state.reports.filter((report) => {
+    if (serverIds.has(report.id)) return false;
+    return !replaceServerSnapshot || !report.remote || report.pending;
+  });
+  state.reports = normalizeReports([...serverReports, ...localOnly])
+    .sort((a, b) => Date.parse(b.updatedAt || b.createdAt) - Date.parse(a.updatedAt || a.createdAt))
+    .slice(0, 160);
+  reportServerFingerprint = fingerprint;
+  invalidateReports();
+  persistReports();
+  renderQuickRail();
+  renderSheet();
+  renderMarkers();
+  refreshStatus();
+}
+
+async function flushPendingReports() {
+  const pending = state.reports.filter((report) => report.pending && !report.remote).slice(0, 5);
+  for (const report of pending) {
+    await sendReportToServer(report, { silent: true });
+  }
+}
+
+async function sendReportToServer(report, { silent = false } = {}) {
+  if (!reportSyncAvailable) return;
+  try {
+    const response = await fetch(reportApiUrl, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Client-ID": reportClientId
+      },
+      body: JSON.stringify({
+        id: report.id,
+        placeId: report.placeId,
+        place: report.place || snapshotSpotForReport(spotById.get(report.spotId)),
+        tags: report.risks,
+        recency: report.recency,
+        createdAt: report.createdAt
+      })
+    });
+    if (response.status === 404 || response.status === 503) {
+      reportSyncAvailable = false;
+      return;
+    }
+    if (!response.ok) throw new Error(`save report ${response.status}`);
+    const payload = await response.json();
+    if (payload?.report) mergeServerReports([payload.report], false);
+  } catch {
+    reportLastFailureAt = Date.now();
+    if (!silent) showToast(tr("reportLocalOnly"));
+  }
+}
+
+async function sendReportVote(reportId, vote) {
+  if (!reportSyncAvailable || !["agree", "dispute"].includes(vote)) return;
+  try {
+    const response = await fetch(`${reportApiUrl}/${encodeURIComponent(reportId)}/vote`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Client-ID": reportClientId
+      },
+      body: JSON.stringify({ vote })
+    });
+    if (response.status === 404 || response.status === 503) {
+      reportSyncAvailable = false;
+      return;
+    }
+    if (!response.ok) throw new Error(`vote ${response.status}`);
+    const payload = await response.json();
+    if (payload?.report) mergeServerReports([payload.report], false);
+  } catch {
+    reportLastFailureAt = Date.now();
+  }
+}
+
+async function deleteRemoteReport(reportId) {
+  if (!reportSyncAvailable) return;
+  try {
+    const response = await fetch(`${reportApiUrl}/${encodeURIComponent(reportId)}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "X-Client-ID": reportClientId
+      }
+    });
+    if (response.status === 404 || response.status === 503) reportSyncAvailable = false;
+  } catch {
+    reportLastFailureAt = Date.now();
+  }
+}
+
+function getVisibleReportsForSpot(spotId) {
+  return state.reports.filter((report) => report.spotId === spotId && !isHiddenReport(report));
+}
+
+function getLiveRisk(spot) {
+  const reports = getVisibleReportsForSpot(spot.id);
+  if (!reports.length) return spot.risk;
+  const counts = new Map();
+  reports.forEach((report) => {
+    report.risks.forEach((risk) => counts.set(risk, (counts.get(risk) || 0) + 1 + report.agrees - report.disputes));
+  });
+  return [...counts.entries()]
+    .filter(([risk]) => allowedReportKeys.has(risk))
+    .sort((a, b) => b[1] - a[1])[0]?.[0] || spot.risk;
+}
+
+function isHiddenReport(report) {
+  return report.disputes >= 3 && report.disputes > report.agrees;
+}
+
+function canDeleteReport(report) {
+  return !report.clientId || report.clientId === reportClientId;
+}
+
+function invalidateReports() {
+  reportVersion += 1;
+}
+
+function persistReports() {
+  writeJson("saferoute:reports", state.reports.slice(0, 160));
+}
+
+function snapshotSpotForReport(spot) {
+  if (!spot) return null;
+  return {
+    id: spot.id,
+    name: spot.name.ko,
+    area: spot.area.ko,
+    nameKo: spot.name.ko,
+    areaKo: spot.area.ko,
+    nameEn: spot.name.en,
+    areaEn: spot.area.en,
+    city: spot.city,
+    category: spot.risk,
+    lat: spot.lat,
+    lng: spot.lng
+  };
+}
+
 function rememberSpot(id) {
   state.recent = [id, ...state.recent.filter((item) => item !== id)].slice(0, 18);
   state.viewed = [id, ...state.viewed.filter((item) => item !== id)].slice(0, 120);
@@ -2313,7 +2801,8 @@ function renderMarkers() {
     }
   });
   list.forEach((spot) => {
-    const html = `<div class="sum-marker marker-${spot.risk} ${spot.id === state.selectedId ? "marker-selected" : ""}"><span>${riskEmoji(spot.risk)}</span></div>`;
+    const liveRisk = getLiveRisk(spot);
+    const html = `<div class="sum-marker marker-${liveRisk} ${spot.id === state.selectedId ? "marker-selected" : ""}"><span>${riskEmoji(liveRisk)}</span></div>`;
     const existing = markers.get(spot.id);
     if (existing) {
       existing.setIcon(markerIcon(html));
@@ -2578,6 +3067,75 @@ function tr(key) {
 function readLanguage() {
   const value = readJson("saferoute:lang", "ko");
   return value === "en" ? "en" : "ko";
+}
+
+function normalizeReports(reports) {
+  if (!Array.isArray(reports)) return [];
+  return reports
+    .map((report, index) => {
+      const spotId = cleanId(report?.spotId || report?.placeId || report?.place_id, "");
+      const risks = Array.isArray(report?.risks)
+        ? report.risks
+        : Array.isArray(report?.tags)
+          ? report.tags
+          : typeof report?.tags === "string"
+            ? parseJsonArray(report.tags)
+            : [];
+      return {
+        id: cleanId(report?.id, `legacy-${index}-${report?.createdAt || report?.created_at || Date.now()}`),
+        spotId: spots.some((spot) => spot.id === spotId) ? spotId : "",
+        placeId: spotId,
+        place: report?.place || null,
+        risks: [...new Set(risks.filter((risk) => allowedReportKeys.has(risk)))].slice(0, 6),
+        recency: ["today", "week", "month", "old"].includes(report?.recency) ? report.recency : "old",
+        createdAt: report?.createdAt || report?.created_at || new Date().toISOString(),
+        updatedAt: report?.updatedAt || report?.updated_at || report?.createdAt || report?.created_at || new Date().toISOString(),
+        agrees: clampCount(report?.agrees),
+        disputes: clampCount(report?.disputes),
+        clientId: cleanId(report?.clientId || report?.client_id || reportClientId, reportClientId),
+        pending: Boolean(report?.pending),
+        remote: Boolean(report?.remote)
+      };
+    })
+    .filter((report) => report.spotId && report.risks.length)
+    .slice(0, 160);
+}
+
+function readStableClientId(key) {
+  const existing = cleanId(readJson(key, ""), "");
+  if (existing) return existing;
+  const next = createId();
+  try {
+    localStorage.setItem(key, JSON.stringify(next));
+  } catch {
+    // Reporting still works as a local signal if storage is blocked.
+  }
+  return next;
+}
+
+function createId() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  return `report-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function cleanId(value, fallback) {
+  const id = String(value || fallback || "").replace(/[^a-zA-Z0-9:_-]/g, "").slice(0, 90);
+  return id || fallback;
+}
+
+function clampCount(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  return Math.max(0, Math.min(999, Math.floor(number)));
+}
+
+function parseJsonArray(value) {
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
 
 function escapeHtml(value) {

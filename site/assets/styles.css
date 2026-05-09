@@ -708,6 +708,112 @@ button.spot-card {
   border-color: #edbbb3;
 }
 
+.report-form {
+  display: grid;
+  gap: 10px;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.report-chip {
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 48px;
+}
+
+.report-chip.is-selected {
+  color: #0e6d58;
+  background: var(--green-soft);
+  border-color: #82d3bd;
+  box-shadow: inset 0 0 0 1px #82d3bd;
+}
+
+.report-emoji {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.recency-chip {
+  position: relative;
+}
+
+.recency-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.recency-chip:has(input:checked) {
+  color: #0e6d58;
+  background: var(--green-soft);
+  border-color: #82d3bd;
+}
+
+.live-feed {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.feed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.feed-head strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.feed-item {
+  display: grid;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.feed-item p {
+  margin: 0;
+  font-weight: 900;
+}
+
+.feed-item small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+}
+
+.feed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.feed-actions button {
+  min-height: 32px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: #244249;
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 900;
+}
+
 .spot-title-row {
   display: flex;
   align-items: flex-start;
