@@ -1,8 +1,8 @@
-const CACHE_NAME = "tripmarking-v23-tripmarking-icon";
+const CACHE_NAME = "tripmarking-v24-ux-identity";
 const LOCAL_ASSETS = [
   "/",
-  "/assets/styles.css?v=20260509-tripmarking2",
-  "/assets/app.js?v=20260509-tripmarking2",
+  "/assets/styles.css?v=20260509-tripmarking3",
+  "/assets/app.js?v=20260509-tripmarking3",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",
@@ -10,7 +10,7 @@ const LOCAL_ASSETS = [
   "/assets/vendor/leaflet/images/marker-icon.png",
   "/assets/vendor/leaflet/images/marker-icon-2x.png",
   "/assets/vendor/leaflet/images/marker-shadow.png",
-  "/assets/icon.svg?v=20260509-tripmarking2",
+  "/assets/icon.svg?v=20260509-tripmarking3",
   "/manifest.webmanifest"
 ];
 

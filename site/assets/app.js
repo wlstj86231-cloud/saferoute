@@ -119,8 +119,16 @@ const dictionary = {
     mapFirstTitle: "지도에서 위험 이모티콘을 눌러요",
     mapFirstDesc: "원하는 표시를 누르면 지금 필요한 주의 정보만 짧게 떠요.",
     mapFirstHelp: "도시·위험 필터는 위쪽 버튼이나 아래 칩에서 가볍게 바꿀 수 있어요.",
+    mapQuickTitle: "처음엔 3가지만 보면 돼요",
+    mapQuickDesc: "도시를 맞추고, 지도 이모티콘을 누르고, 필요하면 대처 순서로 바로 넘어가요.",
+    mapQuickSearch: "도시 검색",
+    mapQuickNearby: "내 주변",
+    mapQuickPanic: "대처 순서",
+    nextWatch: "이어서 볼 위험",
     oneLineRisk: "한 줄 주의",
     quickAction: "지금 할 일",
+    openDetail: "상세 보기",
+    summary: "요약으로",
     tripRoutineTitle: "30초 여행 루틴",
     tripRoutineDesc: "도시·상황·저장·체크를 한 번에 묶어서 지금 볼 순서를 잡아줘요.",
     currentCity: "현재 도시",
@@ -302,8 +310,16 @@ const dictionary = {
     mapFirstTitle: "Tap a risk emoji on the map",
     mapFirstDesc: "Tap the marker you need and only the short safety note will open.",
     mapFirstHelp: "Use the top buttons or chips below to lightly change city and risk filters.",
+    mapQuickTitle: "Start with three quick moves",
+    mapQuickDesc: "Choose a city, tap a map emoji, then jump to the response order if needed.",
+    mapQuickSearch: "Search city",
+    mapQuickNearby: "Near me",
+    mapQuickPanic: "Response order",
+    nextWatch: "Review next",
     oneLineRisk: "One-line risk",
     quickAction: "Do now",
+    openDetail: "Full detail",
+    summary: "Summary",
     tripRoutineTitle: "30-second travel routine",
     tripRoutineDesc: "City, scenario, saved spots, and checks are bundled into a quick review path.",
     currentCity: "Current city",
@@ -1099,6 +1115,7 @@ const state = {
   city: "",
   query: "",
   selectedId: "",
+  detailOpen: false,
   userPosition: null,
   saved: readJson("tripmarking:saved", []),
   recent: readJson("tripmarking:recent", []),
@@ -1255,6 +1272,7 @@ function bindEvents() {
 
   spotSearch.addEventListener("input", (event) => {
     state.query = event.target.value.trim();
+    state.detailOpen = false;
     searchClear.hidden = !state.query;
     scheduleSearchRender();
   });
@@ -1275,6 +1293,7 @@ function bindEvents() {
       if (!city) return;
       state.city = button.dataset.city;
       state.scenario = "";
+      state.detailOpen = false;
       map.setView(city.center, city.zoom);
       syncSelected();
       renderSheet();
@@ -1375,6 +1394,7 @@ function bindEvents() {
     if (filter) {
       state.filter = filter.dataset.riskFilter;
       state.scenario = "";
+      state.detailOpen = false;
       syncSelected();
       renderQuickRail();
       renderSheet();
@@ -1398,6 +1418,34 @@ function bindEvents() {
     const focusListButton = event.target.closest("[data-focus-list]");
     if (focusListButton) {
       focusSpotList();
+      return;
+    }
+
+    const searchOpenButton = event.target.closest("[data-open-search]");
+    if (searchOpenButton) {
+      setSearchPanel(true, true);
+      setSheetMode("collapsed");
+      return;
+    }
+
+    const locateOpenButton = event.target.closest("[data-locate-user]");
+    if (locateOpenButton) {
+      locateUser();
+      return;
+    }
+
+    const detailOpenButton = event.target.closest("[data-open-detail]");
+    if (detailOpenButton) {
+      state.detailOpen = true;
+      setSheetMode("expanded");
+      renderSheet();
+      return;
+    }
+
+    const detailCloseButton = event.target.closest("[data-close-detail]");
+    if (detailCloseButton) {
+      state.detailOpen = false;
+      renderSheet();
       return;
     }
 
@@ -1510,6 +1558,7 @@ function bindEvents() {
 
 function setPanel(panel) {
   state.panel = panel;
+  if (panel !== "map") state.detailOpen = false;
   document.querySelectorAll(".nav-button").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.panel === panel);
   });
@@ -1557,7 +1606,7 @@ function setSearchPanel(open, focus = false) {
 }
 
 function focusSpotList() {
-  const list = sheet.querySelector(".spot-list");
+  const list = sheet.querySelector(".map-next-block, .related-block, .spot-list");
   if (!list) {
     renderSheet();
     return;
@@ -1664,7 +1713,8 @@ function renderMapPanel() {
     ${sheetGrip()}
     ${introHead}
     ${contextTools()}
-    ${selected ? renderSpotBrief(selected) : renderMapFirstHint(list)}
+    ${selected ? state.detailOpen ? renderSpotDetail(selected) : renderSpotBrief(selected) : renderMapFirstHint(list)}
+    ${selected && !state.detailOpen ? renderMapNextRail(list, selected) : ""}
   `;
 }
 
@@ -2113,11 +2163,35 @@ function renderMiniSpot(spot) {
   `;
 }
 
+function renderMapNextRail(list, selected) {
+  const next = routeQueue(list, selected).filter((spot) => spot.id !== selected.id).slice(0, 3);
+  if (!next.length) return "";
+  return `
+    <div class="related-block map-next-block">
+      <strong>${tr("nextWatch")}</strong>
+      <div class="related-rail">
+        ${next.map((spot) => renderMiniSpot(spot)).join("")}
+      </div>
+    </div>
+  `;
+}
+
 function renderMapFirstHint(list) {
   return `
     <section class="spot-card map-hint-card">
       <h3>${tr("mapFirstTitle")}</h3>
       <p>${tr("mapFirstHelp")}</p>
+      <div class="map-action-card">
+        <div>
+          <strong>${tr("mapQuickTitle")}</strong>
+          <p>${tr("mapQuickDesc")}</p>
+        </div>
+        <div class="map-action-strip">
+          <button class="text-button" type="button" data-open-search>${tr("mapQuickSearch")}</button>
+          <button class="text-button" type="button" data-locate-user>${tr("mapQuickNearby")}</button>
+          <button class="text-button" type="button" data-open-panel="panic">${tr("mapQuickPanic")}</button>
+        </div>
+      </div>
       <div class="brief-stats">
         <div><span>${tr("details")}</span><strong>${countSpots(list.length)}</strong></div>
         <div><span>${tr("quickLabel")}</span><strong>${scenarios.slice(0, 3).map((item) => item.emoji).join(" ")}</strong></div>
@@ -2163,8 +2237,8 @@ function renderSpotBrief(spot) {
       <div class="detail-actions brief-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+        <button class="primary-button" type="button" data-open-detail>${icon("list")}${tr("openDetail")}</button>
         <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
-        <button class="primary-button" type="button" data-open-panel="panic">${icon("list")}${tr("panic")}</button>
       </div>
     </section>
   `;
@@ -2193,6 +2267,7 @@ function renderSpotDetail(spot) {
         <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
       </div>
       <div class="detail-actions return-actions">
+        <button class="text-button" type="button" data-close-detail>${tr("summary")}</button>
         <button class="text-button" type="button" data-sheet-collapse>${icon("map")}${tr("mapWide")}</button>
         <button class="text-button" type="button" data-focus-list>${icon("list")}${tr("otherSpots")}</button>
       </div>
@@ -2614,10 +2689,12 @@ function syncSelected() {
   const list = filteredSpots();
   if (!list.length) {
     state.selectedId = "";
+    state.detailOpen = false;
     return;
   }
   if (!list.some((spot) => spot.id === state.selectedId)) {
     state.selectedId = "";
+    state.detailOpen = false;
   }
 }
 
@@ -2860,6 +2937,7 @@ function submitReport(form) {
   invalidateReports();
   persistReports();
   state.selectedId = spot.id;
+  state.detailOpen = false;
   state.panel = "map";
   setSheetMode("expanded");
   showToast(tr("reportSaved"));
@@ -3137,6 +3215,7 @@ function selectSpot(id, move) {
   const spot = spotById.get(id);
   if (!spot) return;
   state.selectedId = id;
+  state.detailOpen = false;
   rememberSpot(id);
   if (move) {
     map.setView([spot.lat, spot.lng], 15);
@@ -3199,6 +3278,7 @@ function refreshStatus() {
 function applyScenario(key) {
   state.scenario = state.scenario === key ? "" : key;
   state.filter = "all";
+  state.detailOpen = false;
   syncSelected();
   renderQuickRail();
   renderSheet();
@@ -3213,6 +3293,7 @@ function resetFilters() {
   state.city = "";
   state.scenario = "";
   state.query = "";
+  state.detailOpen = false;
   spotSearch.value = "";
   searchClear.hidden = true;
   syncSelected();
@@ -3224,6 +3305,7 @@ function resetFilters() {
 
 function clearSearch() {
   state.query = "";
+  state.detailOpen = false;
   spotSearch.value = "";
   searchClear.hidden = true;
   syncSelected();
