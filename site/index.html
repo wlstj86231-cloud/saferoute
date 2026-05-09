@@ -16,25 +16,8 @@
     <meta name="twitter:title" content="트립마킹 - 해외여행 도난·스캠 주의 지도">
     <meta name="twitter:description" content="한국인 해외여행자를 위한 도난·스캠 주의 지도와 현장 대처 가이드.">
     <meta name="google-adsense-account" content="ca-pub-7217591196020054">
-    <script>
-      window.addEventListener("load", () => {
-        if (!["tripmarking.com", "www.tripmarking.com"].includes(location.hostname)) return;
-        const loadAdSense = () => {
-          if (document.querySelector("script[data-adsense-loader]")) return;
-          const script = document.createElement("script");
-          script.async = true;
-          script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054";
-          script.crossOrigin = "anonymous";
-          script.dataset.adsenseLoader = "true";
-          document.head.appendChild(script);
-        };
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(loadAdSense, { timeout: 3500 });
-        } else {
-          window.setTimeout(loadAdSense, 1800);
-        }
-      }, { once: true });
-    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054"
+     crossorigin="anonymous"></script>
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="icon" href="/assets/icon.svg?v=20260509-tripmarking4" type="image/svg+xml">
     <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="https://tripmarking.com/feed.xml">
