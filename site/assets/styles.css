@@ -665,6 +665,54 @@ button.spot-card {
   font-size: 12px;
 }
 
+.marker-legend {
+  display: grid;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid #eadbc4;
+  border-radius: 8px;
+  background: #fffdf7;
+}
+
+.marker-legend > span {
+  color: #805314;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.marker-legend > div {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 1px;
+  scrollbar-width: none;
+}
+
+.marker-legend > div::-webkit-scrollbar {
+  display: none;
+}
+
+.marker-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #eadbc4;
+  border-radius: 999px;
+  color: #2d3940;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.marker-legend button.is-active {
+  color: #0f6b58;
+  background: var(--green-soft);
+  border-color: #8bd3be;
+}
+
 .map-hint-card h3 {
   margin: 0;
   font-size: 18px;
@@ -1196,6 +1244,21 @@ button.spot-card {
   background: var(--surface);
   font-size: 12px;
   font-weight: 900;
+}
+
+.spot-brief-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: visible;
+}
+
+.spot-brief-actions .text-button,
+.spot-brief-actions .primary-button {
+  width: 100%;
+}
+
+.spot-brief-actions .primary-button {
+  grid-column: 1 / -1;
 }
 
 .compare-list {

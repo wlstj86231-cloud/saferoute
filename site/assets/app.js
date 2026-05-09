@@ -124,11 +124,14 @@ const dictionary = {
     mapQuickSearch: "도시 검색",
     mapQuickNearby: "내 주변",
     mapQuickPanic: "대처 순서",
+    markerLegend: "마커 의미",
     nextWatch: "이어서 볼 위험",
     oneLineRisk: "한 줄 주의",
     quickAction: "지금 할 일",
     openDetail: "상세 보기",
     summary: "요약으로",
+    copySpot: "요약 복사",
+    spotCopied: "스팟 요약을 복사했어.",
     tripRoutineTitle: "30초 여행 루틴",
     tripRoutineDesc: "도시·상황·저장·체크를 한 번에 묶어서 지금 볼 순서를 잡아줘요.",
     currentCity: "현재 도시",
@@ -315,11 +318,14 @@ const dictionary = {
     mapQuickSearch: "Search city",
     mapQuickNearby: "Near me",
     mapQuickPanic: "Response order",
+    markerLegend: "Marker meaning",
     nextWatch: "Review next",
     oneLineRisk: "One-line risk",
     quickAction: "Do now",
     openDetail: "Full detail",
     summary: "Summary",
+    copySpot: "Copy summary",
+    spotCopied: "Spot summary copied.",
     tripRoutineTitle: "30-second travel routine",
     tripRoutineDesc: "City, scenario, saved spots, and checks are bundled into a quick review path.",
     currentCity: "Current city",
@@ -1396,6 +1402,8 @@ function bindEvents() {
       state.scenario = "";
       state.detailOpen = false;
       syncSelected();
+      focusFilteredMapIfNeeded();
+      if (state.panel === "map") setSheetMode("collapsed");
       renderQuickRail();
       renderSheet();
       renderMarkers();
@@ -1452,6 +1460,12 @@ function bindEvents() {
     const reportOpenButton = event.target.closest("[data-open-report]");
     if (reportOpenButton) {
       setPanel("report");
+      return;
+    }
+
+    const copySpotButton = event.target.closest("[data-copy-spot]");
+    if (copySpotButton) {
+      copySpotSummary(copySpotButton.dataset.copySpot);
       return;
     }
 
@@ -2181,6 +2195,7 @@ function renderMapFirstHint(list) {
     <section class="spot-card map-hint-card">
       <h3>${tr("mapFirstTitle")}</h3>
       <p>${tr("mapFirstHelp")}</p>
+      ${renderMarkerLegend()}
       <div class="map-action-card">
         <div>
           <strong>${tr("mapQuickTitle")}</strong>
@@ -2200,6 +2215,21 @@ function renderMapFirstHint(list) {
         ${riskTypes.map((risk) => filterChip(risk)).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderMarkerLegend() {
+  return `
+    <div class="marker-legend" aria-label="${tr("markerLegend")}">
+      <span>${tr("markerLegend")}</span>
+      <div>
+        ${reportTypes.map((risk) => `
+          <button type="button" data-risk-filter="${risk.key}" class="${state.filter === risk.key ? "is-active" : ""}">
+            <span aria-hidden="true">${risk.emoji}</span>${riskLabel(risk.key)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
   `;
 }
 
@@ -2234,10 +2264,11 @@ function renderSpotBrief(spot) {
         <span>${tr("quickAction")}</span>
         <strong>${spot.action[state.lang]}</strong>
       </div>
-      <div class="detail-actions brief-actions">
+      <div class="detail-actions brief-actions spot-brief-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
         <button class="primary-button" type="button" data-open-detail>${icon("list")}${tr("openDetail")}</button>
+        <button class="text-button" type="button" data-copy-spot="${spot.id}">${icon("copy")}${tr("copySpot")}</button>
         <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
       </div>
     </section>
@@ -2683,6 +2714,24 @@ function filteredSpots() {
       return (b.level + getVisibleReportsForSpot(b.id).length * 3) - (a.level + getVisibleReportsForSpot(a.id).length * 3);
     });
   return filteredSpotsCache;
+}
+
+function focusFilteredMapIfNeeded() {
+  if (!map) return;
+  const list = filteredSpots();
+  if (!list.length) return;
+
+  const currentBounds = map.getBounds?.();
+  if (currentBounds?.pad(0.08).contains([list[0].lat, list[0].lng])) return;
+  if (currentBounds && list.some((spot) => currentBounds.pad(0.02).contains([spot.lat, spot.lng]))) return;
+
+  if (state.city && list.length > 1) {
+    const bounds = L.latLngBounds(list.map((spot) => [spot.lat, spot.lng]));
+    map.fitBounds(bounds, { padding: [46, 46], maxZoom: 14, animate: false });
+  } else {
+    map.setView([list[0].lat, list[0].lng], Math.max(map.getZoom(), 13), { animate: false });
+  }
+  scheduleMapResize(80);
 }
 
 function syncSelected() {
@@ -3280,6 +3329,8 @@ function applyScenario(key) {
   state.filter = "all";
   state.detailOpen = false;
   syncSelected();
+  focusFilteredMapIfNeeded();
+  if (state.panel === "map") setSheetMode("collapsed");
   renderQuickRail();
   renderSheet();
   renderMarkers();
@@ -3400,6 +3451,25 @@ function copySavedBrief() {
     return;
   }
   copyText(savedBriefText(saved)).then(() => showToast(tr("briefCopied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+function copySpotSummary(id) {
+  const spot = spotById.get(id);
+  if (!spot) return;
+  copyText(spotSummaryText(spot)).then(() => showToast(tr("spotCopied"))).catch(() => showToast(tr("copyFailed")));
+}
+
+function spotSummaryText(spot) {
+  const liveRisk = getLiveRisk(spot);
+  return [
+    `[${tr("brand")}] ${riskEmoji(liveRisk)} ${spot.name[state.lang]}`,
+    `${tr("city")}: ${cities[spot.city].label[state.lang]} / ${spot.area[state.lang]}`,
+    `${tr("risk")}: ${riskLabel(liveRisk)} / ${tr("timing")}: ${spot.time[state.lang]}`,
+    `${tr("oneLineRisk")}: ${spot.pattern[state.lang]}`,
+    `${tr("quickAction")}: ${spot.action[state.lang]}`,
+    `${tr("after")}: ${spot.after[state.lang]}`,
+    mapsUrl(spot)
+  ].join("\n");
 }
 
 function savedBriefText(saved) {
