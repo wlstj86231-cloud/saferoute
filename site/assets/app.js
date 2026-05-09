@@ -1146,6 +1146,7 @@ let reportSyncAvailable = true;
 let reportLastFailureAt = 0;
 let reportServerFingerprint = "";
 let searchRenderFrame = 0;
+let mapResizeTimer = 0;
 
 startWhenReady();
 
@@ -1514,7 +1515,15 @@ function setSheetMode(mode) {
   const expanded = mode === "expanded";
   sheet.classList.toggle("is-expanded", expanded);
   sheet.classList.toggle("is-collapsed", !expanded);
-  window.setTimeout(() => map.invalidateSize(), 180);
+  scheduleMapResize(180);
+}
+
+function scheduleMapResize(delay = 180) {
+  window.clearTimeout(mapResizeTimer);
+  mapResizeTimer = window.setTimeout(() => {
+    mapResizeTimer = 0;
+    map?.invalidateSize?.();
+  }, delay);
 }
 
 function previewSheetDrag(deltaY) {
