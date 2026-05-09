@@ -1145,6 +1145,7 @@ let reportSyncInFlight = false;
 let reportSyncAvailable = true;
 let reportLastFailureAt = 0;
 let reportServerFingerprint = "";
+let searchRenderFrame = 0;
 
 startWhenReady();
 
@@ -1249,10 +1250,7 @@ function bindEvents() {
   spotSearch.addEventListener("input", (event) => {
     state.query = event.target.value.trim();
     searchClear.hidden = !state.query;
-    syncSelected();
-    renderSheet();
-    renderMarkers();
-    refreshStatus();
+    scheduleSearchRender();
   });
 
   spotSearch.addEventListener("keydown", (event) => {
@@ -2529,6 +2527,18 @@ function syncSelected() {
   if (!list.some((spot) => spot.id === state.selectedId)) {
     state.selectedId = "";
   }
+}
+
+function scheduleSearchRender() {
+  if (searchRenderFrame) return;
+  const schedule = window.requestAnimationFrame || ((callback) => window.setTimeout(callback, 16));
+  searchRenderFrame = schedule(() => {
+    searchRenderFrame = 0;
+    syncSelected();
+    renderSheet();
+    renderMarkers();
+    refreshStatus();
+  });
 }
 
 function checkProgress() {

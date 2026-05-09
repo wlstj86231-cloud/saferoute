@@ -1900,7 +1900,55 @@ button.spot-card {
     font-size: 11px;
   }
 
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
+.info-grid {
+  grid-template-columns: 1fr;
+}
+}
+
+/* Performance pass */
+.map-surface,
+.bottom-sheet,
+.bottom-nav,
+.topbar,
+.search-panel,
+.quick-rail {
+  contain: layout paint style;
+}
+
+.spot-card,
+.city-card,
+.guide-card,
+.panic-card,
+.check-card,
+.decision-card,
+.routine-card,
+.loop-card,
+.brief-card,
+.compare-card,
+.incident-card,
+.playbook-card,
+.drill-card,
+.progress-card,
+.feedback-card,
+.feed-item {
+  contain: layout paint;
+}
+
+.spot-list,
+.live-feed,
+.report-form {
+  contain: layout style;
+  content-visibility: auto;
+  contain-intrinsic-size: 360px;
+}
+
+.topbar,
+.search-panel,
+.bottom-sheet,
+.bottom-nav {
+  backdrop-filter: blur(10px);
+}
+
+.sum-marker {
+  will-change: transform;
 }
