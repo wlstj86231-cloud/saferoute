@@ -418,9 +418,9 @@ a {
 .sheet-grip {
   display: block;
   position: relative;
-  width: 92px;
-  height: 32px;
-  margin: -4px auto 6px;
+  width: 112px;
+  height: 44px;
+  margin: -8px auto 0;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -434,7 +434,7 @@ a {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 52px;
+  width: 58px;
   height: 5px;
   border-radius: 999px;
   background: #cfd9d8;
@@ -449,6 +449,14 @@ a {
 .sheet-grip:focus-visible {
   outline: 3px solid rgba(23, 138, 112, 0.28);
   outline-offset: 2px;
+}
+
+.bottom-sheet {
+  transform: translateY(var(--sheet-drag-offset, 0));
+}
+
+.bottom-sheet.is-dragging {
+  transition: none !important;
 }
 
 .sheet-head {
@@ -1469,7 +1477,7 @@ button.spot-card {
   }
 
   .bottom-sheet.is-collapsed {
-    max-height: 44px;
+    max-height: 56px;
     overflow: hidden;
     padding: 6px 12px;
   }
@@ -1513,7 +1521,7 @@ button.spot-card {
   }
 
   .bottom-sheet.is-expanded {
-    max-height: min(60dvh, 520px);
+    max-height: min(50dvh, 430px);
   }
 
   .playbook-grid {
@@ -1578,11 +1586,11 @@ button.spot-card {
   }
 
   .bottom-sheet.is-collapsed {
-    max-height: 44px;
+    max-height: 56px;
   }
 
   .bottom-sheet.is-expanded {
-    max-height: min(60dvh, 510px);
+    max-height: min(49dvh, 420px);
   }
 
   .sheet-head h1,

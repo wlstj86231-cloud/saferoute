@@ -79,6 +79,7 @@ const dictionary = {
     risk: "위험 유형",
     details: "상세",
     showMap: "지도 보기",
+    sheetToggle: "패널 열고 닫기",
     quickTransit: "지하철 탑승",
     quickPhoto: "사진 찍을 때",
     quickCafe: "카페·식당",
@@ -240,6 +241,7 @@ const dictionary = {
     risk: "Risk type",
     details: "Details",
     showMap: "Show map",
+    sheetToggle: "Open or close panel",
     quickTransit: "Using metro",
     quickPhoto: "Taking photos",
     quickCafe: "Cafe/restaurant",
@@ -1073,6 +1075,7 @@ let baseMapLayer;
 const markers = new Map();
 let sheetPointerStartY = null;
 let sheetPointerStartX = null;
+let sheetPointerStartMode = "";
 let sheetPointerMoved = false;
 let ignoreNextSheetToggleClick = false;
 
@@ -1207,7 +1210,10 @@ function bindEvents() {
     if (!handle) return;
     sheetPointerStartY = event.clientY;
     sheetPointerStartX = event.clientX;
+    sheetPointerStartMode = sheet.classList.contains("is-collapsed") ? "collapsed" : "expanded";
     sheetPointerMoved = false;
+    sheet.classList.add("is-dragging");
+    sheet.style.setProperty("--sheet-drag-offset", "0px");
     try {
       handle.setPointerCapture?.(event.pointerId);
     } catch {
@@ -1225,6 +1231,7 @@ function bindEvents() {
     }
     if (Math.abs(deltaY) > 12 && Math.abs(deltaY) > Math.abs(deltaX)) {
       event.preventDefault();
+      previewSheetDrag(deltaY);
     }
   });
 
@@ -1233,9 +1240,7 @@ function bindEvents() {
 
     const deltaY = event.clientY - sheetPointerStartY;
     const moved = sheetPointerMoved;
-    sheetPointerStartY = null;
-    sheetPointerStartX = null;
-    sheetPointerMoved = false;
+    clearSheetDragState();
     if (Math.abs(deltaY) < 28) {
       if (moved) {
         ignoreNextSheetToggleClick = true;
@@ -1254,9 +1259,7 @@ function bindEvents() {
   });
 
   sheet.addEventListener("pointercancel", () => {
-    sheetPointerStartY = null;
-    sheetPointerStartX = null;
-    sheetPointerMoved = false;
+    clearSheetDragState();
   });
 
   sheet.addEventListener("click", (event) => {
@@ -1392,6 +1395,23 @@ function setSheetMode(mode) {
   sheet.classList.toggle("is-expanded", expanded);
   sheet.classList.toggle("is-collapsed", !expanded);
   window.setTimeout(() => map.invalidateSize(), 180);
+}
+
+function previewSheetDrag(deltaY) {
+  const maxOffset = 88;
+  const offset = sheetPointerStartMode === "collapsed"
+    ? Math.min(0, Math.max(deltaY, -maxOffset))
+    : Math.max(0, Math.min(deltaY, maxOffset));
+  sheet.style.setProperty("--sheet-drag-offset", `${Math.round(offset)}px`);
+}
+
+function clearSheetDragState() {
+  sheetPointerStartY = null;
+  sheetPointerStartX = null;
+  sheetPointerStartMode = "";
+  sheetPointerMoved = false;
+  sheet.classList.remove("is-dragging");
+  sheet.style.removeProperty("--sheet-drag-offset");
 }
 
 function setSearchPanel(open, focus = false) {
@@ -1998,7 +2018,7 @@ function renderEmpty() {
 }
 
 function sheetGrip() {
-  return `<button class="sheet-grip" type="button" data-sheet-toggle aria-label="${tr("showMap")}"></button>`;
+  return `<button class="sheet-grip" type="button" data-sheet-toggle aria-label="${tr("sheetToggle")}"></button>`;
 }
 
 function filterChip(risk) {
