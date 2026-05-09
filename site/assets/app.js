@@ -1147,6 +1147,9 @@ let reportLastFailureAt = 0;
 let reportServerFingerprint = "";
 let searchRenderFrame = 0;
 let mapResizeTimer = 0;
+let sheetHtmlCache = "";
+let markerRenderKey = "";
+let quickRailHtmlCache = "";
 
 startWhenReady();
 
@@ -1603,27 +1606,36 @@ function applyLanguage() {
 }
 
 function renderQuickRail() {
-  quickRail.innerHTML = scenarios.map((scenario) => `
+  const nextHtml = scenarios.map((scenario) => `
     <button type="button" class="quick-chip ${state.scenario === scenario.key ? "is-active" : ""}" data-scenario="${scenario.key}">
       <span aria-hidden="true">${scenario.emoji}</span>
       <strong>${tr(scenario.label)}</strong>
     </button>
   `).join("");
+  if (quickRailHtmlCache !== nextHtml) {
+    quickRail.innerHTML = nextHtml;
+    quickRailHtmlCache = nextHtml;
+  }
 }
 
 function renderSheet() {
+  let nextHtml = "";
   if (state.panel === "cities") {
-    sheet.innerHTML = renderCities();
+    nextHtml = renderCities();
   } else if (state.panel === "panic") {
-    sheet.innerHTML = renderPanic();
+    nextHtml = renderPanic();
   } else if (state.panel === "saved") {
-    sheet.innerHTML = renderSaved();
+    nextHtml = renderSaved();
   } else if (state.panel === "check") {
-    sheet.innerHTML = renderCheck();
+    nextHtml = renderCheck();
   } else if (state.panel === "report") {
-    sheet.innerHTML = renderReportPanel();
+    nextHtml = renderReportPanel();
   } else {
-    sheet.innerHTML = renderMapPanel();
+    nextHtml = renderMapPanel();
+  }
+  if (sheetHtmlCache !== nextHtml) {
+    sheet.innerHTML = nextHtml;
+    sheetHtmlCache = nextHtml;
   }
 }
 
@@ -3065,6 +3077,9 @@ function selectSpot(id, move) {
 
 function renderMarkers() {
   const list = filteredSpots();
+  const nextRenderKey = `${state.selectedId}|${list.map((spot) => `${spot.id}:${getLiveRisk(spot)}`).join("|")}`;
+  if (markerRenderKey === nextRenderKey) return;
+  markerRenderKey = nextRenderKey;
   const visible = new Set(list.map((spot) => spot.id));
   markers.forEach((marker, id) => {
     if (!visible.has(id)) {
