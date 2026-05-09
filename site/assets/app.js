@@ -153,6 +153,11 @@ const dictionary = {
     latestUpdateDate: "2026.05 갱신",
     updateSourceBadge: "공식 안내 기반",
     expandedSpotLabel: "추가 스팟",
+    priorityTitle: "먼저 볼 위험 신호",
+    priorityDesc: "현재 조건에서 위험도와 최근 제보 신호가 높은 곳부터 짧게 골랐어요.",
+    popularCities: "빠른 도시 선택",
+    openSpot: "바로 보기",
+    distanceLabel: "거리",
     averageRisk: "평균 위험",
     focusTime: "주의 시간",
     strongestSignals: "강한 신호",
@@ -352,6 +357,11 @@ const dictionary = {
     latestUpdateDate: "Updated 2026.05",
     updateSourceBadge: "Official guidance based",
     expandedSpotLabel: "Added spots",
+    priorityTitle: "Signals to check first",
+    priorityDesc: "A short list ranked by current filters, risk level, and live report signals.",
+    popularCities: "Quick city switch",
+    openSpot: "Open",
+    distanceLabel: "Distance",
     averageRisk: "Average risk",
     focusTime: "Watch time",
     strongestSignals: "Strong signals",
@@ -2564,6 +2574,7 @@ function renderMapPanel() {
     ${introHead}
     ${contextTools()}
     ${selected ? state.detailOpen ? renderSpotDetail(selected) : renderSpotBrief(selected) : renderMapFirstHint(list)}
+    ${selected && !state.detailOpen ? renderCityBrief(list, selected) : ""}
     ${selected && !state.detailOpen ? renderMapNextRail(list, selected) : ""}
   `;
 }
@@ -3048,8 +3059,66 @@ function renderMapFirstHint(list) {
         <div><span>${tr("quickLabel")}</span><strong>${scenarios.slice(0, 3).map((item) => item.emoji).join(" ")}</strong></div>
       </div>
       ${renderLatestUpdate(list)}
+      ${renderCityShortcutRail()}
+      ${renderPriorityStack(list)}
       <div class="filter-row compact-filter-row">
         ${riskTypes.map((risk) => filterChip(risk)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderCityShortcutRail() {
+  const priorityCities = Object.entries(cities)
+    .map(([key, city]) => {
+      const citySpots = spots.filter((spot) => spot.city === key);
+      return { key, city, count: citySpots.length, average: averageRisk(citySpots), top: cityRiskMix(citySpots)[0] };
+    })
+    .sort((a, b) => b.count - a.count || b.average - a.average);
+  return `
+    <div class="city-shortcut-card">
+      <span>${tr("popularCities")}</span>
+      <div class="city-shortcut-rail">
+        ${priorityCities.map((item) => `
+          <button type="button" class="${state.city === item.key ? "is-active" : ""}" data-open-city="${item.key}">
+            <strong>${item.city.label[state.lang]}</strong>
+            <em>${countSpots(item.count)} · ${riskEmoji(item.top?.key)} ${riskLabel(item.top?.key)}</em>
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderPriorityStack(list) {
+  if (!list.length) return renderEmpty();
+  const selected = spotById.get(state.selectedId);
+  const queue = routeQueue(list, selected).slice(0, 3);
+  return `
+    <section class="priority-card">
+      <div class="priority-head">
+        <div>
+          <span>${tr("priorityTitle")}</span>
+          <p>${tr("priorityDesc")}</p>
+        </div>
+        <strong>${queue.length}</strong>
+      </div>
+      <div class="priority-list">
+        ${queue.map((spot, index) => {
+          const reports = getVisibleReportsForSpot(spot.id);
+          const distance = state.userPosition ? `<em>${tr("distanceLabel")} ${formatDistance(distanceTo(spot))}</em>` : "";
+          return `
+            <button type="button" class="priority-item ${index === 0 ? "is-first" : ""}" data-spot-id="${spot.id}">
+              <span>${riskEmoji(getLiveRisk(spot))}</span>
+              <div>
+                <strong>${spot.name[state.lang]}</strong>
+                <small>${cities[spot.city].label[state.lang]} · ${riskLabel(spot.risk)} · ${reports.length ? `${reports.length} ${tr("liveReports")}` : spot.time[state.lang]}</small>
+                ${distance}
+              </div>
+              <b>${tr("openSpot")}</b>
+            </button>
+          `;
+        }).join("")}
       </div>
     </section>
   `;
@@ -3121,11 +3190,11 @@ function renderSpotBrief(spot) {
         <strong>${spot.action[state.lang]}</strong>
       </div>
       <div class="detail-actions brief-actions spot-brief-actions">
-        <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
-        <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
         <button class="primary-button" type="button" data-open-detail>${icon("list")}${tr("openDetail")}</button>
-        <button class="text-button" type="button" data-copy-spot="${spot.id}">${icon("copy")}${tr("copySpot")}</button>
+        <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
+        <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
+        <button class="text-button" type="button" data-copy-spot="${spot.id}">${icon("copy")}${tr("copySpot")}</button>
       </div>
     </section>
   `;
@@ -4170,8 +4239,8 @@ function markerIcon(html) {
   return L.divIcon({
     html,
     className: "sum-marker-wrap",
-    iconSize: [42, 42],
-    iconAnchor: [21, 42]
+    iconSize: [48, 48],
+    iconAnchor: [24, 48]
   });
 }
 
@@ -4430,6 +4499,12 @@ function distanceTo(spot) {
     Math.sin(dLat / 2) ** 2 +
     Math.cos(toRad(state.userPosition.lat)) * Math.cos(toRad(spot.lat)) * Math.sin(dLng / 2) ** 2;
   return radius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function formatDistance(meters) {
+  if (!Number.isFinite(meters)) return "";
+  if (meters < 950) return `${Math.max(30, Math.round(meters / 10) * 10)}m`;
+  return `${(meters / 1000).toFixed(meters < 10000 ? 1 : 0)}km`;
 }
 
 function tr(key) {

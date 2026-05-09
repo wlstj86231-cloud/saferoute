@@ -384,8 +384,8 @@ a {
 .sum-marker {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px 999px 999px 3px;
   transform: rotate(45deg);
   color: #ffffff;
@@ -408,6 +408,10 @@ a {
 .marker-night { background: #3f5262; }
 .marker-selected {
   outline: 4px solid rgba(23, 138, 112, 0.28);
+}
+
+.sum-marker-wrap {
+  touch-action: manipulation;
 }
 
 .bottom-sheet {
@@ -842,6 +846,163 @@ button.spot-card {
   font-size: 12px;
   font-style: normal;
   line-height: 1.4;
+}
+
+.city-shortcut-card,
+.priority-card {
+  display: grid;
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid #d5ece4;
+  border-radius: 8px;
+  background: #fbfdfb;
+}
+
+.city-shortcut-card > span,
+.priority-head span {
+  color: #126653;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.city-shortcut-rail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.city-shortcut-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.city-shortcut-rail button {
+  display: grid;
+  gap: 4px;
+  flex: 0 0 auto;
+  min-width: 132px;
+  min-height: 58px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface);
+  text-align: left;
+}
+
+.city-shortcut-rail button.is-active {
+  color: #0e6d58;
+  background: var(--green-soft);
+  border-color: #82d3bd;
+  box-shadow: inset 3px 0 0 #45b995;
+}
+
+.city-shortcut-rail strong,
+.city-shortcut-rail em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.city-shortcut-rail strong {
+  font-size: 14px;
+}
+
+.city-shortcut-rail em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.priority-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.priority-head p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.priority-head > strong {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  min-width: 38px;
+  height: 38px;
+  border: 1px solid #cce8df;
+  border-radius: 8px;
+  color: #136451;
+  background: var(--green-soft);
+  font-size: 16px;
+}
+
+.priority-list {
+  display: grid;
+  gap: 8px;
+}
+
+.priority-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 68px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface);
+  text-align: left;
+}
+
+.priority-item.is-first {
+  border-color: rgba(23, 138, 112, 0.26);
+  background: linear-gradient(180deg, #f3fbf8, #ffffff);
+  box-shadow: inset 3px 0 0 #45b995;
+}
+
+.priority-item > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #f2f6f5;
+  font-size: 19px;
+}
+
+.priority-item strong,
+.priority-item small,
+.priority-item em {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.priority-item strong {
+  font-size: 14px;
+  line-height: 1.28;
+}
+
+.priority-item small,
+.priority-item em {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.priority-item b {
+  color: #0e6d58;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .brief-actions {
@@ -1321,6 +1482,7 @@ button.spot-card {
 
 .spot-brief-actions .primary-button {
   grid-column: 1 / -1;
+  min-height: 48px;
 }
 
 .compare-list {
@@ -1861,11 +2023,13 @@ button.spot-card {
   .bottom-sheet.is-collapsed .routine-card,
   .bottom-sheet.is-collapsed .loop-card,
   .bottom-sheet.is-collapsed .brief-card,
+  .bottom-sheet.is-collapsed .city-shortcut-card,
   .bottom-sheet.is-collapsed .compare-card,
   .bottom-sheet.is-collapsed .incident-card,
   .bottom-sheet.is-collapsed .playbook-card,
   .bottom-sheet.is-collapsed .drill-card,
   .bottom-sheet.is-collapsed .progress-card,
+  .bottom-sheet.is-collapsed .priority-card,
   .bottom-sheet.is-collapsed .spot-card,
   .bottom-sheet.is-collapsed .spot-list,
   .bottom-sheet.is-collapsed .guide-card,
