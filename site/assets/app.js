@@ -1071,6 +1071,10 @@ let markerLayer;
 let userMarker;
 let baseMapLayer;
 const markers = new Map();
+let sheetPointerStartY = null;
+let sheetPointerStartX = null;
+let sheetPointerMoved = false;
+let ignoreNextSheetToggleClick = false;
 
 startWhenReady();
 
@@ -1198,6 +1202,63 @@ function bindEvents() {
     applyScenario(button.dataset.scenario);
   });
 
+  sheet.addEventListener("pointerdown", (event) => {
+    const handle = event.target.closest("[data-sheet-toggle]");
+    if (!handle) return;
+    sheetPointerStartY = event.clientY;
+    sheetPointerStartX = event.clientX;
+    sheetPointerMoved = false;
+    try {
+      handle.setPointerCapture?.(event.pointerId);
+    } catch {
+      // Synthetic pointer events used by some test runners do not own capture.
+    }
+  });
+
+  sheet.addEventListener("pointermove", (event) => {
+    if (sheetPointerStartY === null || sheetPointerStartX === null) return;
+
+    const deltaY = event.clientY - sheetPointerStartY;
+    const deltaX = event.clientX - sheetPointerStartX;
+    if (Math.abs(deltaY) > 6 || Math.abs(deltaX) > 6) {
+      sheetPointerMoved = true;
+    }
+    if (Math.abs(deltaY) > 12 && Math.abs(deltaY) > Math.abs(deltaX)) {
+      event.preventDefault();
+    }
+  });
+
+  sheet.addEventListener("pointerup", (event) => {
+    if (sheetPointerStartY === null) return;
+
+    const deltaY = event.clientY - sheetPointerStartY;
+    const moved = sheetPointerMoved;
+    sheetPointerStartY = null;
+    sheetPointerStartX = null;
+    sheetPointerMoved = false;
+    if (Math.abs(deltaY) < 28) {
+      if (moved) {
+        ignoreNextSheetToggleClick = true;
+        window.setTimeout(() => {
+          ignoreNextSheetToggleClick = false;
+        }, 0);
+      }
+      return;
+    }
+
+    setSheetMode(deltaY > 0 ? "collapsed" : "expanded");
+    ignoreNextSheetToggleClick = true;
+    window.setTimeout(() => {
+      ignoreNextSheetToggleClick = false;
+    }, 0);
+  });
+
+  sheet.addEventListener("pointercancel", () => {
+    sheetPointerStartY = null;
+    sheetPointerStartX = null;
+    sheetPointerMoved = false;
+  });
+
   sheet.addEventListener("click", (event) => {
     const collapse = event.target.closest("[data-sheet-collapse]");
     if (collapse) {
@@ -1207,7 +1268,10 @@ function bindEvents() {
 
     const toggle = event.target.closest("[data-sheet-toggle]");
     if (toggle) {
-      setSheetMode(sheet.classList.contains("is-collapsed") ? "expanded" : "collapsed");
+      if (!ignoreNextSheetToggleClick) {
+        setSheetMode(sheet.classList.contains("is-collapsed") ? "expanded" : "collapsed");
+      }
+      ignoreNextSheetToggleClick = false;
       return;
     }
 

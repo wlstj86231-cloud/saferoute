@@ -417,11 +417,38 @@ a {
 
 .sheet-grip {
   display: block;
-  width: 48px;
+  position: relative;
+  width: 92px;
+  height: 32px;
+  margin: -4px auto 6px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  appearance: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.sheet-grip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 52px;
   height: 5px;
-  margin: 0 auto 12px;
   border-radius: 999px;
   background: #cfd9d8;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 0 0 1px rgba(72, 91, 98, 0.08);
+  transform: translate(-50%, -50%);
+}
+
+.sheet-grip:active {
+  cursor: grabbing;
+}
+
+.sheet-grip:focus-visible {
+  outline: 3px solid rgba(23, 138, 112, 0.28);
+  outline-offset: 2px;
 }
 
 .sheet-head {
@@ -1442,9 +1469,9 @@ button.spot-card {
   }
 
   .bottom-sheet.is-collapsed {
-    max-height: 30px;
+    max-height: 44px;
     overflow: hidden;
-    padding: 7px 12px 8px;
+    padding: 6px 12px;
   }
 
   .bottom-sheet.is-collapsed .sheet-grip {
@@ -1551,7 +1578,7 @@ button.spot-card {
   }
 
   .bottom-sheet.is-collapsed {
-    max-height: 30px;
+    max-height: 44px;
   }
 
   .bottom-sheet.is-expanded {
