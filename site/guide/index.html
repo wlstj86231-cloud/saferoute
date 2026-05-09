@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
@@ -11,10 +11,19 @@
     <meta property="og:title" content="해외여행 도난·스캠 예방 가이드">
     <meta property="og:description" content="역, 사진 명소, 카페, 야간 이동, 피해 직후 대응까지 여행자가 현장에서 바로 확인할 수 있는 체크리스트.">
     <meta property="og:url" content="https://tripmarking.com/guide/">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054" crossorigin="anonymous"></script>
+    <script>
+      window.addEventListener("load", () => {
+        if (!["tripmarking.com", "www.tripmarking.com"].includes(location.hostname)) return;
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054";
+        script.crossOrigin = "anonymous";
+        document.head.appendChild(script);
+      }, { once: true });
+    </script>
     <meta name="google-adsense-account" content="ca-pub-7217591196020054">
     <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="https://tripmarking.com/feed.xml">
-    <link rel="stylesheet" href="/assets/styles.css?v=20260509-perf3">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260509-tripmarking4">
   </head>
   <body>
     <main class="static-shell">
@@ -48,6 +57,16 @@
       <h2>도시별로 보는 방식</h2>
       <p>바르셀로나, 파리, 로마처럼 유명 관광지와 대중교통 혼잡이 겹치는 도시는 사진 명소와 환승 구간을 먼저 봅니다. 런던, 뉴욕처럼 큰 도시에서는 휴대폰을 도로 쪽 손에 들고 길찾기 하는 습관을 줄이는 것이 좋습니다. 방콕, 이스탄불처럼 관광지 접근 제안이 많은 곳에서는 공식 입구, 공식 요금, 호출앱 기준을 먼저 확인합니다.</p>
       <p>도쿄나 암스테르담처럼 비교적 질서가 잡힌 도시라도 야간 귀가, 술자리 후 이동, 역 환승 중 소지품 분산은 별도로 봐야 합니다. 도시별 자세한 기준은 <a href="/cities/">도시별 주의 맥락</a>에서 이어서 확인할 수 있습니다.</p>
+      <div class="cluster-links">
+        <strong>장소별로 바로 확인하기</strong>
+        <ul>
+          <li><a href="/barcelona-pickpocket-guide/">바르셀로나 소매치기 주의 가이드</a></li>
+          <li><a href="/barcelona/la-rambla-pickpocket/">람블라스 거리와 보케리아 주변 소매치기 대처</a></li>
+          <li><a href="/barcelona/catalunya-metro-pickpocket/">카탈루냐 광장 지하철 환승 소매치기 주의</a></li>
+          <li><a href="/barcelona/sagrada-familia-scam/">사그라다 파밀리아 사진 대기 구역 스캠 주의</a></li>
+          <li><a href="/barcelona/barceloneta-beach-bag-theft/">바르셀로네타 해변·테라스 가방 도난 주의</a></li>
+        </ul>
+      </div>
       <p><a href="/field-notes/">현장 판단 기준 읽기</a> · <a href="/">앱으로 돌아가기</a></p>
     </main>
   </body>

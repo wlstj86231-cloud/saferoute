@@ -1681,6 +1681,67 @@ button.spot-card {
   line-height: 1.7;
 }
 
+.static-shell img {
+  max-width: 100%;
+}
+
+.static-shot {
+  margin: 22px 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.static-shot img {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.static-shot figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.keyword-map,
+.editor-note,
+.cluster-links {
+  margin: 22px 0;
+  padding: 16px;
+  border: 1px solid #d5ece4;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f6fbf8, #ffffff);
+}
+
+.keyword-map strong,
+.editor-note strong,
+.cluster-links strong {
+  display: block;
+  color: #126653;
+}
+
+.keyword-map ul,
+.cluster-links ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.use-steps {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.use-steps li {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
 @media (min-width: 780px) {
   .topbar,
   .search-panel,

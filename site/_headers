@@ -9,6 +9,12 @@
 /about/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/barcelona-pickpocket-guide/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/barcelona/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /cities/*
   Cache-Control: public, max-age=0, must-revalidate
 
