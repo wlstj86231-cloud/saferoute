@@ -484,6 +484,7 @@ const reportTypes = riskTypes.filter((risk) => risk.key !== "all");
 const allowedReportKeys = new Set(reportTypes.map((risk) => risk.key));
 const reportClientStorageKey = "saferoute:reportClientId";
 const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://saferoute.kr/api/reports" : "/api/reports";
+const feedbackApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://saferoute.kr/api/feedback" : "/api/feedback";
 const reportSyncIntervalMs = 2000;
 const reportRetryIntervalMs = 15000;
 const reportClientId = readStableClientId(reportClientStorageKey);
@@ -1086,7 +1087,8 @@ const icons = {
   link: `<path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/>`,
   map: `<path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/>`,
   list: `<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>`,
-  plus: `<path d="M12 5v14M5 12h14"/>`
+  plus: `<path d="M12 5v14M5 12h14"/>`,
+  send: `<path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4 18-7Z"/>`
 };
 
 const state = {
@@ -1118,6 +1120,7 @@ const searchToggle = document.querySelector("#searchToggle");
 const searchClear = document.querySelector("#searchClear");
 const spotSearch = document.querySelector("#spotSearch");
 const languageToggle = document.querySelector("#languageToggle");
+const feedbackButton = document.querySelector("#feedbackButton");
 const locateButton = document.querySelector("#locateButton");
 
 let map;
@@ -1221,6 +1224,7 @@ function bindEvents() {
   searchToggle.addEventListener("click", () => setSearchPanel(searchPanel.hidden, true));
   searchClear.addEventListener("click", clearSearch);
   languageToggle.addEventListener("click", toggleLanguage);
+  feedbackButton?.addEventListener("click", openFeedbackDialog);
   locateButton.addEventListener("click", locateUser);
 
   spotSearch.addEventListener("input", (event) => {
@@ -1470,6 +1474,14 @@ function bindEvents() {
     event.preventDefault();
     saveIncidentNote(form);
   });
+
+  document.addEventListener("click", handleFeedbackClick);
+  document.addEventListener("submit", handleFeedbackSubmit);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && document.querySelector(".feedback-overlay")) {
+      closeFeedbackDialog();
+    }
+  });
 }
 
 function setPanel(panel) {
@@ -1549,6 +1561,7 @@ function applyLanguage() {
   searchClear.setAttribute("aria-label", tr("clearSearch"));
   languageToggle.setAttribute("aria-label", state.lang === "ko" ? tr("translateToEnglish") : tr("translateToKorean"));
   languageToggle.setAttribute("aria-pressed", String(state.lang === "en"));
+  feedbackButton?.setAttribute("aria-label", feedbackCopy("buttonLabel"));
   languageToggle.querySelector(".language-code").textContent = state.lang === "ko" ? "EN" : "한";
   spotSearch.placeholder = tr("searchPlaceholder");
   document.querySelector(".city-strip").setAttribute("aria-label", tr("cityButtonLabel"));
@@ -2211,6 +2224,188 @@ function renderReportFeed(reports) {
       `).join("")}
     </div>
   `;
+}
+
+function openFeedbackDialog() {
+  document.querySelector(".feedback-overlay")?.remove();
+  document.body.insertAdjacentHTML("beforeend", renderFeedbackDialog());
+  window.requestAnimationFrame(() => {
+    document.querySelector("#feedbackMessage")?.focus();
+  });
+}
+
+function closeFeedbackDialog() {
+  document.querySelector(".feedback-overlay")?.remove();
+}
+
+function handleFeedbackClick(event) {
+  const close = event.target.closest("[data-feedback-close]");
+  if (close && (close.matches("button") || event.target === close)) {
+    closeFeedbackDialog();
+    return;
+  }
+
+  const kind = event.target.closest("[data-feedback-kind]");
+  if (!kind) return;
+  const form = kind.closest("#feedbackForm");
+  if (!form) return;
+  form.elements.kind.value = kind.dataset.feedbackKind;
+  form.querySelectorAll("[data-feedback-kind]").forEach((button) => {
+    const active = button === kind;
+    button.classList.toggle("is-selected", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function handleFeedbackSubmit(event) {
+  const form = event.target.closest("#feedbackForm");
+  if (!form) return;
+  event.preventDefault();
+  submitFeedback(form);
+}
+
+function renderFeedbackDialog() {
+  const kinds = [
+    ["idea", "💬", feedbackCopy("kindIdea")],
+    ["bug", "🛠️", feedbackCopy("kindBug")],
+    ["question", "❓", feedbackCopy("kindQuestion")]
+  ];
+  return `
+    <div class="feedback-overlay" data-feedback-close>
+      <section class="feedback-card" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+        <div class="feedback-head">
+          <div>
+            <span class="feedback-kicker">${feedbackCopy("kicker")}</span>
+            <h2 id="feedbackTitle">${feedbackCopy("title")}</h2>
+            <p>${feedbackCopy("desc")}</p>
+          </div>
+          <button class="feedback-close" type="button" data-feedback-close aria-label="${escapeHtml(feedbackCopy("close"))}">×</button>
+        </div>
+        <form id="feedbackForm" class="feedback-form">
+          <input type="hidden" name="kind" value="idea">
+          <div class="feedback-kind-row" aria-label="${escapeHtml(feedbackCopy("kindLabel"))}">
+            ${kinds.map(([key, emoji, label], index) => `
+              <button class="${index === 0 ? "is-selected" : ""}" type="button" data-feedback-kind="${key}" aria-pressed="${index === 0 ? "true" : "false"}">
+                <span aria-hidden="true">${emoji}</span>${label}
+              </button>
+            `).join("")}
+          </div>
+          <label class="feedback-field">
+            <span>${feedbackCopy("messageLabel")}</span>
+            <textarea id="feedbackMessage" name="message" rows="5" maxlength="1200" placeholder="${escapeHtml(feedbackCopy("messagePlaceholder"))}" required></textarea>
+          </label>
+          <label class="feedback-field">
+            <span>${feedbackCopy("contactLabel")}</span>
+            <input name="contact" type="text" maxlength="180" placeholder="${escapeHtml(feedbackCopy("contactPlaceholder"))}">
+          </label>
+          <div class="feedback-actions">
+            <button class="text-button" type="button" data-feedback-close>${feedbackCopy("cancel")}</button>
+            <button class="primary-button" type="submit">${icon("send")}${feedbackCopy("send")}</button>
+          </div>
+          <p class="feedback-note">${feedbackCopy("note")}</p>
+        </form>
+      </section>
+    </div>
+  `;
+}
+
+async function submitFeedback(form) {
+  const data = new FormData(form);
+  const message = String(data.get("message") || "").trim();
+  const contact = String(data.get("contact") || "").trim();
+  const kind = String(data.get("kind") || "idea");
+  if (message.length < 2) {
+    showToast(feedbackCopy("tooShort"));
+    return;
+  }
+
+  const submit = form.querySelector("[type='submit']");
+  submit.disabled = true;
+  const payload = {
+    id: createId(),
+    app: "saferoute",
+    kind,
+    message: message.slice(0, 1200),
+    contact: contact.slice(0, 180),
+    language: state.lang,
+    path: location.pathname,
+    userAgent: navigator.userAgent.slice(0, 180),
+    clientId: reportClientId,
+    createdAt: new Date().toISOString()
+  };
+
+  try {
+    const response = await fetch(feedbackApiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Client-ID": reportClientId
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error(`Feedback failed: ${response.status}`);
+    closeFeedbackDialog();
+    showToast(feedbackCopy("sent"));
+  } catch {
+    saveLocalFeedback(payload);
+    closeFeedbackDialog();
+    showToast(feedbackCopy("localSaved"));
+  } finally {
+    submit.disabled = false;
+  }
+}
+
+function saveLocalFeedback(payload) {
+  const key = "saferoute:feedbackOutbox";
+  const current = Array.isArray(readJson(key, [])) ? readJson(key, []) : [];
+  writeJson(key, [payload, ...current].slice(0, 20));
+}
+
+function feedbackCopy(key) {
+  const ko = {
+    buttonLabel: "그냥 건의 사항",
+    kicker: "편하게 주세요",
+    title: "그냥 건의 사항",
+    desc: "어떤 질문, 개선점, 버그든 짧게 남겨주세요. 여행자가 실제로 오래 쓰는 서비스로 다듬는 데 가장 중요하게 볼게요.",
+    close: "닫기",
+    kindLabel: "피드백 종류",
+    kindIdea: "건의",
+    kindBug: "버그",
+    kindQuestion: "질문",
+    messageLabel: "내용",
+    messagePlaceholder: "예: 지도 이모티콘을 누른 뒤 다시 나오는 흐름이 불편해요.",
+    contactLabel: "답장 받을 연락처 선택",
+    contactPlaceholder: "이메일 또는 닉네임, 비워도 괜찮아요",
+    cancel: "괜찮아요",
+    send: "보내기",
+    note: "여권번호, 상세 숙소, 실명 같은 민감한 정보는 적지 않는 쪽이 안전해요.",
+    tooShort: "조금만 더 적어주세요.",
+    sent: "고마워요. 피드백을 받았어요.",
+    localSaved: "서버 연결이 아직 없어 기기에 임시 저장했어요."
+  };
+  const en = {
+    buttonLabel: "Quick feedback",
+    kicker: "Easy feedback",
+    title: "Quick feedback",
+    desc: "Send any question, bug, or improvement idea. These notes are the fastest way to make the service actually useful for travelers.",
+    close: "Close",
+    kindLabel: "Feedback type",
+    kindIdea: "Idea",
+    kindBug: "Bug",
+    kindQuestion: "Question",
+    messageLabel: "Message",
+    messagePlaceholder: "Example: it is hard to return after tapping a map marker.",
+    contactLabel: "Optional reply contact",
+    contactPlaceholder: "Email or nickname, optional",
+    cancel: "Not now",
+    send: "Send",
+    note: "Please avoid passport numbers, exact lodging details, real names, or other sensitive information.",
+    tooShort: "Please add a little more detail.",
+    sent: "Thank you. Feedback received.",
+    localSaved: "Server connection is not ready, so this was saved on this device."
+  };
+  const source = state.lang === "en" ? en : ko;
+  return source[key] || ko[key] || key;
 }
 
 function renderEmpty() {
