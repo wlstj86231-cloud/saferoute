@@ -587,7 +587,7 @@ const allowedReportKeys = new Set(reportTypes.map((risk) => risk.key));
 const reportClientStorageKey = "tripmarking:reportClientId";
 const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://tripmarking.com/api/reports" : "/api/reports";
 const feedbackApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://tripmarking.com/api/feedback" : "/api/feedback";
-const reportSyncIntervalMs = 2000;
+const reportSyncIntervalMs = 30000;
 const reportRetryIntervalMs = 15000;
 const reportClientId = readStableClientId(reportClientStorageKey);
 
@@ -2081,6 +2081,7 @@ function bootMap() {
   setBaseMapLanguage(state.lang, false);
 
   markerLayer = L.layerGroup().addTo(map);
+  map.on("moveend zoomend", () => renderMarkers());
   map.on("click", () => {
     if (!searchPanel.hidden) setSearchPanel(false);
     if (state.panel === "map") setSheetMode("collapsed");
@@ -4200,8 +4201,8 @@ function selectSpot(id, move) {
 }
 
 function renderMarkers() {
-  const list = filteredSpots();
-  const nextRenderKey = `${state.selectedId}|${list.map((spot) => `${spot.id}:${getLiveRisk(spot)}`).join("|")}`;
+  const list = getMarkerRenderSpots();
+  const nextRenderKey = `${state.selectedId}|${markerViewportKey()}|${list.map((spot) => `${spot.id}:${getLiveRisk(spot)}`).join("|")}`;
   if (markerRenderKey === nextRenderKey) return;
   markerRenderKey = nextRenderKey;
   const visible = new Set(list.map((spot) => spot.id));
@@ -4233,6 +4234,81 @@ function renderMarkers() {
     markers.set(spot.id, marker);
     markerHtmlCache.set(spot.id, html);
   });
+}
+
+function getMarkerRenderSpots() {
+  const list = filteredSpots();
+  if (!map?.getBounds) return list;
+  if (state.query) return limitMarkerSpots(list);
+
+  const bounds = map.getBounds().pad(isCompactViewport() ? 0.32 : 0.24);
+  let visible = list.filter((spot) => bounds.contains([spot.lat, spot.lng]));
+  if (shouldUseCityRepresentativeMarkers()) {
+    visible = cityRepresentativeSpots(visible);
+  }
+
+  visible = limitMarkerSpots(visible);
+
+  return visible;
+}
+
+function limitMarkerSpots(list) {
+  let visible = list;
+  const maxMarkers = maxMarkerCountForZoom(map?.getZoom?.() || 12);
+  if (visible.length > maxMarkers) {
+    visible = visible.slice(0, maxMarkers);
+  }
+
+  const selected = state.selectedId ? filteredSpots().find((spot) => spot.id === state.selectedId) : null;
+  if (selected && !visible.some((spot) => spot.id === selected.id)) {
+    visible.push(selected);
+  }
+  return visible;
+}
+
+function markerViewportKey() {
+  if (!map?.getBounds) return "no-map";
+  const bounds = map.getBounds();
+  return [
+    Math.round(map.getZoom() * 10) / 10,
+    bounds.getSouth().toFixed(2),
+    bounds.getWest().toFixed(2),
+    bounds.getNorth().toFixed(2),
+    bounds.getEast().toFixed(2)
+  ].join(":");
+}
+
+function shouldUseCityRepresentativeMarkers() {
+  if (!map?.getZoom) return false;
+  if (state.city || state.query) return false;
+  return map.getZoom() < 9.5;
+}
+
+function cityRepresentativeSpots(list) {
+  const byCity = new Map();
+  list.forEach((spot) => {
+    const current = byCity.get(spot.city);
+    if (!current || markerPriority(spot) > markerPriority(current)) {
+      byCity.set(spot.city, spot);
+    }
+  });
+  return [...byCity.values()].sort((a, b) => markerPriority(b) - markerPriority(a));
+}
+
+function markerPriority(spot) {
+  return spot.level + getVisibleReportsForSpot(spot.id).length * 4;
+}
+
+function maxMarkerCountForZoom(zoom) {
+  const compact = isCompactViewport();
+  if (zoom < 9.5) return compact ? 12 : 18;
+  if (zoom < 12) return compact ? 24 : 36;
+  if (zoom < 14) return compact ? 36 : 48;
+  return compact ? 48 : 72;
+}
+
+function isCompactViewport() {
+  return window.matchMedia?.("(max-width: 720px)")?.matches || window.innerWidth <= 720;
 }
 
 function markerIcon(html) {
