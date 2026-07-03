@@ -3158,9 +3158,9 @@ function renderHomeContentGuide() {
       body: "트립마킹은 소매치기·여권 분실·야간 이동처럼 여행자가 바로 검색하는 질문을 지도와 문서로 연결합니다.",
       links: [
         { href: "/guide/", label: "예방 가이드", body: "여행 전 기본 원칙" },
-        { href: "/guides/", label: "상황별 가이드", body: "공항·환승·ATM" },
-        { href: "/cities/barcelona/", label: "바르셀로나 맥락", body: "사진·지하철·해변" },
-        { href: "/field-notes/", label: "현장 판단 기준", body: "거리에서 보는 신호" }
+        { href: "/field-notes/crowd-density-check/", label: "혼잡도 판단", body: "사람 많은 곳 읽기" },
+        { href: "/spots/paris/chatelet-transfer/", label: "샤틀레 환승", body: "역 안에서 볼 신호" },
+        { href: "/cities/barcelona/", label: "바르셀로나 맥락", body: "사진·지하철·해변" }
       ]
     },
     en: {
@@ -3169,9 +3169,9 @@ function renderHomeContentGuide() {
       body: "TripMarking connects common traveler searches such as pickpocketing, passport loss, and night transit to map context and guide pages.",
       links: [
         { href: "/guide/", label: "Prevention guide", body: "Before-trip basics" },
-        { href: "/guides/", label: "Situation guides", body: "Arrival, metro, ATM" },
-        { href: "/cities/barcelona/", label: "Barcelona context", body: "Photos, metro, beach" },
-        { href: "/field-notes/", label: "Field notes", body: "Signals on the street" }
+        { href: "/field-notes/crowd-density-check/", label: "Crowd check", body: "Read busy places" },
+        { href: "/spots/paris/chatelet-transfer/", label: "Chatelet transfer", body: "Signals in station" },
+        { href: "/cities/barcelona/", label: "Barcelona context", body: "Photos, metro, beach" }
       ]
     }
   }[state.lang] || {};

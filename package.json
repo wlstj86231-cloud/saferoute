@@ -7,6 +7,7 @@
     "content:inventory": "node scripts/content-inventory.mjs",
     "seo:city-safety": "node scripts/seo-city-safety-pages.mjs",
     "seo:keywords": "node scripts/seo-keyword-pages.mjs",
+    "seo:spot-fields": "node scripts/seo-spot-field-pages.mjs",
     "serve": "python -m http.server 4197 --directory site --bind 127.0.0.1"
   }
 }
