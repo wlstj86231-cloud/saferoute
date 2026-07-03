@@ -2113,7 +2113,13 @@ function bootMap() {
 
   setBaseMapLanguage(state.lang, false);
 
-  markerLayer = L.layerGroup().addTo(map);
+  markerLayer = map.createPane("tripmarkingFastMarkerPane");
+  markerLayer.classList.add("tripmarking-fast-marker-pane");
+  markerLayer.style.zIndex = "600";
+  markerLayer.addEventListener("click", handleMarkerLayerClick);
+  markerLayer.addEventListener("keydown", handleMarkerLayerKeydown);
+  L.DomEvent.disableClickPropagation(markerLayer);
+  L.DomEvent.disableScrollPropagation(markerLayer);
   map.on("movestart zoomstart dragstart", beginMapInteraction);
   map.on("moveend zoomend dragend", finishMapInteraction);
   map.on("moveend zoomend", scheduleMapRenderAfterInteraction);
@@ -2131,7 +2137,6 @@ function setBaseMapLanguage(language, notify = true) {
 function replaceBaseMap(nextLayer) {
   if (baseMapLayer) map.removeLayer(baseMapLayer);
   baseMapLayer = nextLayer.addTo(map);
-  markerLayer?.eachLayer((layer) => layer.bringToFront?.());
 }
 
 function focusInitialRoute() {
@@ -4282,12 +4287,15 @@ function renderMarkers() {
   }
   const list = getMarkerRenderSpots();
   const nextRenderKey = `${state.selectedId}|${markerViewportKey()}|${list.map((spot) => `${spot.id}:${getLiveRisk(spot)}`).join("|")}`;
-  if (markerRenderKey === nextRenderKey) return;
+  if (markerRenderKey === nextRenderKey) {
+    syncMarkerPositions(list);
+    return;
+  }
   markerRenderKey = nextRenderKey;
   const visible = new Set(list.map((spot) => spot.id));
   markers.forEach((marker, id) => {
     if (!visible.has(id)) {
-      markerLayer.removeLayer(marker);
+      marker.remove();
       markers.delete(id);
       markerHtmlCache.delete(id);
     }
@@ -4298,21 +4306,54 @@ function renderMarkers() {
     const existing = markers.get(spot.id);
     if (existing) {
       if (markerHtmlCache.get(spot.id) !== html) {
-        existing.setIcon(markerIcon(html));
+        existing.innerHTML = html;
         markerHtmlCache.set(spot.id, html);
       }
+      positionMarkerElement(existing, [spot.lat, spot.lng]);
       return;
     }
-    const marker = L.marker([spot.lat, spot.lng], { icon: markerIcon(html), keyboard: true });
-    marker.on("click", (event) => {
-      if (event?.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
-      selectSpot(spot.id, false);
-      setSheetMode("expanded");
-    });
-    marker.addTo(markerLayer);
+    const marker = document.createElement("button");
+    marker.type = "button";
+    marker.className = "sum-marker-wrap";
+    marker.dataset.spotMarker = spot.id;
+    marker.setAttribute("aria-label", spot.name[state.lang]);
+    marker.innerHTML = html;
+    positionMarkerElement(marker, [spot.lat, spot.lng]);
+    markerLayer.appendChild(marker);
     markers.set(spot.id, marker);
     markerHtmlCache.set(spot.id, html);
   });
+}
+
+function syncMarkerPositions(list) {
+  list.forEach((spot) => {
+    const marker = markers.get(spot.id);
+    if (marker) positionMarkerElement(marker, [spot.lat, spot.lng]);
+  });
+}
+
+function positionMarkerElement(marker, latLng) {
+  if (!map?.latLngToLayerPoint) return;
+  const point = map.latLngToLayerPoint(latLng);
+  marker.style.transform = `translate3d(${Math.round(point.x)}px, ${Math.round(point.y)}px, 0)`;
+}
+
+function handleMarkerLayerClick(event) {
+  const marker = event.target.closest("[data-spot-marker]");
+  if (!marker || !markerLayer?.contains(marker)) return;
+  event.preventDefault();
+  event.stopPropagation();
+  selectSpot(marker.dataset.spotMarker, false);
+  setSheetMode("expanded");
+}
+
+function handleMarkerLayerKeydown(event) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const marker = event.target.closest("[data-spot-marker]");
+  if (!marker || !markerLayer?.contains(marker)) return;
+  event.preventDefault();
+  selectSpot(marker.dataset.spotMarker, false);
+  setSheetMode("expanded");
 }
 
 function getMarkerRenderSpots() {
@@ -4388,15 +4429,6 @@ function maxMarkerCountForZoom(zoom) {
 
 function isCompactViewport() {
   return window.matchMedia?.("(max-width: 720px)")?.matches || window.innerWidth <= 720;
-}
-
-function markerIcon(html) {
-  return L.divIcon({
-    html,
-    className: "sum-marker-wrap",
-    iconSize: [48, 48],
-    iconAnchor: [24, 48]
-  });
 }
 
 function refreshStatus() {
