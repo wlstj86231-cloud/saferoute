@@ -1,8 +1,8 @@
-const CACHE_NAME = "tripmarking-v29-content-routes";
+const CACHE_NAME = "tripmarking-v30-map-performance";
 const LOCAL_ASSETS = [
   "/",
-  "/assets/styles.css?v=20260509-tripmarking7",
-  "/assets/app.js?v=20260703-tripmarking8",
+  "/assets/styles.css?v=20260703-mapperf1",
+  "/assets/app.js?v=20260703-mapperf1",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",

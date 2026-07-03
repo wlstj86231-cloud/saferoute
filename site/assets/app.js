@@ -1981,6 +1981,7 @@ const state = {
 
 const riskByKey = new Map(riskTypes.map((risk) => [risk.key, risk]));
 const spotById = new Map(spots.map((spot) => [spot.id, spot]));
+const appShell = document.querySelector(".app-shell");
 const sheet = document.querySelector("#sheet");
 const toast = document.querySelector("#toast");
 const statusPill = document.querySelector("#statusPill");
@@ -2018,6 +2019,9 @@ let reportLastFailureAt = 0;
 let reportServerFingerprint = "";
 let searchRenderFrame = 0;
 let mapResizeTimer = 0;
+let mapInteractionTimer = 0;
+let pendingMapRenderFrame = 0;
+let mapInteractionActive = false;
 
 function readInitialRoute() {
   const fallback = { city: "", filter: "all", selectedId: "" };
@@ -2110,7 +2114,9 @@ function bootMap() {
   setBaseMapLanguage(state.lang, false);
 
   markerLayer = L.layerGroup().addTo(map);
-  map.on("moveend zoomend", () => renderMarkers());
+  map.on("movestart zoomstart dragstart", beginMapInteraction);
+  map.on("moveend zoomend dragend", finishMapInteraction);
+  map.on("moveend zoomend", scheduleMapRenderAfterInteraction);
   map.on("click", () => {
     if (!searchPanel.hidden) setSearchPanel(false);
     if (state.panel === "map") setSheetMode("collapsed");
@@ -2478,6 +2484,36 @@ function scheduleMapResize(delay = 180) {
     mapResizeTimer = 0;
     map?.invalidateSize?.();
   }, delay);
+}
+
+function beginMapInteraction() {
+  window.clearTimeout(mapInteractionTimer);
+  if (mapInteractionActive) return;
+  mapInteractionActive = true;
+  appShell?.classList.add("is-map-moving");
+}
+
+function finishMapInteraction() {
+  window.clearTimeout(mapInteractionTimer);
+  mapInteractionTimer = window.setTimeout(() => {
+    mapInteractionTimer = 0;
+    mapInteractionActive = false;
+    appShell?.classList.remove("is-map-moving");
+    renderMarkers();
+  }, isCompactViewport() ? 120 : 70);
+}
+
+function scheduleMapRenderAfterInteraction() {
+  if (mapInteractionActive) {
+    finishMapInteraction();
+    return;
+  }
+  if (pendingMapRenderFrame) return;
+  const schedule = window.requestAnimationFrame || ((callback) => window.setTimeout(callback, 16));
+  pendingMapRenderFrame = schedule(() => {
+    pendingMapRenderFrame = 0;
+    renderMarkers();
+  });
 }
 
 function previewSheetDrag(deltaY) {
@@ -4240,6 +4276,10 @@ function selectSpot(id, move) {
 }
 
 function renderMarkers() {
+  if (mapInteractionActive) {
+    markerRenderKey = "";
+    return;
+  }
   const list = getMarkerRenderSpots();
   const nextRenderKey = `${state.selectedId}|${markerViewportKey()}|${list.map((spot) => `${spot.id}:${getLiveRisk(spot)}`).join("|")}`;
   if (markerRenderKey === nextRenderKey) return;
@@ -4340,10 +4380,10 @@ function markerPriority(spot) {
 
 function maxMarkerCountForZoom(zoom) {
   const compact = isCompactViewport();
-  if (zoom < 9.5) return compact ? 12 : 18;
-  if (zoom < 12) return compact ? 24 : 36;
-  if (zoom < 14) return compact ? 36 : 48;
-  return compact ? 48 : 72;
+  if (zoom < 9.5) return compact ? 8 : 12;
+  if (zoom < 12) return compact ? 16 : 24;
+  if (zoom < 14) return compact ? 26 : 40;
+  return compact ? 34 : 52;
 }
 
 function isCompactViewport() {

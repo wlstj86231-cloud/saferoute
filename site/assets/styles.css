@@ -2408,3 +2408,22 @@ button.spot-card {
 .sum-marker {
   will-change: transform;
 }
+
+.app-shell.is-map-moving .topbar,
+.app-shell.is-map-moving .search-panel,
+.app-shell.is-map-moving .quick-rail,
+.app-shell.is-map-moving .bottom-sheet,
+.app-shell.is-map-moving .bottom-nav,
+.app-shell.is-map-moving .status-pill {
+  backdrop-filter: none;
+  box-shadow: 0 1px 4px rgba(23, 32, 39, 0.08);
+  transition: none !important;
+}
+
+.app-shell.is-map-moving .sum-marker-wrap {
+  visibility: hidden;
+}
+
+.app-shell.is-map-moving .leaflet-tile {
+  will-change: transform;
+}
