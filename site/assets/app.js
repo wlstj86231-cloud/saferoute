@@ -1958,15 +1958,17 @@ const icons = {
   send: `<path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4 18-7Z"/>`
 };
 
+const initialRoute = readInitialRoute();
+
 const state = {
   lang: readLanguage(),
   panel: "map",
-  filter: "all",
+  filter: initialRoute.filter,
   scenario: "",
-  city: "",
+  city: initialRoute.city,
   query: "",
-  selectedId: "",
-  detailOpen: false,
+  selectedId: initialRoute.selectedId,
+  detailOpen: Boolean(initialRoute.selectedId),
   userPosition: null,
   saved: readJson("tripmarking:saved", []),
   recent: readJson("tripmarking:recent", []),
@@ -2016,6 +2018,32 @@ let reportLastFailureAt = 0;
 let reportServerFingerprint = "";
 let searchRenderFrame = 0;
 let mapResizeTimer = 0;
+
+function readInitialRoute() {
+  const fallback = { city: "", filter: "all", selectedId: "" };
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const cityKey = cleanRouteKey(params.get("city"));
+    const riskKey = cleanRouteKey(params.get("risk"));
+    const spotId = cleanRouteSpot(params.get("spot") || params.get("place"));
+    const spot = spots.find((item) => item.id === spotId);
+    return {
+      city: cities[cityKey] ? cityKey : spot?.city || "",
+      filter: allowedReportKeys.has(riskKey) ? riskKey : spot?.risk || "all",
+      selectedId: spot?.id || ""
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function cleanRouteKey(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9_-]/g, "").slice(0, 40);
+}
+
+function cleanRouteSpot(value) {
+  return String(value || "").replace(/[^a-zA-Z0-9:_-]/g, "").slice(0, 90);
+}
 let sheetHtmlCache = "";
 let markerRenderKey = "";
 let quickRailHtmlCache = "";
@@ -2037,6 +2065,7 @@ function startWhenReady() {
 function init() {
   applyLanguage();
   bootMap();
+  focusInitialRoute();
   bindEvents();
   renderQuickRail();
   renderSheet();
@@ -2097,6 +2126,16 @@ function replaceBaseMap(nextLayer) {
   if (baseMapLayer) map.removeLayer(baseMapLayer);
   baseMapLayer = nextLayer.addTo(map);
   markerLayer?.eachLayer((layer) => layer.bringToFront?.());
+}
+
+function focusInitialRoute() {
+  const spot = spotById.get(state.selectedId);
+  if (spot) {
+    map.setView([spot.lat, spot.lng], 15);
+    return;
+  }
+  const city = cities[state.city];
+  if (city) map.setView(city.center, city.zoom);
 }
 
 function rasterBaseMap() {

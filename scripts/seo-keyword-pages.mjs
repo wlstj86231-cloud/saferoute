@@ -36,6 +36,97 @@ const pages = [
     related: ["/guide/", "/cities/", "/europe-subway-pickpocket/"]
   },
   {
+    slug: "cities/paris",
+    title: "파리 여행 안전 맥락 가이드 - 트립마킹",
+    h1: "파리에서 사진 명소와 지하철 동선을 나눠 보는 법",
+    description: "파리 에펠탑, 루브르, 몽마르트르, 지하철 환승 구간에서 소지품과 접근 제안을 조심스럽게 확인하는 도시별 여행 안전 가이드.",
+    intent: "파리 여행 주의, 파리 지하철 소매치기, 에펠탑 주변 주의",
+    city: "파리",
+    signal: "도시별 주의 맥락",
+    emoji: "🗼",
+    mapHref: "/?city=paris&utm_source=city-page&utm_medium=internal&utm_campaign=paris-city",
+    scenarios: ["트로카데로와 에펠탑 포토존에서 사진을 찍느라 가방 지퍼가 시야 밖으로 가는 순간", "샤틀레, 루브르, 북역 연결 구간에서 노선과 짐을 동시에 확인하는 순간", "몽마르트르 언덕길에서 팔찌, 서명, 사진 제안처럼 대화가 길어지는 접근을 받는 순간"],
+    related: ["/paris-pickpocket-guide/", "/guides/pickpocket/", "/guides/night-transport/", "/field-notes/"],
+    lastmod: "2026-07-03",
+    buildDate: "Fri, 03 Jul 2026 11:10:00 +0900"
+  },
+  {
+    slug: "cities/rome",
+    title: "로마 여행 안전 맥락 가이드 - 트립마킹",
+    h1: "로마에서 역·분수·입장 대기줄을 다르게 보는 법",
+    description: "로마 테르미니역, 트레비 분수, 콜로세움, 바티칸 주변에서 소지품 분산과 접근 제안을 줄이는 도시별 여행 안전 가이드.",
+    intent: "로마 여행 주의, 로마 테르미니역 소매치기, 트레비 분수 주의",
+    city: "로마",
+    signal: "도시별 주의 맥락",
+    emoji: "🏛️",
+    mapHref: "/?city=rome&utm_source=city-page&utm_medium=internal&utm_campaign=rome-city",
+    scenarios: ["테르미니역에서 발권기, 플랫폼, 캐리어, 여권 확인이 한 번에 몰리는 순간", "트레비 분수에서 사진과 동전, 휴대폰, 가방을 동시에 다루는 순간", "콜로세움이나 바티칸 대기줄에서 입장권과 소지품 확인 역할이 섞이는 순간"],
+    related: ["/rome-pickpocket-guide/", "/guides/pickpocket/", "/guides/passport-loss/", "/field-notes/"],
+    lastmod: "2026-07-03",
+    buildDate: "Fri, 03 Jul 2026 11:10:00 +0900"
+  },
+  {
+    slug: "guides/pickpocket",
+    title: "해외여행 소매치기 예방 핵심 가이드 - 트립마킹",
+    h1: "도시가 달라도 반복되는 소매치기 순간을 줄이는 법",
+    description: "해외여행 중 지하철, 사진 명소, 시장, 야외 좌석에서 지갑, 휴대폰, 여권, 가방 노출을 줄이는 소매치기 예방 가이드.",
+    intent: "해외여행 소매치기 예방, 여행 지갑 보관, 여행 가방 지퍼 관리",
+    city: "해외여행",
+    signal: "소매치기 예방",
+    emoji: "🖐️",
+    mapHref: "/?risk=pickpocket&utm_source=guide-topic&utm_medium=internal&utm_campaign=pickpocket-guide",
+    scenarios: ["지하철 승하차 직전에 몸이 가까워지고 백팩이 뒤로 밀리는 순간", "사진 명소에서 휴대폰은 앞에 있지만 지갑과 여권 파우치가 시야 밖으로 가는 순간", "시장이나 카페에서 결제 후 지갑을 다시 넣었는지 기억이 흐려지는 순간"],
+    related: ["/travel-pickpocket-prevention/", "/cities/paris/", "/cities/rome/", "/spots/barcelona/la-rambla/"],
+    lastmod: "2026-07-03",
+    buildDate: "Fri, 03 Jul 2026 11:10:00 +0900"
+  },
+  {
+    slug: "guides/passport-loss",
+    title: "해외여행 여권·카드 분실 직후 대응 가이드 - 트립마킹",
+    h1: "여권이나 카드가 사라졌을 때 먼저 잠글 것과 기록할 것",
+    description: "해외여행 중 여권, 카드, 휴대폰, 숙소 키를 잃어버렸다고 느낄 때 카드 정지, 계정 잠금, 경찰 신고, 영사관 절차를 정리하는 대응 가이드.",
+    intent: "여권 분실 대처, 해외 카드 분실 신고, 여행 도난 직후 행동",
+    city: "해외여행",
+    signal: "분실 직후 대응",
+    emoji: "🧾",
+    mapHref: "/?utm_source=guide-topic&utm_medium=internal&utm_campaign=passport-loss",
+    scenarios: ["지갑이나 여권 파우치가 사라졌지만 마지막으로 확인한 위치가 불명확한 상황", "카드와 휴대폰이 같이 불안해 결제 차단과 계정 잠금 순서를 정해야 하는 상황", "경찰 신고와 보험 접수를 위해 시간, 장소, 마지막 결제, 피해 물품을 짧게 기록해야 하는 상황"],
+    related: ["/lost-passport-card-response/", "/field-notes/", "/cities/rome/", "/guides/night-transport/"],
+    lastmod: "2026-07-03",
+    buildDate: "Fri, 03 Jul 2026 11:10:00 +0900",
+    adAllowed: false
+  },
+  {
+    slug: "guides/night-transport",
+    title: "해외여행 야간 이동 주의 기준 - 트립마킹",
+    h1: "밤 이동 전에 카드·여권·휴대폰을 먼저 맞추는 법",
+    description: "해외여행 중 야간 귀가, 호출앱, 술자리 후 이동, 큰 역 환승에서 소지품과 목적지를 다시 확인하는 여행 안전 가이드.",
+    intent: "해외여행 야간 이동 주의, 밤길 여행 안전, 호출앱 카드 여권 확인",
+    city: "해외여행",
+    signal: "야간 이동",
+    emoji: "🌙",
+    mapHref: "/?risk=night&utm_source=guide-topic&utm_medium=internal&utm_campaign=night-transport",
+    scenarios: ["술자리나 공연 후 숙소 주소, 호출앱, 결제 수단을 동시에 확인해야 하는 상황", "큰 역에서 막차나 야간 버스 시간 때문에 캐리어와 휴대폰이 분산되는 상황", "배터리와 데이터가 부족해 동행자와 위치 공유, 카드, 여권 확인을 짧게 끝내야 하는 상황"],
+    related: ["/field-notes/", "/guides/passport-loss/", "/london-phone-snatching-guide/", "/cities/paris/"],
+    lastmod: "2026-07-03",
+    buildDate: "Fri, 03 Jul 2026 11:10:00 +0900"
+  },
+  {
+    slug: "spots/barcelona/la-rambla",
+    title: "바르셀로나 람블라스 거리 주의 맥락 - 트립마킹",
+    h1: "람블라스 거리에서 사진·시장·길찾기가 겹칠 때",
+    description: "바르셀로나 람블라스 거리와 보케리아 시장 주변에서 사진, 길찾기, 결제, 야외 좌석 중 소지품 노출을 줄이는 장소별 가이드.",
+    intent: "람블라스 거리 소매치기, 보케리아 시장 소매치기, 바르셀로나 구시가지 주의",
+    city: "바르셀로나 람블라스",
+    signal: "장소별 주의 맥락",
+    emoji: "📍",
+    mapHref: "/?city=barcelona&risk=pickpocket&spot=barcelona-ramblas&utm_source=spot-page&utm_medium=internal&utm_campaign=la-rambla",
+    scenarios: ["사진을 보거나 길을 찾는 동안 가방 지퍼와 뒷주머니가 시야 밖으로 가는 순간", "보케리아 시장 근처에서 간식, 결제 카드, 휴대폰, 작은 봉투를 동시에 다루는 순간", "야외 좌석이나 테이블 주변에서 휴대폰을 내려놓고 동행자와 다음 동선을 이야기하는 순간"],
+    related: ["/barcelona/la-rambla-pickpocket/", "/barcelona-pickpocket-guide/", "/guides/pickpocket/", "/cities/"],
+    lastmod: "2026-07-03",
+    buildDate: "Fri, 03 Jul 2026 11:10:00 +0900"
+  },
+  {
     slug: "london-phone-snatching-guide",
     title: "런던 휴대폰 날치기 주의 가이드 - 트립마킹",
     h1: "런던에서 휴대폰을 꺼내는 순간을 더 안전하게 만드는 법",
@@ -194,13 +285,28 @@ function relatedTitle(href) {
     "/barcelona-pickpocket-guide/": "바르셀로나 소매치기 주의 가이드",
     "/travel-pickpocket-prevention/": "해외여행 소매치기 예방 체크리스트",
     "/lost-passport-card-response/": "여권·카드 분실 직후 행동 순서",
-    "/europe-subway-pickpocket/": "유럽 지하철 소매치기 주의"
+    "/europe-subway-pickpocket/": "유럽 지하철 소매치기 주의",
+    "/paris-pickpocket-guide/": "파리 소매치기 주의 가이드",
+    "/rome-pickpocket-guide/": "로마 소매치기 주의 가이드",
+    "/london-phone-snatching-guide/": "런던 휴대폰 날치기 주의 가이드",
+    "/cities/paris/": "파리 여행 안전 맥락 가이드",
+    "/cities/rome/": "로마 여행 안전 맥락 가이드",
+    "/guides/pickpocket/": "해외여행 소매치기 예방 핵심 가이드",
+    "/guides/passport-loss/": "여권·카드 분실 직후 대응 가이드",
+    "/guides/night-transport/": "야간 이동 주의 기준",
+    "/spots/barcelona/la-rambla/": "바르셀로나 람블라스 거리 주의 맥락",
+    "/barcelona/la-rambla-pickpocket/": "람블라스 거리 소매치기 대처"
   };
   return titles[href] || href;
 }
 
 function renderPage(page) {
   const url = pageUrl(page);
+  const pageLastmod = page.lastmod || lastmod;
+  const adMeta = page.adAllowed === false
+    ? `<meta name="google-adsense-account" content="ca-pub-7217591196020054">`
+    : `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-7217591196020054">`;
   const scenarios = page.scenarios.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n");
   const related = page.related.map((href) => `<li><a href="${href}">${escapeHtml(relatedTitle(href))}</a></li>`).join("\n");
   const articleLd = {
@@ -209,8 +315,8 @@ function renderPage(page) {
     headline: page.title.replace(" - 트립마킹", ""),
     description: page.description,
     inLanguage: "ko-KR",
-    datePublished: lastmod,
-    dateModified: lastmod,
+    datePublished: page.datePublished || pageLastmod,
+    dateModified: pageLastmod,
     author: { "@type": "Organization", name: "트립마킹 편집부" },
     publisher: { "@type": "Organization", name: "트립마킹", url: siteUrl },
     mainEntityOfPage: url,
@@ -230,8 +336,7 @@ function renderPage(page) {
     <meta property="og:title" content="${escapeHtml(page.title.replace(" - 트립마킹", ""))}">
     <meta property="og:description" content="${escapeHtml(page.description)}">
     <meta property="og:url" content="${url}">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054" crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-7217591196020054">
+    ${adMeta}
     <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="${siteUrl}/feed.xml">
     <link rel="stylesheet" href="/assets/styles.css?v=20260509-seo1">
     <script type="application/ld+json">${JSON.stringify(articleLd)}</script>
@@ -256,14 +361,14 @@ function renderPage(page) {
       </figure>
 
       <h2>먼저 나눠볼 상황</h2>
-      <p>${escapeHtml(page.city)}에서 ${escapeHtml(page.signal)}를 조심해야 한다는 말만 보면 막연합니다. 실제로 도움이 되는 것은 특정 사람을 의심하는 태도가 아니라, 여행자가 손과 시선을 놓치기 쉬운 장면을 미리 나누는 일입니다. 그래서 트립마킹은 도시 전체를 위험하다고 말하지 않고, 승하차, 사진 촬영, 결제, 길찾기, 접근 제안처럼 반복되는 순간을 중심으로 정리합니다.</p>
+      <p>${escapeHtml(page.city)}에서 ${escapeHtml(page.signal)} 신호를 본다는 말만으로는 막연합니다. 실제로 도움이 되는 것은 특정 사람을 의심하는 태도가 아니라, 여행자가 손과 시선을 놓치기 쉬운 장면을 미리 나누는 일입니다. 그래서 트립마킹은 도시 전체를 위험하다고 말하지 않고, 승하차, 사진 촬영, 결제, 길찾기, 접근 제안처럼 반복되는 순간을 중심으로 정리합니다.</p>
       <ul>
         ${scenarios}
       </ul>
 
       <h2>트립마킹에서 확인하는 순서</h2>
       <ol class="use-steps">
-        <li><strong>도시와 위험 유형을 먼저 좁힙니다.</strong> 검색 화면에서 ${escapeHtml(page.city)}와 ${escapeHtml(page.signal)} 관련 마커를 먼저 봅니다.</li>
+        <li><strong>도시와 위험 유형을 먼저 좁힙니다.</strong> 검색 화면에서 ${escapeHtml(page.city)} · ${escapeHtml(page.signal)} 관련 마커를 먼저 봅니다.</li>
         <li><strong>지도 마커를 누릅니다.</strong> 장소명, 한 줄 주의, 지금 할 일을 먼저 확인합니다.</li>
         <li><strong>상세 설명은 이동 전후에 읽습니다.</strong> 현장에서는 요약이 먼저이고, 숙소나 카페에서 자세한 글을 보는 편이 덜 피곤합니다.</li>
         <li><strong>동행자에게 공유합니다.</strong> 같은 장소를 지나가기 전에 한 줄 요약을 공유하면 불필요한 설명 없이 행동이 맞춰집니다.</li>
@@ -308,7 +413,7 @@ function upsertSitemap() {
       const loc = block.match(/<loc>(.*?)<\/loc>/)?.[1];
       return loc && !generatedLocs.has(loc);
     });
-  const generatedBlocks = pages.map((page) => `  <url><loc>${pageUrl(page)}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
+  const generatedBlocks = pages.map((page) => `  <url><loc>${pageUrl(page)}</loc><lastmod>${page.lastmod || lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
   const next = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${existingBlocks.map((block) => `  ${block}`).join("\n")}\n${generatedBlocks.join("\n")}\n</urlset>\n`;
   fs.writeFileSync(sitemapPath, next);
 }
@@ -326,7 +431,7 @@ function renderFeedItem(title, href, description, date = buildDate) {
 
 function writeFeed() {
   const items = [
-    ...pages.map((page) => renderFeedItem(page.title.replace(" - 트립마킹", ""), `/${page.slug}/`, page.description)),
+    ...pages.map((page) => renderFeedItem(page.title.replace(" - 트립마킹", ""), `/${page.slug}/`, page.description, page.buildDate || buildDate)),
     ...coreFeedItems.map(([title, href, description]) => renderFeedItem(title, href, description, "Sat, 09 May 2026 00:00:00 +0900"))
   ].join("\n");
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
