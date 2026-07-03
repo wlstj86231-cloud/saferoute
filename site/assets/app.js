@@ -3135,6 +3135,7 @@ function renderMapFirstHint(list) {
           <button class="text-button" type="button" data-open-panel="panic">${tr("mapQuickPanic")}</button>
         </div>
       </div>
+      ${renderHomeContentGuide()}
       <div class="brief-stats">
         <div><span>${tr("details")}</span><strong>${countSpots(list.length)}</strong></div>
         <div><span>${tr("quickLabel")}</span><strong>${scenarios.slice(0, 3).map((item) => item.emoji).join(" ")}</strong></div>
@@ -3146,6 +3147,51 @@ function renderMapFirstHint(list) {
         ${riskTypes.map((risk) => filterChip(risk)).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderHomeContentGuide() {
+  const copy = {
+    ko: {
+      eyebrow: "지도와 함께 읽는 여행 안전 가이드",
+      title: "도시를 위험하다고 단정하지 않고, 장면별 판단 기준을 정리합니다.",
+      body: "트립마킹은 소매치기·여권 분실·야간 이동처럼 여행자가 바로 검색하는 질문을 지도와 문서로 연결합니다.",
+      links: [
+        { href: "/guide/", label: "예방 가이드", body: "여행 전 기본 원칙" },
+        { href: "/field-notes/", label: "현장 판단 기준", body: "거리에서 보는 신호" },
+        { href: "/cities/paris/", label: "파리 주의 맥락", body: "관광지·지하철 중심" },
+        { href: "/guides/pickpocket/", label: "소매치기 대처", body: "당하기 전 행동" }
+      ]
+    },
+    en: {
+      eyebrow: "Travel safety guides linked to the map",
+      title: "The map avoids city-wide fear labels and explains scene-by-scene decisions.",
+      body: "TripMarking connects common traveler searches such as pickpocketing, passport loss, and night transit to map context and guide pages.",
+      links: [
+        { href: "/guide/", label: "Prevention guide", body: "Before-trip basics" },
+        { href: "/field-notes/", label: "Field notes", body: "Signals on the street" },
+        { href: "/cities/paris/", label: "Paris context", body: "Sights and metro" },
+        { href: "/guides/pickpocket/", label: "Pickpocket guide", body: "Before it happens" }
+      ]
+    }
+  }[state.lang] || {};
+
+  return `
+    <div class="home-content-card" aria-label="${escapeHtml(copy.eyebrow || "")}">
+      <div>
+        <span>${escapeHtml(copy.eyebrow || "")}</span>
+        <strong>${escapeHtml(copy.title || "")}</strong>
+        <p>${escapeHtml(copy.body || "")}</p>
+      </div>
+      <div class="home-content-links">
+        ${(copy.links || []).map((link) => `
+          <a href="${link.href}">
+            <span>${escapeHtml(link.label)}</span>
+            <em>${escapeHtml(link.body)}</em>
+          </a>
+        `).join("")}
+      </div>
+    </div>
   `;
 }
 
