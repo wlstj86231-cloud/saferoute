@@ -241,7 +241,8 @@ const pages = [
     emoji: "🧾",
     mapHref: "/?risk=response&utm_source=seo-keyword&utm_medium=internal&utm_campaign=lost-response",
     scenarios: ["지갑이나 여권 파우치가 없다는 것을 숙소 밖에서 깨달은 순간", "결제 카드가 사라졌지만 마지막 장소가 불명확한 상황", "휴대폰까지 불안해 동행자와 연락을 먼저 정리해야 하는 상황"],
-    related: ["/guide/", "/field-notes/", "/travel-pickpocket-prevention/"]
+    related: ["/guide/", "/field-notes/", "/travel-pickpocket-prevention/"],
+    adAllowed: false
   },
   {
     slug: "europe-subway-pickpocket",

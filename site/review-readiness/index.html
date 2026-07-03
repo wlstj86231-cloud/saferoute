@@ -14,6 +14,12 @@
     <meta name="google-adsense-account" content="ca-pub-7217591196020054">
     <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="https://tripmarking.com/feed.xml">
     <link rel="stylesheet" href="/assets/styles.css?v=20260509-perf3">
+    <style>
+      .readiness-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.25rem; font-size: .95rem; }
+      .readiness-table th, .readiness-table td { border: 1px solid #d9e2e0; padding: .75rem; text-align: left; vertical-align: top; }
+      .readiness-table th { background: #f5faf8; }
+      .readiness-note { border: 1px solid #d9e2e0; border-radius: 8px; background: #f8fbfa; padding: 1rem; }
+    </style>
   </head>
   <body>
     <main class="static-shell">
@@ -30,8 +36,54 @@
       <p>트립마킹은 특정 국적, 외모, 개인, 집단을 범죄와 연결하지 않습니다. 실제 피해가 발생하면 현지 경찰, 카드사, 보험사, 대사관 또는 영사관 안내가 우선입니다. 이 사이트는 신고 창구나 법률 자문이 아니라, 여행자가 당황하기 전에 행동 순서를 떠올리도록 돕는 보조 도구입니다.</p>
       <h2>광고와 정보의 분리</h2>
       <p>광고는 지도 조작, 신고 버튼, 피해 대응 순서를 방해하지 않는 위치에만 배치하는 것을 원칙으로 합니다. 광고가 어떤 도시나 위험 유형을 더 중요하게 보이게 만들지 않으며, 안전 관련 안내와 광고 문구가 섞이지 않도록 관리합니다.</p>
+      <p>2026-07-03 기준으로 홈 지도, 정책 문서, 심사 준비 문서, 여권·카드 분실 직후 대응 문서는 광고 스크립트를 제외했습니다. 일반 도시·장소·예방 가이드 문서에만 광고를 허용합니다.</p>
+      <h2>광고 허용·제외 점검표</h2>
+      <table class="readiness-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>대표 URL</th>
+            <th>현재 상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>광고 제외</td>
+            <td><code>/</code>, <code>/about/</code>, <code>/editorial/</code>, <code>/editorial-policy/</code>, <code>/privacy/</code>, <code>/terms/</code>, <code>/contact/</code>, <code>/review-readiness/</code>, <code>/guides/passport-loss/</code>, <code>/lost-passport-card-response/</code></td>
+            <td>지도 앱, 정책성 문서, 문의·개인정보 문서, 긴급 분실 대응 문서는 AdSense script absent.</td>
+          </tr>
+          <tr>
+            <td>광고 허용</td>
+            <td><code>/guide/</code>, <code>/field-notes/</code>, <code>/cities/</code>, <code>/cities/*</code>, <code>/guides/pickpocket/</code>, <code>/guides/night-transport/</code>, <code>/spots/*</code>, 일반 여행 안전 가이드 문서</td>
+            <td>사전 준비와 예방 목적의 정적 콘텐츠 문서에만 AdSense script present.</td>
+          </tr>
+          <tr>
+            <td>기능 상태</td>
+            <td>지도, 체크리스트, 저장, 제보, 피해 직후 행동 순서</td>
+            <td>현장 조작과 긴급 대응을 방해하지 않도록 광고를 첫 화면 기능 상태에 넣지 않음.</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>공개 색인 상태</h2>
+      <table class="readiness-table">
+        <tbody>
+          <tr>
+            <th>sitemap</th>
+            <td><code>https://tripmarking.com/sitemap.xml</code>에 34개 URL이 있으며 중복 URL 없음.</td>
+          </tr>
+          <tr>
+            <th>feed</th>
+            <td><code>https://tripmarking.com/feed.xml</code>에 22개 콘텐츠 항목이 있으며 도시·가이드·장소 문서와 표현·검수 정책이 반영됨.</td>
+          </tr>
+          <tr>
+            <th>대표 공개 확인</th>
+            <td><code>/</code>, <code>/editorial-policy/</code>, <code>/guides/passport-loss/</code>, <code>/lost-passport-card-response/</code> 광고 제외, <code>/guide/</code>, <code>/cities/paris/</code>, <code>/guides/pickpocket/</code>, <code>/spots/barcelona/la-rambla/</code> 광고 허용 상태로 확인.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="readiness-note">트립마킹의 검토 기준은 “위험을 자극적으로 보여주는 사이트”가 아니라 “여행자가 사전에 읽고 현장에서 행동 순서를 확인하는 도구”로 보이게 하는 것입니다.</p>
       <h2>함께 확인할 문서</h2>
-      <p><a href="/about/">소개</a> · <a href="/guide/">예방 가이드</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/cities/">도시별 맥락</a> · <a href="/privacy/">개인정보 처리방침</a> · <a href="/contact/">문의</a></p>
+      <p><a href="/about/">소개</a> · <a href="/editorial-policy/">표현·검수·제보 정책</a> · <a href="/guide/">예방 가이드</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/cities/">도시별 맥락</a> · <a href="/privacy/">개인정보 처리방침</a> · <a href="/contact/">문의</a></p>
     </main>
   </body>
 </html>
