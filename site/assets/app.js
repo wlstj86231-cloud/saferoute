@@ -3158,9 +3158,9 @@ function renderHomeContentGuide() {
       body: "트립마킹은 소매치기·여권 분실·야간 이동처럼 여행자가 바로 검색하는 질문을 지도와 문서로 연결합니다.",
       links: [
         { href: "/guide/", label: "예방 가이드", body: "여행 전 기본 원칙" },
-        { href: "/field-notes/", label: "현장 판단 기준", body: "거리에서 보는 신호" },
-        { href: "/cities/paris/", label: "파리 주의 맥락", body: "관광지·지하철 중심" },
-        { href: "/guides/pickpocket/", label: "소매치기 대처", body: "당하기 전 행동" }
+        { href: "/guides/", label: "상황별 가이드", body: "공항·환승·ATM" },
+        { href: "/cities/barcelona/", label: "바르셀로나 맥락", body: "사진·지하철·해변" },
+        { href: "/field-notes/", label: "현장 판단 기준", body: "거리에서 보는 신호" }
       ]
     },
     en: {
@@ -3169,9 +3169,9 @@ function renderHomeContentGuide() {
       body: "TripMarking connects common traveler searches such as pickpocketing, passport loss, and night transit to map context and guide pages.",
       links: [
         { href: "/guide/", label: "Prevention guide", body: "Before-trip basics" },
-        { href: "/field-notes/", label: "Field notes", body: "Signals on the street" },
-        { href: "/cities/paris/", label: "Paris context", body: "Sights and metro" },
-        { href: "/guides/pickpocket/", label: "Pickpocket guide", body: "Before it happens" }
+        { href: "/guides/", label: "Situation guides", body: "Arrival, metro, ATM" },
+        { href: "/cities/barcelona/", label: "Barcelona context", body: "Photos, metro, beach" },
+        { href: "/field-notes/", label: "Field notes", body: "Signals on the street" }
       ]
     }
   }[state.lang] || {};

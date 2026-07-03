@@ -1,8 +1,8 @@
-const CACHE_NAME = "tripmarking-v32-final-readiness";
+const CACHE_NAME = "tripmarking-v33-city-guides";
 const LOCAL_ASSETS = [
   "/",
   "/assets/styles.css?v=20260703-final3",
-  "/assets/app.js?v=20260703-final3",
+  "/assets/app.js?v=20260703-tripcity1",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",

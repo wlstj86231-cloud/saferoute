@@ -3,9 +3,156 @@
   <channel>
     <title>트립마킹</title>
     <link>https://tripmarking.com/</link>
-    <description>한국인 여행자를 위한 해외여행 도난·스캠 주의 지도.</description>
+    <description>한국인 여행자를 위한 해외여행 도난·스캠 주의 지도와 상황별 판단 가이드.</description>
     <language>ko-KR</language>
-    <lastBuildDate>Sat, 09 May 2026 18:35:00 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 14:30:00 +0900</lastBuildDate>
+    <item>
+      <title>여행 상황별 판단 가이드</title>
+      <link>https://tripmarking.com/guides/</link>
+      <guid>https://tripmarking.com/guides/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>공항 도착, 지하철 환승, 붐비는 광장, ATM 출금, 택시·호출앱, 해변·테라스처럼 여행자가 자주 검색하는 상황을 정리한 트립마킹 가이드 허브.</description>
+    </item>
+    <item>
+      <title>바르셀로나 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/barcelona/</link>
+      <guid>https://tripmarking.com/cities/barcelona/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>바르셀로나 람블라스 거리, 카탈루냐 광장, 사그라다 파밀리아, 바르셀로네타 주변에서 소지품과 접근 제안을 차분히 확인하는 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>런던 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/london/</link>
+      <guid>https://tripmarking.com/cities/london/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>런던 큰 역, 횡단보도, 펍·카페 좌석, 야간 이동에서 휴대폰과 가방 관리 기준을 정리한 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>암스테르담 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/amsterdam/</link>
+      <guid>https://tripmarking.com/cities/amsterdam/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>암스테르담 중앙역, 운하 주변, 자전거 동선, 야간 번화가에서 소지품과 이동 판단을 정리한 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>이스탄불 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/istanbul/</link>
+      <guid>https://tripmarking.com/cities/istanbul/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>이스탄불 관광지, 바자르, 택시·환전, 공항 이동 중 가격과 목적지를 확인하는 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>방콕 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/bangkok/</link>
+      <guid>https://tripmarking.com/cities/bangkok/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>방콕 관광지, 툭툭·택시 제안, 야시장, ATM·환전 상황에서 여행자가 확인할 기준을 정리한 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>도쿄 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/tokyo/</link>
+      <guid>https://tripmarking.com/cities/tokyo/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>도쿄 신주쿠, 시부야, 우에노 등 큰 역과 야간 번화가에서 소지품, 결제, 숙소 귀가를 확인하는 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>뉴욕 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/new-york/</link>
+      <guid>https://tripmarking.com/cities/new-york/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>뉴욕 지하철, 타임스스퀘어, 카페, 야간 이동에서 휴대폰과 가방 위치를 확인하는 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>리스본 여행 안전 맥락 가이드</title>
+      <link>https://tripmarking.com/cities/lisbon/</link>
+      <guid>https://tripmarking.com/cities/lisbon/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>리스본 트램, 전망대, 언덕길, 지하철과 관광지 주변에서 휴대폰과 가방 위치를 확인하는 도시별 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>공항 도착 직후 소지품 점검 가이드</title>
+      <link>https://tripmarking.com/guides/airport-arrival/</link>
+      <guid>https://tripmarking.com/guides/airport-arrival/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>해외 공항 도착 직후 유심, 환전, 택시, 숙소 이동을 시작하기 전에 여권, 카드, 휴대폰, 수하물을 점검하는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>지하철 환승 중 소지품 점검 가이드</title>
+      <link>https://tripmarking.com/guides/metro-transfer/</link>
+      <guid>https://tripmarking.com/guides/metro-transfer/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>해외 지하철 환승, 승강장, 개찰구, 에스컬레이터에서 휴대폰, 지갑, 백팩, 캐리어를 관리하는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>붐비는 광장·사진 명소 판단 가이드</title>
+      <link>https://tripmarking.com/guides/crowded-square/</link>
+      <guid>https://tripmarking.com/guides/crowded-square/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>유명 광장, 사진 명소, 전망대, 관광지 대기줄에서 휴대폰과 가방 노출을 줄이는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>해외 ATM 출금 전후 확인 가이드</title>
+      <link>https://tripmarking.com/guides/atm-withdrawal/</link>
+      <guid>https://tripmarking.com/guides/atm-withdrawal/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>해외 ATM 출금, 환전, 카드 결제 후 현금과 카드를 정리하고 기록을 남기는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>해외 택시·호출앱 확인 가이드</title>
+      <link>https://tripmarking.com/guides/taxi-app-check/</link>
+      <guid>https://tripmarking.com/guides/taxi-app-check/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>해외 택시, 호출앱, 공항 이동, 야간 귀가 전 차량 번호, 목적지, 결제 수단을 확인하는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>해변·테라스 가방 관리 가이드</title>
+      <link>https://tripmarking.com/guides/beach-bag-safety/</link>
+      <guid>https://tripmarking.com/guides/beach-bag-safety/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>해외 해변, 야외 테라스, 카페 좌석에서 가방, 휴대폰, 지갑을 내려놓는 시간을 줄이는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>도시별 해외여행 도난·스캠 주의 맥락</title>
+      <link>https://tripmarking.com/cities/</link>
+      <guid>https://tripmarking.com/cities/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>바르셀로나, 파리, 로마, 런던, 방콕, 도쿄, 뉴욕 등 도시별로 소지품과 이동 판단을 확인하는 허브.</description>
+    </item>
+    <item>
+      <title>바르셀로나 소매치기 주의 가이드</title>
+      <link>https://tripmarking.com/barcelona-pickpocket-guide/</link>
+      <guid>https://tripmarking.com/barcelona-pickpocket-guide/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>바르셀로나 주요 관광지와 지하철, 해변 동선에서 소지품 노출을 줄이는 여행 안전 가이드.</description>
+    </item>
+    <item>
+      <title>람블라스 거리와 보케리아 주변 소매치기 대처</title>
+      <link>https://tripmarking.com/barcelona/la-rambla-pickpocket/</link>
+      <guid>https://tripmarking.com/barcelona/la-rambla-pickpocket/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>람블라스 거리와 보케리아 시장 주변에서 사진, 길찾기, 결제 중 소지품을 확인하는 장소별 가이드.</description>
+    </item>
+    <item>
+      <title>카탈루냐 광장 지하철 환승 소매치기 주의</title>
+      <link>https://tripmarking.com/barcelona/catalunya-metro-pickpocket/</link>
+      <guid>https://tripmarking.com/barcelona/catalunya-metro-pickpocket/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>카탈루냐 광장 지하철 환승과 만남 장소에서 노선 확인과 소지품 관리를 분리하는 장소별 가이드.</description>
+    </item>
+    <item>
+      <title>사그라다 파밀리아 사진 대기 구역 스캠 주의</title>
+      <link>https://tripmarking.com/barcelona/sagrada-familia-scam/</link>
+      <guid>https://tripmarking.com/barcelona/sagrada-familia-scam/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>사그라다 파밀리아 주변 사진 대기와 입장 전 확인 중 접근 제안과 소지품 노출을 줄이는 가이드.</description>
+    </item>
+    <item>
+      <title>바르셀로네타 해변·테라스 가방 도난 주의</title>
+      <link>https://tripmarking.com/barcelona/barceloneta-beach-bag-theft/</link>
+      <guid>https://tripmarking.com/barcelona/barceloneta-beach-bag-theft/</guid>
+      <pubDate>Fri, 03 Jul 2026 14:30:00 +0900</pubDate>
+      <description>바르셀로네타 해변과 테라스 좌석에서 가방과 휴대폰을 몸에서 떼지 않는 기준.</description>
+    </item>
     <item>
       <title>파리 소매치기 주의 가이드</title>
       <link>https://tripmarking.com/paris-pickpocket-guide/</link>
