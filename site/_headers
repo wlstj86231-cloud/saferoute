@@ -21,6 +21,9 @@
 /contact/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/editorial-policy/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /field-notes/*
   Cache-Control: public, max-age=0, must-revalidate
 

@@ -261,7 +261,8 @@ const pages = [
 const coreFeedItems = [
   ["트립마킹 여행 안전 지도", "/", "해외여행 도난·스캠 제보를 지도와 이모티콘 신호로 빠르게 확인하는 서비스."],
   ["해외여행 도난·스캠 예방 가이드", "/guide/", "지하철, 관광지, 카페, 야간 이동, 피해 직후 행동을 확인하는 기본 가이드."],
-  ["트립마킹 현장 판단 기준", "/field-notes/", "손, 시선, 피로, 접근 제안, 첫 대응 루틴으로 여행 위험을 읽는 방식."]
+  ["트립마킹 현장 판단 기준", "/field-notes/", "손, 시선, 피로, 접근 제안, 첫 대응 루틴으로 여행 위험을 읽는 방식."],
+  ["표현·검수·제보 정책", "/editorial-policy/", "여행 안전 정보를 특정 집단 낙인 없이 다루기 위한 표현, 제보, 광고 제외 기준."]
 ];
 
 function escapeHtml(value) {
@@ -281,6 +282,7 @@ function relatedTitle(href) {
     "/": "트립마킹 지도 열기",
     "/guide/": "해외여행 도난·스캠 예방 가이드",
     "/field-notes/": "현장 판단 기준",
+    "/editorial-policy/": "표현·검수·제보 정책",
     "/cities/": "도시별 위험 맥락",
     "/barcelona-pickpocket-guide/": "바르셀로나 소매치기 주의 가이드",
     "/travel-pickpocket-prevention/": "해외여행 소매치기 예방 체크리스트",
@@ -396,7 +398,7 @@ function renderPage(page) {
         </ul>
       </div>
 
-      <p><a href="${page.mapHref}">트립마킹 지도에서 ${escapeHtml(page.city)} ${escapeHtml(page.signal)} 보기</a> · <a href="/cities/">도시별 주의 맥락</a> · <a href="/field-notes/">현장 판단 기준</a></p>
+      <p><a href="${page.mapHref}">트립마킹 지도에서 ${escapeHtml(page.city)} ${escapeHtml(page.signal)} 보기</a> · <a href="/cities/">도시별 주의 맥락</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/editorial-policy/">표현·검수 기준</a></p>
     </main>
   </body>
 </html>
