@@ -2,3 +2,7 @@ node_modules/
 .wrangler/
 dist/
 .DS_Store
+.playwright-cli/
+output/
+playwright-report/
+test-results/

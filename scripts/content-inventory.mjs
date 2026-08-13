@@ -15,7 +15,7 @@ const blockedAdPaths = new Set([
   "/privacy/",
   "/terms/",
   "/contact/",
-  "/review-readiness/",
+  "/sources/",
   "/guides/passport-loss/",
   "/lost-passport-card-response/"
 ]);
@@ -28,7 +28,7 @@ const nonContentPaths = new Set([
   "/privacy/",
   "/terms/",
   "/contact/",
-  "/review-readiness/"
+  "/sources/"
 ]);
 
 const contentEntryPrefixes = [
@@ -131,8 +131,23 @@ function extractLinks(html) {
   return [...new Set(links)].sort();
 }
 
+function extractExternalLinks(html) {
+  const links = [];
+  const regex = /\bhref=["'](https?:\/\/[^"']+)["']/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    try {
+      const url = new URL(decodeEntities(match[1]));
+      if (url.origin !== siteUrl) links.push(url.toString());
+    } catch {
+      // A malformed link is handled by the browser/link checks elsewhere.
+    }
+  }
+  return [...new Set(links)].sort();
+}
+
 function isVerificationPath(route) {
-  return route.startsWith("/google") || /^\/[a-f0-9]{16,}\.html$/i.test(route);
+  return route === "/404.html" || route.startsWith("/google") || /^\/[a-f0-9]{16,}\.html$/i.test(route);
 }
 
 function isContentPath(route) {
@@ -189,6 +204,31 @@ function textLength(html) {
     .length;
 }
 
+function textShingles(html, size = 7) {
+  const withoutSourceNote = html.replace(/<!-- SOURCE_NOTE_START -->[\s\S]*?<!-- SOURCE_NOTE_END -->/gi, " ");
+  const words = withoutSourceNote
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  const shingles = new Set();
+  for (let index = 0; index <= words.length - size; index += 1) {
+    shingles.add(words.slice(index, index + size).join(" "));
+  }
+  return shingles;
+}
+
+function jaccard(left, right) {
+  if (!left.size || !right.size) return 0;
+  let intersection = 0;
+  for (const value of left) if (right.has(value)) intersection += 1;
+  return intersection / (left.size + right.size - intersection);
+}
+
 function expectedCanonicalForRoute(route) {
   return `${siteUrl}${route}`;
 }
@@ -218,6 +258,7 @@ async function main() {
     const route = routeFromHtmlFile(filePath);
     const html = await fs.readFile(filePath, "utf8");
     const links = extractLinks(html);
+    const externalLinks = extractExternalLinks(html);
     htmlRoutes.set(route, {
       route,
       file: path.relative(root, filePath).replaceAll(path.sep, "/"),
@@ -227,7 +268,11 @@ async function main() {
       hasAds: /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js|adsbygoogle/i.test(html),
       paragraphCount: countParagraphs(html),
       textLength: textLength(html),
-      internalLinks: links
+      internalLinks: links,
+      externalLinks,
+      hasSourceNote: /<!-- SOURCE_NOTE_START -->[\s\S]*?<!-- SOURCE_NOTE_END -->/i.test(html),
+      shingles: textShingles(html),
+      html
     });
   }
 
@@ -266,6 +311,13 @@ async function main() {
     if (isContentPath(route) && page.internalLinks.length < 3) warnings.push(`content page has fewer than 3 internal links: ${route}`);
     if (isContentPath(route) && page.paragraphCount < 4) warnings.push(`content page has fewer than 4 paragraphs: ${route}`);
     if (isContentPath(route) && page.textLength < minContentTextLength) warnings.push(`content page has short text: ${route} (${page.textLength} chars)`);
+    if (isContentPath(route) && !page.hasSourceNote) errors.push(`content page missing source note: ${route}`);
+    if (isContentPath(route) && page.externalLinks.length < 1) errors.push(`content page missing direct external source: ${route}`);
+
+    const forbiddenPhrases = ["검색 진입", "검색 구조", "세부키워드", "극세부키워드", "애드센스 심사", "심사 준비 노트"];
+    for (const phrase of forbiddenPhrases) {
+      if (page.html.includes(phrase)) errors.push(`review/SEO production phrase on ${route}: ${phrase}`);
+    }
 
     for (const link of page.internalLinks) {
       if (!htmlRouteSet.has(link)) errors.push(`broken internal link from ${route} to ${link}`);
@@ -290,6 +342,37 @@ async function main() {
   for (const group of duplicateDescriptions) warnings.push(`duplicate content description: ${group.routes.join(", ")}`);
   for (const group of duplicateCanonicals) errors.push(`duplicate canonical ${group.value}: ${group.routes.join(", ")}`);
 
+  const similarPairs = [];
+  for (let left = 0; left < contentPages.length; left += 1) {
+    for (let right = left + 1; right < contentPages.length; right += 1) {
+      const score = jaccard(contentPages[left].shingles, contentPages[right].shingles);
+      if (score >= 0.72) {
+        similarPairs.push({
+          left: contentPages[left].route,
+          right: contentPages[right].route,
+          score: Number(score.toFixed(3))
+        });
+      }
+    }
+  }
+  for (const pair of similarPairs) {
+    warnings.push(`highly similar content (${pair.score}): ${pair.left}, ${pair.right}`);
+  }
+
+  const notFound = htmlRoutes.get("/404.html");
+  if (!notFound) {
+    errors.push("missing local 404.html");
+  } else {
+    if (!/name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(notFound.html)) errors.push("404 page missing noindex");
+    if (notFound.canonical) errors.push("404 page must not declare canonical");
+    if (notFound.hasAds) errors.push("404 page must not load ads");
+  }
+
+  if (!htmlRoutes.has("/sources/")) errors.push("missing sources page");
+  if ([...htmlRoutes.values()].some((page) => page.html.includes("contact@tripmarking.com"))) {
+    errors.push("unconfigured contact email is still public");
+  }
+
   const blockedWithAds = pages.filter((page) => blockedAdPaths.has(page.route) && page.hasAds);
   const contentWithAds = contentPages.filter((page) => page.hasAds);
   const summary = {
@@ -306,6 +389,9 @@ async function main() {
     duplicateContentTitleGroups: duplicateTitles.length,
     duplicateContentDescriptionGroups: duplicateDescriptions.length,
     duplicateCanonicalGroups: duplicateCanonicals.length,
+    sourceNotedContentPages: contentPages.filter((page) => page.hasSourceNote).length,
+    externallySourcedContentPages: contentPages.filter((page) => page.externalLinks.length > 0).length,
+    highlySimilarContentPairs: similarPairs.length,
     errors: errors.length,
     warnings: warnings.length
   };

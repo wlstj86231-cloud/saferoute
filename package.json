@@ -5,9 +5,15 @@
   "type": "module",
   "scripts": {
     "content:inventory": "node scripts/content-inventory.mjs",
-    "seo:city-safety": "node scripts/seo-city-safety-pages.mjs",
-    "seo:keywords": "node scripts/seo-keyword-pages.mjs",
-    "seo:spot-fields": "node scripts/seo-spot-field-pages.mjs",
+    "content:sources": "node scripts/add-source-notes.mjs",
+    "site:indexes": "node scripts/generate-site-indexes.mjs",
+    "validate": "node --check site/assets/app.js && node --check functions/_middleware.js && node scripts/validate-production.mjs && npm run content:inventory -- --json",
+    "test:e2e": "playwright test tests/site.spec.mjs --workers=1",
+    "seo:city-safety": "node scripts/seo-city-safety-pages.mjs && npm run content:sources && npm run site:indexes",
+    "seo:spot-fields": "node scripts/seo-spot-field-pages.mjs && npm run content:sources && npm run site:indexes",
     "serve": "python -m http.server 4197 --directory site --bind 127.0.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1"
   }
 }

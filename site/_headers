@@ -62,3 +62,17 @@
 /feed.xml
   Cache-Control: public, max-age=86400
   Content-Type: application/xml; charset=UTF-8
+
+/404.html
+  Cache-Control: no-store, max-age=0
+  X-Robots-Tag: noindex, follow
+
+/api
+  Cache-Control: no-store, max-age=0
+  Content-Type: application/json; charset=UTF-8
+  X-Robots-Tag: noindex, follow
+
+/api/*
+  Cache-Control: no-store, max-age=0
+  Content-Type: application/json; charset=UTF-8
+  X-Robots-Tag: noindex, follow

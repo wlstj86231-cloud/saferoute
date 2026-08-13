@@ -3,7 +3,7 @@ const dictionary = {
     brand: "트립마킹",
     tagline: "여행자 주의 지도",
     title: "트립마킹 - 해외여행 도난·스캠 주의 지도",
-    description: "한국인 해외여행자를 위한 소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠 주의 지도와 현장 대처 가이드.",
+    description: "공식 여행안전 안내를 바탕으로 한국인 해외여행자의 소지품 관리와 피해 직후 행동을 돕는 여행 지도.",
     mapPanelTitle: "지금 조심할 여행 스팟",
     mapPanelDesc: "소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠을 장소별 행동요령으로 봐요.",
     citiesTitle: "도시별 주의 맥락",
@@ -30,7 +30,7 @@ const dictionary = {
     save: "저장",
     savedDone: "저장됨",
     source: "기준",
-    level: "주의도",
+    level: "현장 안내",
     pattern: "자주 생기는 상황",
     action: "현장에서 할 일",
     after: "피해 직후",
@@ -63,7 +63,7 @@ const dictionary = {
     filtered: "상황으로 좁혔어.",
     shown: "곳 표시",
     selected: "선택됨",
-    sourceNote: "이 지도는 신고 통계가 아니라 공식 안전 안내와 여행자에게 반복적으로 알려진 피해 패턴을 정리한 참고 도구예요.",
+    sourceNote: "이 지도는 범죄 통계나 실시간 위험 순위가 아닙니다. 공식 안전 안내를 여행자의 행동 시나리오로 풀어 쓴 참고 도구예요.",
     officialLinks: "공식 안전 링크",
     police: "현지 경찰",
     card: "카드사 정지",
@@ -90,28 +90,8 @@ const dictionary = {
     afterLoss: "분실 후",
     officialSource: "공식·공공 안전 안내 기반",
     practicalRule: "실전 규칙",
-    reportRisk: "위험 제보는 선택형 신호만 바로 공유돼요. 자유 텍스트 없이 동의와 허위 의심으로 균형을 맞춥니다.",
-    reportPanelTitle: "현장 위험 제보",
-    reportPanelDesc: "방금 확인한 위험 신호를 누르면 다른 사용자 지도에도 빠르게 반영돼요.",
-    reportNow: "제보",
-    submitReport: "바로 반영",
-    firstReport: "첫 제보 남기기",
-    recentReports: "최근 제보",
-    noLiveReports: "아직 실시간 제보 없음",
-    liveReports: "실시간 제보",
-    reportSynced: "공유 반영됨",
-    reportSelectOne: "위험 유형을 하나 이상 선택해줘.",
-    reportSaved: "제보가 바로 반영됐어. 다른 사람 화면에도 곧 떠요.",
-    reportLocalOnly: "제보는 이 기기에 먼저 반영했고 서버 반영은 다시 시도할게.",
-    reportDeleted: "제보를 삭제했어.",
-    reportMineOnly: "내가 남긴 제보만 삭제할 수 있어.",
-    agree: "동의",
-    dispute: "허위 의심",
-    delete: "삭제",
-    today: "오늘 확인",
-    week: "최근 1주일",
-    month: "최근 1개월",
-    old: "이전 기억",
+    sourceReviewed: "공식 출처 확인",
+    correction: "수정 제안",
     cityButtonLabel: "도시 빠른 이동",
     mainNav: "주요 메뉴",
     quickLabel: "상황 빠른 보기",
@@ -146,19 +126,19 @@ const dictionary = {
     reviewSaved: "저장한 곳 다시 보기",
     cityRiskMix: "위험 유형 요약",
     cityBriefTitle: "도시 안전 브리핑",
-    compareTitle: "도시별 위험 비교",
-    compareDesc: "여행 전에는 도시별 평균 위험도와 스팟 수를 훑어보면 동선 감각이 빨리 잡혀요.",
+    compareTitle: "도시별 안내 범위",
+    compareDesc: "도시를 위험 순위로 비교하지 않고, 어떤 이동 장면을 안내하는지 보여줘요.",
     latestUpdateTitle: "최신 보강 요약",
-    latestUpdateDesc: "2026년 5월 공식 여행안전 안내를 다시 대조하고, 여행자가 많이 들르는 도시와 환승·야간·관광지 확인 지점을 크게 늘렸어요.",
-    latestUpdateDate: "2026.05 갱신",
+    latestUpdateDesc: "2026년 8월 14일 도시별 정부·경찰·공식 관광기관 안내 링크를 다시 확인하고, 통계로 오해될 수 있는 숫자 순위를 없앴어요.",
+    latestUpdateDate: "2026.08.14 출처 확인",
     updateSourceBadge: "공식 안내 기반",
     expandedSpotLabel: "추가 스팟",
     priorityTitle: "먼저 볼 위험 신호",
-    priorityDesc: "현재 조건에서 위험도와 최근 제보 신호가 높은 곳부터 짧게 골랐어요.",
+    priorityDesc: "현재 도시와 상황 필터에 맞는 확인 장면을 짧게 골랐어요.",
     popularCities: "빠른 도시 선택",
     openSpot: "바로 보기",
     distanceLabel: "거리",
-    averageRisk: "평균 위험",
+    averageRisk: "안내 스팟",
     focusTime: "주의 시간",
     strongestSignals: "강한 신호",
     openCheck: "체크 열기",
@@ -207,7 +187,7 @@ const dictionary = {
     brand: "TripMarking",
     tagline: "Traveler risk map",
     title: "TripMarking - Travel Theft and Scam Risk Map",
-    description: "A map for Korean travelers to check pickpocketing, phone snatching, bag theft, tourist scams, and what to do on the spot.",
+    description: "A travel map that translates official safety guidance into practical belongings checks and post-incident steps for Korean travelers.",
     mapPanelTitle: "Travel Spots To Watch Now",
     mapPanelDesc: "Check pickpocketing, phone snatching, bag theft, and tourist scams with simple on-site actions.",
     citiesTitle: "City Risk Context",
@@ -234,7 +214,7 @@ const dictionary = {
     save: "Save",
     savedDone: "Saved",
     source: "Basis",
-    level: "Risk",
+    level: "Field guide",
     pattern: "Common pattern",
     action: "What to do",
     after: "After incident",
@@ -267,7 +247,7 @@ const dictionary = {
     filtered: "mode applied.",
     shown: "spots shown",
     selected: "Selected",
-    sourceNote: "This map is not a crime-stat database. It summarizes official safety advice and repeatedly reported traveler risk patterns.",
+    sourceNote: "This is not a crime-statistics database or live risk ranking. It translates official safety guidance into traveler action scenarios.",
     officialLinks: "Official Safety Links",
     police: "Local police",
     card: "Freeze cards",
@@ -294,28 +274,8 @@ const dictionary = {
     afterLoss: "After loss",
     officialSource: "Based on official/public safety advice",
     practicalRule: "Practical rule",
-    reportRisk: "Public reports are shared as structured signals only. No free text; agreement and dispute signals keep it balanced.",
-    reportPanelTitle: "Report A Risk Signal",
-    reportPanelDesc: "Tap what you just checked and it will update other travelers' maps shortly.",
-    reportNow: "Report",
-    submitReport: "Publish now",
-    firstReport: "Add first report",
-    recentReports: "Recent reports",
-    noLiveReports: "No live reports yet",
-    liveReports: "Live reports",
-    reportSynced: "Shared",
-    reportSelectOne: "Select at least one risk type.",
-    reportSaved: "Report added. Other travelers will see it shortly.",
-    reportLocalOnly: "Saved on this device first; server sync will retry.",
-    reportDeleted: "Report deleted.",
-    reportMineOnly: "Only your own report can be deleted.",
-    agree: "Agree",
-    dispute: "False report",
-    delete: "Delete",
-    today: "Checked today",
-    week: "Last week",
-    month: "Last month",
-    old: "Older memory",
+    sourceReviewed: "Official source checked",
+    correction: "Suggest a correction",
     cityButtonLabel: "Quick city move",
     mainNav: "Main menu",
     quickLabel: "Quick scenarios",
@@ -350,19 +310,19 @@ const dictionary = {
     reviewSaved: "Review saved spots",
     cityRiskMix: "Risk type summary",
     cityBriefTitle: "City safety brief",
-    compareTitle: "Compare city risk",
-    compareDesc: "Before a trip, scanning average risk and spot count helps you understand the route faster.",
+    compareTitle: "City guide coverage",
+    compareDesc: "Cities are not ranked by danger. This shows which travel situations each guide covers.",
     latestUpdateTitle: "Latest coverage update",
-    latestUpdateDesc: "Coverage was expanded in May 2026 after checking official travel-safety guidance again, with more cities and more transit, night, and tourist-site checkpoints.",
-    latestUpdateDate: "Updated 2026.05",
+    latestUpdateDesc: "On August 14, 2026, city links from governments, police and official tourism bodies were rechecked, and numeric rankings that could be mistaken for statistics were removed.",
+    latestUpdateDate: "Sources checked 2026.08.14",
     updateSourceBadge: "Official guidance based",
     expandedSpotLabel: "Added spots",
     priorityTitle: "Signals to check first",
-    priorityDesc: "A short list ranked by current filters, risk level, and live report signals.",
+    priorityDesc: "A short list of check scenarios matching the current city and situation filters.",
     popularCities: "Quick city switch",
     openSpot: "Open",
     distanceLabel: "Distance",
-    averageRisk: "Average risk",
+    averageRisk: "Guide spots",
     focusTime: "Watch time",
     strongestSignals: "Strong signals",
     openCheck: "Open check",
@@ -582,14 +542,9 @@ const riskTypes = [
   { key: "night", emoji: "🌙", color: "dark" }
 ];
 
-const reportTypes = riskTypes.filter((risk) => risk.key !== "all");
-const allowedReportKeys = new Set(reportTypes.map((risk) => risk.key));
-const reportClientStorageKey = "tripmarking:reportClientId";
-const reportApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://tripmarking.com/api/reports" : "/api/reports";
-const feedbackApiUrl = location.hostname === "appassets.androidplatform.net" ? "https://tripmarking.com/api/feedback" : "/api/feedback";
-const reportSyncIntervalMs = 30000;
-const reportRetryIntervalMs = 15000;
-const reportClientId = readStableClientId(reportClientStorageKey);
+const visibleRiskTypes = riskTypes.filter((risk) => risk.key !== "all");
+const allowedRiskKeys = new Set(visibleRiskTypes.map((risk) => risk.key));
+const correctionUrl = "https://github.com/wlstj86231-cloud/saferoute/issues/new";
 
 const scenarios = [
   { key: "transit", label: "quickTransit", emoji: "🚇", risks: ["transit", "pickpocket"] },
@@ -1975,8 +1930,7 @@ const state = {
   viewed: readJson("tripmarking:viewed", []),
   incident: readJson("tripmarking:incident", {}),
   drill: readJson("tripmarking:drill", {}),
-  checks: readJson("tripmarking:checks", {}),
-  reports: normalizeReports(readJson("tripmarking:reports", []))
+  checks: readJson("tripmarking:checks", {})
 };
 
 const riskByKey = new Map(riskTypes.map((risk) => [risk.key, risk]));
@@ -2006,17 +1960,8 @@ let sheetPointerStartX = null;
 let sheetPointerStartMode = "";
 let sheetPointerMoved = false;
 let ignoreNextSheetToggleClick = false;
-let reportVersion = 0;
 let filteredSpotsCacheKey = "";
 let filteredSpotsCache = [];
-let reportDerivedVersion = -1;
-let visibleReportsBySpot = new Map();
-let liveRiskBySpot = new Map();
-let reportSyncTimer = null;
-let reportSyncInFlight = false;
-let reportSyncAvailable = true;
-let reportLastFailureAt = 0;
-let reportServerFingerprint = "";
 let searchRenderFrame = 0;
 let mapResizeTimer = 0;
 let mapInteractionTimer = 0;
@@ -2033,7 +1978,7 @@ function readInitialRoute() {
     const spot = spots.find((item) => item.id === spotId);
     return {
       city: cities[cityKey] ? cityKey : spot?.city || "",
-      filter: allowedReportKeys.has(riskKey) ? riskKey : spot?.risk || "all",
+      filter: allowedRiskKeys.has(riskKey) ? riskKey : spot?.risk || "all",
       selectedId: spot?.id || ""
     };
   } catch {
@@ -2076,7 +2021,6 @@ function init() {
   renderMarkers();
   refreshStatus();
   registerServiceWorkerWhenIdle();
-  runAfterFirstPaint(startReportSync, 1800, 3200);
 }
 
 function registerServiceWorkerWhenIdle() {
@@ -2168,8 +2112,8 @@ function bindEvents() {
   searchToggle.addEventListener("click", () => setSearchPanel(searchPanel.hidden, true));
   searchClear.addEventListener("click", clearSearch);
   languageToggle.addEventListener("click", toggleLanguage);
-  siblingButton?.addEventListener("click", openSiblingDialog);
-  feedbackButton?.addEventListener("click", openFeedbackDialog);
+  siblingButton?.addEventListener("click", () => window.location.assign("/sources/"));
+  feedbackButton?.addEventListener("click", () => window.open(correctionUrl, "_blank", "noopener,noreferrer"));
   locateButton.addEventListener("click", locateUser);
 
   spotSearch.addEventListener("input", (event) => {
@@ -2269,13 +2213,6 @@ function bindEvents() {
     clearSheetDragState();
   });
 
-  sheet.addEventListener("submit", (event) => {
-    const form = event.target.closest("#reportForm");
-    if (!form) return;
-    event.preventDefault();
-    submitReport(form);
-  });
-
   sheet.addEventListener("click", (event) => {
     const collapse = event.target.closest("[data-sheet-collapse]");
     if (collapse) {
@@ -2353,34 +2290,9 @@ function bindEvents() {
       return;
     }
 
-    const reportOpenButton = event.target.closest("[data-open-report]");
-    if (reportOpenButton) {
-      setPanel("report");
-      return;
-    }
-
     const copySpotButton = event.target.closest("[data-copy-spot]");
     if (copySpotButton) {
       copySpotSummary(copySpotButton.dataset.copySpot);
-      return;
-    }
-
-    const reportRisk = event.target.closest("[data-report-risk]");
-    if (reportRisk) {
-      reportRisk.classList.toggle("is-selected");
-      reportRisk.setAttribute("aria-pressed", String(reportRisk.classList.contains("is-selected")));
-      return;
-    }
-
-    const reportVote = event.target.closest("[data-report-vote]");
-    if (reportVote) {
-      voteReport(reportVote.dataset.reportId, reportVote.dataset.reportVote);
-      return;
-    }
-
-    const reportDelete = event.target.closest("[data-report-delete]");
-    if (reportDelete) {
-      deleteReport(reportDelete.dataset.reportDelete);
       return;
     }
 
@@ -2456,14 +2368,6 @@ function bindEvents() {
     saveIncidentNote(form);
   });
 
-  document.addEventListener("click", handleFeedbackClick);
-  document.addEventListener("submit", handleFeedbackSubmit);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && document.querySelector(".feedback-overlay")) {
-      closeSiblingDialog();
-      closeFeedbackDialog();
-    }
-  });
 }
 
 function setPanel(panel) {
@@ -2582,8 +2486,8 @@ function applyLanguage() {
   searchClear.setAttribute("aria-label", tr("clearSearch"));
   languageToggle.setAttribute("aria-label", state.lang === "ko" ? tr("translateToEnglish") : tr("translateToKorean"));
   languageToggle.setAttribute("aria-pressed", String(state.lang === "en"));
-  siblingButton?.setAttribute("aria-label", state.lang === "ko" ? "형제 서비스 보기" : "Open sister service");
-  feedbackButton?.setAttribute("aria-label", feedbackCopy("buttonLabel"));
+  siblingButton?.setAttribute("aria-label", state.lang === "ko" ? "공식 출처와 편집 방법 보기" : "Open sources and methodology");
+  feedbackButton?.setAttribute("aria-label", tr("correction"));
   languageToggle.querySelector(".language-code").textContent = state.lang === "ko" ? "EN" : "한";
   spotSearch.placeholder = tr("searchPlaceholder");
   document.querySelector(".city-strip").setAttribute("aria-label", tr("cityButtonLabel"));
@@ -2621,8 +2525,6 @@ function renderSheet() {
     nextHtml = renderSaved();
   } else if (state.panel === "check") {
     nextHtml = renderCheck();
-  } else if (state.panel === "report") {
-    nextHtml = renderReportPanel();
   } else {
     nextHtml = renderMapPanel();
   }
@@ -2688,7 +2590,7 @@ function renderCities() {
     }).join("")}
     <div class="guide-card">
       <strong>${tr("sourceNote")}</strong>
-      <p>${tr("reportRisk")}</p>
+      <p><a href="/sources/">${tr("sourceReviewed")}</a> · <a href="${correctionUrl}" target="_blank" rel="noreferrer">${tr("correction")}</a></p>
     </div>
   `;
 }
@@ -2770,63 +2672,6 @@ function renderCheck() {
         `).join("")}
       </div>
     `).join("")}
-  `;
-}
-
-function renderReportPanel() {
-  const spot = spotById.get(state.selectedId) || filteredSpots()[0];
-  if (!spot) {
-    return `
-      ${sheetGrip()}
-      <section class="spot-card">
-        <h3>${tr("noResults")}</h3>
-        <p>${tr("sourceNote")}</p>
-      </section>
-    `;
-  }
-  const reports = getVisibleReportsForSpot(spot.id);
-  return `
-    ${sheetGrip()}
-    <div class="sheet-head" data-sheet-toggle>
-      <div>
-        <h2>${tr("reportPanelTitle")}</h2>
-        <p>${tr("reportPanelDesc")}</p>
-      </div>
-      <button class="sheet-mini-action" type="button" data-sheet-collapse>${tr("mapWide")}</button>
-    </div>
-    <form class="report-form" id="reportForm">
-      <input type="hidden" name="spotId" value="${escapeHtml(spot.id)}">
-      <section class="spot-card report-target-card">
-        <div class="spot-title-row">
-          <div>
-            <h3>${riskEmoji(getLiveRisk(spot))} ${spot.name[state.lang]}</h3>
-            <p>${spot.area[state.lang]} · ${spot.type[state.lang]}</p>
-          </div>
-          <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length ? `${reports.length}` : `${tr("level")} ${spot.level}`}</span>
-        </div>
-      </section>
-      <div class="report-grid">
-        ${reportTypes.map((risk) => `
-          <button type="button" class="chip report-chip" data-report-risk="${risk.key}" aria-pressed="false">
-            <span class="report-emoji" aria-hidden="true">${risk.emoji}</span>
-            <span>${tr(risk.key)}</span>
-          </button>
-        `).join("")}
-      </div>
-      <div class="filter-row compact-filter-row">
-        ${["today", "week", "month", "old"].map((value, index) => `
-          <label class="chip recency-chip">
-            <input type="radio" name="recency" value="${value}" ${index === 0 ? "checked" : ""}>
-            <span>${tr(value)}</span>
-          </label>
-        `).join("")}
-      </div>
-      <button class="primary-button" type="submit">
-        ${icon("plus")}
-        ${reports.length ? tr("submitReport") : tr("firstReport")}
-      </button>
-    </form>
-    ${renderReportFeed(reports)}
   `;
 }
 
@@ -2924,7 +2769,6 @@ function renderCityBrief(list, selected) {
   const citySpots = spots.filter((spot) => spot.city === cityKey);
   const top = citySpots.slice().sort((a, b) => b.level - a.level)[0];
   const mix = cityRiskMix(citySpots).slice(0, 4);
-  const average = averageRisk(citySpots);
   const times = citySpots.slice().sort((a, b) => b.level - a.level).slice(0, 2).map((spot) => spot.time[state.lang]);
   return `
     <section class="brief-card">
@@ -2933,7 +2777,7 @@ function renderCityBrief(list, selected) {
           <span>${tr("cityBriefTitle")}</span>
           <strong>${city?.label[state.lang] || tr("currentCity")}</strong>
         </div>
-        <span class="badge ${badgeClass(average)}">${tr("averageRisk")} ${average}</span>
+        <span class="badge">${tr("averageRisk")} ${citySpots.length}</span>
       </div>
       <div class="brief-grid">
         <div><span>${tr("topRisk")}</span><strong>${riskEmoji(top?.risk)} ${riskLabel(top?.risk)}</strong></div>
@@ -2954,9 +2798,9 @@ function renderCityCompare() {
   const stats = Object.entries(cities)
     .map(([key, city]) => {
       const citySpots = spots.filter((spot) => spot.city === key);
-      return { key, city, count: citySpots.length, average: averageRisk(citySpots), top: cityRiskMix(citySpots)[0] };
+      return { key, city, count: citySpots.length, top: cityRiskMix(citySpots)[0] };
     })
-    .sort((a, b) => b.average - a.average);
+    .sort((a, b) => b.count - a.count || a.city.label[state.lang].localeCompare(b.city.label[state.lang]));
   return `
     <section class="compare-card">
       <div>
@@ -2964,10 +2808,10 @@ function renderCityCompare() {
         <p>${tr("compareDesc")}</p>
       </div>
       <div class="compare-list">
-        ${stats.map((item, index) => `
+        ${stats.map((item) => `
           <button type="button" data-open-city="${item.key}">
-            <strong>${index + 1}. ${item.city.label[state.lang]}</strong>
-            <span>${tr("averageRisk")} ${item.average} · ${countSpots(item.count)} · ${riskEmoji(item.top?.key)} ${riskLabel(item.top?.key)}</span>
+            <strong>${item.city.label[state.lang]}</strong>
+            <span>${tr("averageRisk")} ${item.count} · ${riskEmoji(item.top?.key)} ${riskLabel(item.top?.key)}</span>
           </button>
         `).join("")}
       </div>
@@ -3100,7 +2944,7 @@ function renderMiniSpot(spot) {
     <button class="mini-spot" type="button" data-spot-id="${spot.id}">
       <span>${riskEmoji(spot.risk)} ${riskLabel(spot.risk)}</span>
       <strong>${spot.name[state.lang]}</strong>
-      <em>${cities[spot.city].label[state.lang]} · ${spot.level}</em>
+      <em>${cities[spot.city].label[state.lang]} · ${spot.time[state.lang]}</em>
     </button>
   `;
 }
@@ -3199,9 +3043,9 @@ function renderCityShortcutRail() {
   const priorityCities = Object.entries(cities)
     .map(([key, city]) => {
       const citySpots = spots.filter((spot) => spot.city === key);
-      return { key, city, count: citySpots.length, average: averageRisk(citySpots), top: cityRiskMix(citySpots)[0] };
+      return { key, city, count: citySpots.length, top: cityRiskMix(citySpots)[0] };
     })
-    .sort((a, b) => b.count - a.count || b.average - a.average);
+    .sort((a, b) => b.count - a.count || a.city.label[state.lang].localeCompare(b.city.label[state.lang]));
   return `
     <div class="city-shortcut-card">
       <span>${tr("popularCities")}</span>
@@ -3232,14 +3076,13 @@ function renderPriorityStack(list) {
       </div>
       <div class="priority-list">
         ${queue.map((spot, index) => {
-          const reports = getVisibleReportsForSpot(spot.id);
           const distance = state.userPosition ? `<em>${tr("distanceLabel")} ${formatDistance(distanceTo(spot))}</em>` : "";
           return `
             <button type="button" class="priority-item ${index === 0 ? "is-first" : ""}" data-spot-id="${spot.id}">
               <span>${riskEmoji(getLiveRisk(spot))}</span>
               <div>
                 <strong>${spot.name[state.lang]}</strong>
-                <small>${cities[spot.city].label[state.lang]} · ${riskLabel(spot.risk)} · ${reports.length ? `${reports.length} ${tr("liveReports")}` : spot.time[state.lang]}</small>
+                <small>${cities[spot.city].label[state.lang]} · ${riskLabel(spot.risk)} · ${spot.time[state.lang]}</small>
                 ${distance}
               </div>
               <b>${tr("openSpot")}</b>
@@ -3275,7 +3118,7 @@ function renderMarkerLegend() {
     <div class="marker-legend" aria-label="${tr("markerLegend")}">
       <span>${tr("markerLegend")}</span>
       <div>
-        ${reportTypes.map((risk) => `
+        ${visibleRiskTypes.map((risk) => `
           <button type="button" data-risk-filter="${risk.key}" class="${state.filter === risk.key ? "is-active" : ""}">
             <span aria-hidden="true">${risk.emoji}</span>${riskLabel(risk.key)}
           </button>
@@ -3288,7 +3131,6 @@ function renderMarkerLegend() {
 function renderSpotBrief(spot) {
   const saved = state.saved.includes(spot.id);
   const tags = spot.tags.slice(0, 3);
-  const reports = getVisibleReportsForSpot(spot.id);
   const liveRisk = getLiveRisk(spot);
   return `
     <section class="spot-card spot-brief-card is-selected">
@@ -3297,17 +3139,11 @@ function renderSpotBrief(spot) {
           <h3>${riskEmoji(liveRisk)} ${spot.name[state.lang]}</h3>
           <p>${spot.area[state.lang]} · ${spot.type[state.lang]} · ${spot.time[state.lang]}</p>
         </div>
-        <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length ? `${reports.length} ${tr("liveReports")}` : `${tr("level")} ${spot.level}`}</span>
+        <span class="badge">${tr("level")}</span>
       </div>
       <div class="tag-row compact-tags">
         ${tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
       </div>
-      ${reports.length ? `
-        <div class="brief-line">
-          <span>${tr("recentReports")}</span>
-          <strong>${reports.slice(0, 3).map((report) => report.risks.map((risk) => `${riskEmoji(risk)} ${riskLabel(risk)}`).join(" · ")).join(" / ")}</strong>
-        </div>
-      ` : ""}
       <div class="brief-line">
         <span>${tr("oneLineRisk")}</span>
         <strong>${spot.pattern[state.lang]}</strong>
@@ -3320,7 +3156,7 @@ function renderSpotBrief(spot) {
         <button class="primary-button" type="button" data-open-detail>${icon("list")}${tr("openDetail")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
-        <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
+        <a class="text-button" href="${correctionUrl}" target="_blank" rel="noreferrer">${icon("plus")}${tr("correction")}</a>
         <button class="text-button" type="button" data-copy-spot="${spot.id}">${icon("copy")}${tr("copySpot")}</button>
       </div>
     </section>
@@ -3329,7 +3165,6 @@ function renderSpotBrief(spot) {
 
 function renderSpotDetail(spot) {
   const saved = state.saved.includes(spot.id);
-  const reports = getVisibleReportsForSpot(spot.id);
   const liveRisk = getLiveRisk(spot);
   return `
     <section class="spot-card is-selected">
@@ -3338,7 +3173,7 @@ function renderSpotDetail(spot) {
           <h3>${riskEmoji(liveRisk)} ${spot.name[state.lang]}</h3>
           <p>${spot.area[state.lang]} · ${spot.type[state.lang]}</p>
         </div>
-        <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length ? `${reports.length} ${tr("liveReports")}` : `${tr("level")} ${spot.level}`}</span>
+        <span class="badge">${tr("level")}</span>
       </div>
       <div class="tag-row">
         ${spot.tags.map((tag) => `<span class="badge ${tag === "night" || tag === "phone" ? "danger" : tag === "scam" ? "warn" : ""}">${tagEmoji(tag)} ${tagLabel(tag)}</span>`).join("")}
@@ -3347,7 +3182,7 @@ function renderSpotDetail(spot) {
       <div class="detail-actions">
         <button class="text-button" type="button" data-save="${spot.id}">${icon(saved ? "saved" : "save")}${saved ? tr("savedDone") : tr("save")}</button>
         <a class="text-button" href="${mapsUrl(spot)}" target="_blank" rel="noreferrer">${icon("route")}${tr("route")}</a>
-        <button class="text-button" type="button" data-open-report>${icon("plus")}${tr("reportNow")}</button>
+        <a class="text-button" href="${correctionUrl}" target="_blank" rel="noreferrer">${icon("plus")}${tr("correction")}</a>
       </div>
       <div class="detail-actions return-actions">
         <button class="text-button" type="button" data-close-detail>${tr("summary")}</button>
@@ -3370,14 +3205,13 @@ function renderSpotDetail(spot) {
       </ul>
       ${renderSpotPlaybook(spot)}
       ${renderRelatedSpots(spot)}
-      ${renderReportFeed(reports)}
+      <div class="guide-card"><strong>${tr("sourceReviewed")}</strong><p><a href="/sources/">${tr("sourceNote")}</a></p></div>
     </section>
   `;
 }
 
 function renderSpotCard(spot) {
   const liveRisk = getLiveRisk(spot);
-  const reports = getVisibleReportsForSpot(spot.id);
   return `
     <button class="spot-card ${spot.id === state.selectedId ? "is-selected" : ""}" type="button" data-spot-id="${spot.id}">
       <div class="spot-title-row">
@@ -3385,294 +3219,10 @@ function renderSpotCard(spot) {
           <h3>${riskEmoji(liveRisk)} ${spot.name[state.lang]}</h3>
           <p>${spot.area[state.lang]} · ${riskLabel(spot.risk)} · ${spot.time[state.lang]}</p>
         </div>
-        <span class="badge ${reports.length ? "warn" : badgeClass(spot.level)}">${reports.length || spot.level}</span>
+        <span class="badge">${riskEmoji(spot.risk)}</span>
       </div>
     </button>
   `;
-}
-
-function renderReportFeed(reports) {
-  if (!reports.length) {
-    return `
-      <div class="live-feed">
-        <div class="feed-head">
-          <strong>${tr("recentReports")}</strong>
-          <span>${tr("noLiveReports")}</span>
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="live-feed">
-      <div class="feed-head">
-        <strong>${tr("recentReports")}</strong>
-        <span>${tr("reportSynced")}</span>
-      </div>
-      ${reports.map((report) => `
-        <article class="feed-item">
-          <div>
-            <p>${report.risks.map((risk) => `${riskEmoji(risk)} ${riskLabel(risk)}`).join(" · ")}</p>
-            <small>${tr(report.recency)} · ${tr("agree")} ${report.agrees} · ${tr("dispute")} ${report.disputes}</small>
-          </div>
-          <div class="feed-actions">
-            <button type="button" data-report-id="${escapeHtml(report.id)}" data-report-vote="agree">${tr("agree")}</button>
-            <button type="button" data-report-id="${escapeHtml(report.id)}" data-report-vote="dispute">${tr("dispute")}</button>
-            ${canDeleteReport(report) ? `<button type="button" class="danger-action" data-report-delete="${escapeHtml(report.id)}">${tr("delete")}</button>` : ""}
-          </div>
-        </article>
-      `).join("")}
-    </div>
-  `;
-}
-
-function siblingCopy(key) {
-  const ko = {
-    kicker: "트립마킹 패밀리",
-    title: "스미맵",
-    desc: "일본에서 충전, 화장실, 쉬기, 비 피하기, 한국어 대응처럼 생활 중 바로 필요한 장소 신호를 사용자 제보로 빠르게 확인하는 형제 지도입니다.",
-    badge: "일본 생활 제보 지도",
-    note: "트립마킹이 해외 치안 주의와 대처 루틴을 맡고, 스미맵은 일본 생활 편의 신호를 맡습니다.",
-    cta: "스미맵 열기",
-    close: "닫기"
-  };
-  const en = {
-    kicker: "TripMarking Family",
-    title: "Sumimap",
-    desc: "A sibling map for Korean users in Japan: charging, restrooms, short rest spots, rain shelter, Korean-language support, and comfort signals from user reports.",
-    badge: "Japan daily-life report map",
-    note: "TripMarking handles travel safety signals and response routines; Sumimap handles everyday living spots in Japan.",
-    cta: "Open Sumimap",
-    close: "Close"
-  };
-  return (state.lang === "en" ? en : ko)[key] || ko[key] || "";
-}
-
-function openSiblingDialog() {
-  document.querySelector(".feedback-overlay")?.remove();
-  document.body.insertAdjacentHTML("beforeend", renderSiblingDialog());
-  const overlay = document.querySelector(".sibling-overlay");
-  overlay?.addEventListener("click", handleSiblingDialogClick);
-  window.requestAnimationFrame(() => {
-    document.querySelector(".sibling-link")?.focus();
-  });
-}
-
-function closeSiblingDialog() {
-  document.querySelector(".sibling-overlay")?.remove();
-}
-
-function handleSiblingDialogClick(event) {
-  if (event.target === event.currentTarget || event.target.closest("[data-sibling-close]")) {
-    closeSiblingDialog();
-  }
-}
-
-function renderSiblingDialog() {
-  return `
-    <div class="feedback-overlay sibling-overlay">
-      <section class="feedback-card sibling-card" role="dialog" aria-modal="true" aria-labelledby="siblingTitle">
-        <div class="feedback-head">
-          <div>
-            <span class="feedback-kicker">${escapeHtml(siblingCopy("kicker"))}</span>
-            <h2 id="siblingTitle">${escapeHtml(siblingCopy("title"))}</h2>
-            <p>${escapeHtml(siblingCopy("desc"))}</p>
-          </div>
-          <button class="feedback-close" type="button" data-sibling-close aria-label="${escapeHtml(siblingCopy("close"))}">×</button>
-        </div>
-        <div class="sibling-body">
-          <span class="sibling-badge">住 ${escapeHtml(siblingCopy("badge"))}</span>
-          <p class="sibling-note">${escapeHtml(siblingCopy("note"))}</p>
-          <a class="sibling-link" href="https://sumimap.com/" rel="noopener">
-            <span>${escapeHtml(siblingCopy("cta"))}</span>
-            <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </section>
-    </div>
-  `;
-}
-
-function openFeedbackDialog() {
-  document.querySelector(".feedback-overlay")?.remove();
-  document.body.insertAdjacentHTML("beforeend", renderFeedbackDialog());
-  window.requestAnimationFrame(() => {
-    document.querySelector("#feedbackMessage")?.focus();
-  });
-}
-
-function closeFeedbackDialog() {
-  document.querySelector(".feedback-overlay")?.remove();
-}
-
-function handleFeedbackClick(event) {
-  const close = event.target.closest("[data-feedback-close]");
-  if (close && (close.matches("button") || event.target === close)) {
-    closeFeedbackDialog();
-    return;
-  }
-
-  const kind = event.target.closest("[data-feedback-kind]");
-  if (!kind) return;
-  const form = kind.closest("#feedbackForm");
-  if (!form) return;
-  form.elements.kind.value = kind.dataset.feedbackKind;
-  form.querySelectorAll("[data-feedback-kind]").forEach((button) => {
-    const active = button === kind;
-    button.classList.toggle("is-selected", active);
-    button.setAttribute("aria-pressed", String(active));
-  });
-}
-
-function handleFeedbackSubmit(event) {
-  const form = event.target.closest("#feedbackForm");
-  if (!form) return;
-  event.preventDefault();
-  submitFeedback(form);
-}
-
-function renderFeedbackDialog() {
-  const kinds = [
-    ["idea", "💬", feedbackCopy("kindIdea")],
-    ["bug", "🛠️", feedbackCopy("kindBug")],
-    ["question", "❓", feedbackCopy("kindQuestion")]
-  ];
-  return `
-    <div class="feedback-overlay" data-feedback-close>
-      <section class="feedback-card" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
-        <div class="feedback-head">
-          <div>
-            <span class="feedback-kicker">${feedbackCopy("kicker")}</span>
-            <h2 id="feedbackTitle">${feedbackCopy("title")}</h2>
-            <p>${feedbackCopy("desc")}</p>
-          </div>
-          <button class="feedback-close" type="button" data-feedback-close aria-label="${escapeHtml(feedbackCopy("close"))}">×</button>
-        </div>
-        <form id="feedbackForm" class="feedback-form">
-          <input type="hidden" name="kind" value="idea">
-          <div class="feedback-kind-row" aria-label="${escapeHtml(feedbackCopy("kindLabel"))}">
-            ${kinds.map(([key, emoji, label], index) => `
-              <button class="${index === 0 ? "is-selected" : ""}" type="button" data-feedback-kind="${key}" aria-pressed="${index === 0 ? "true" : "false"}">
-                <span aria-hidden="true">${emoji}</span>${label}
-              </button>
-            `).join("")}
-          </div>
-          <label class="feedback-field">
-            <span>${feedbackCopy("messageLabel")}</span>
-            <textarea id="feedbackMessage" name="message" rows="5" maxlength="1200" placeholder="${escapeHtml(feedbackCopy("messagePlaceholder"))}" required></textarea>
-          </label>
-          <label class="feedback-field">
-            <span>${feedbackCopy("contactLabel")}</span>
-            <input name="contact" type="text" maxlength="180" placeholder="${escapeHtml(feedbackCopy("contactPlaceholder"))}">
-          </label>
-          <div class="feedback-actions">
-            <button class="text-button" type="button" data-feedback-close>${feedbackCopy("cancel")}</button>
-            <button class="primary-button" type="submit">${icon("send")}${feedbackCopy("send")}</button>
-          </div>
-          <p class="feedback-note">${feedbackCopy("note")}</p>
-        </form>
-      </section>
-    </div>
-  `;
-}
-
-async function submitFeedback(form) {
-  const data = new FormData(form);
-  const message = String(data.get("message") || "").trim();
-  const contact = String(data.get("contact") || "").trim();
-  const kind = String(data.get("kind") || "idea");
-  if (message.length < 2) {
-    showToast(feedbackCopy("tooShort"));
-    return;
-  }
-
-  const submit = form.querySelector("[type='submit']");
-  submit.disabled = true;
-  const payload = {
-    id: createId(),
-    app: "tripmarking",
-    kind,
-    message: message.slice(0, 1200),
-    contact: contact.slice(0, 180),
-    language: state.lang,
-    path: location.pathname,
-    userAgent: navigator.userAgent.slice(0, 180),
-    clientId: reportClientId,
-    createdAt: new Date().toISOString()
-  };
-
-  try {
-    const response = await fetch(feedbackApiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Client-ID": reportClientId
-      },
-      body: JSON.stringify(payload)
-    });
-    if (!response.ok) throw new Error(`Feedback failed: ${response.status}`);
-    closeFeedbackDialog();
-    showToast(feedbackCopy("sent"));
-  } catch {
-    saveLocalFeedback(payload);
-    closeFeedbackDialog();
-    showToast(feedbackCopy("localSaved"));
-  } finally {
-    submit.disabled = false;
-  }
-}
-
-function saveLocalFeedback(payload) {
-  const key = "tripmarking:feedbackOutbox";
-  const current = Array.isArray(readJson(key, [])) ? readJson(key, []) : [];
-  writeJson(key, [payload, ...current].slice(0, 20));
-}
-
-function feedbackCopy(key) {
-  const ko = {
-    buttonLabel: "그냥 건의 사항",
-    kicker: "편하게 주세요",
-    title: "그냥 건의 사항",
-    desc: "어떤 질문, 개선점, 버그든 짧게 남겨주세요. 여행자가 실제로 오래 쓰는 서비스로 다듬는 데 가장 중요하게 볼게요.",
-    close: "닫기",
-    kindLabel: "피드백 종류",
-    kindIdea: "건의",
-    kindBug: "버그",
-    kindQuestion: "질문",
-    messageLabel: "내용",
-    messagePlaceholder: "예: 지도 이모티콘을 누른 뒤 다시 나오는 흐름이 불편해요.",
-    contactLabel: "답장 받을 연락처 선택",
-    contactPlaceholder: "이메일 또는 닉네임, 비워도 괜찮아요",
-    cancel: "괜찮아요",
-    send: "보내기",
-    note: "여권번호, 상세 숙소, 실명 같은 민감한 정보는 적지 않는 쪽이 안전해요.",
-    tooShort: "조금만 더 적어주세요.",
-    sent: "고마워요. 피드백을 받았어요.",
-    localSaved: "서버 연결이 아직 없어 기기에 임시 저장했어요."
-  };
-  const en = {
-    buttonLabel: "Quick feedback",
-    kicker: "Easy feedback",
-    title: "Quick feedback",
-    desc: "Send any question, bug, or improvement idea. These notes are the fastest way to make the service actually useful for travelers.",
-    close: "Close",
-    kindLabel: "Feedback type",
-    kindIdea: "Idea",
-    kindBug: "Bug",
-    kindQuestion: "Question",
-    messageLabel: "Message",
-    messagePlaceholder: "Example: it is hard to return after tapping a map marker.",
-    contactLabel: "Optional reply contact",
-    contactPlaceholder: "Email or nickname, optional",
-    cancel: "Not now",
-    send: "Send",
-    note: "Please avoid passport numbers, exact lodging details, real names, or other sensitive information.",
-    tooShort: "Please add a little more detail.",
-    sent: "Thank you. Feedback received.",
-    localSaved: "Server connection is not ready, so this was saved on this device."
-  };
-  const source = state.lang === "en" ? en : ko;
-  return source[key] || ko[key] || key;
 }
 
 function renderEmpty() {
@@ -3722,8 +3272,7 @@ function filteredSpots() {
     state.filter,
     state.scenario,
     state.query,
-    positionKey,
-    reportVersion
+    positionKey
   ].join("|");
   if (cacheKey === filteredSpotsCacheKey) return filteredSpotsCache;
 
@@ -3742,7 +3291,6 @@ function filteredSpots() {
     })
     .filter((spot) => {
       if (!query) return true;
-      const reports = getVisibleReportsForSpot(spot.id);
       return [
         spot.name.ko,
         spot.name.en,
@@ -3751,7 +3299,6 @@ function filteredSpots() {
         spot.type.ko,
         spot.type.en,
         spot.tags.join(" "),
-        reports.flatMap((report) => report.risks).join(" "),
         cities[spot.city].label.ko,
         cities[spot.city].label.en,
         riskLabel(spot.risk),
@@ -3763,7 +3310,7 @@ function filteredSpots() {
         const diff = distanceTo(a) - distanceTo(b);
         if (diff) return diff;
       }
-      return (b.level + getVisibleReportsForSpot(b.id).length * 3) - (a.level + getVisibleReportsForSpot(a.id).length * 3);
+      return b.level - a.level;
     });
   return filteredSpotsCache;
 }
@@ -4002,307 +3549,8 @@ function streetSense(spot) {
   return (state.lang === "en" ? en : ko)[spot.risk] || (state.lang === "en" ? en.pickpocket : ko.pickpocket);
 }
 
-function submitReport(form) {
-  const selected = [...form.querySelectorAll("[data-report-risk].is-selected")]
-    .map((button) => button.dataset.reportRisk)
-    .filter((risk) => allowedReportKeys.has(risk));
-  if (!selected.length) {
-    showToast(tr("reportSelectOne"));
-    return;
-  }
-
-  const data = new FormData(form);
-  const spotId = String(data.get("spotId") || "");
-  const spot = spotById.get(spotId);
-  if (!spot) return;
-
-  const createdAt = new Date().toISOString();
-  const report = {
-    id: createId(),
-    spotId,
-    placeId: spotId,
-    place: snapshotSpotForReport(spot),
-    risks: selected,
-    tags: selected,
-    recency: String(data.get("recency") || "today"),
-    createdAt,
-    updatedAt: createdAt,
-    agrees: 0,
-    disputes: 0,
-    clientId: reportClientId,
-    pending: true,
-    remote: false
-  };
-
-  state.reports.unshift(report);
-  invalidateReports();
-  persistReports();
-  state.selectedId = spot.id;
-  state.detailOpen = false;
-  state.panel = "map";
-  setSheetMode("expanded");
-  showToast(tr("reportSaved"));
-  renderSheet();
-  renderMarkers();
-  refreshStatus();
-  sendReportToServer(report);
-}
-
-function voteReport(reportId, vote) {
-  const report = state.reports.find((item) => item.id === reportId);
-  if (!report || !["agree", "dispute"].includes(vote)) return;
-  if (vote === "agree") report.agrees += 1;
-  if (vote === "dispute") report.disputes += 1;
-  report.updatedAt = new Date().toISOString();
-  invalidateReports();
-  persistReports();
-  renderSheet();
-  renderMarkers();
-  refreshStatus();
-  sendReportVote(reportId, vote);
-}
-
-function deleteReport(reportId) {
-  const target = state.reports.find((item) => item.id === reportId);
-  if (target && !canDeleteReport(target)) {
-    showToast(tr("reportMineOnly"));
-    return;
-  }
-  state.reports = state.reports.filter((item) => item.id !== reportId);
-  invalidateReports();
-  persistReports();
-  renderSheet();
-  renderMarkers();
-  refreshStatus();
-  showToast(tr("reportDeleted"));
-  if (target?.remote) deleteRemoteReport(reportId);
-}
-
-function startReportSync() {
-  syncReports({ silent: true });
-  if (reportSyncTimer) window.clearInterval(reportSyncTimer);
-  reportSyncTimer = window.setInterval(() => {
-    if (document.hidden) return;
-    syncReports({ silent: true });
-  }, reportSyncIntervalMs);
-  window.addEventListener("focus", () => syncReports({ silent: true }));
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) syncReports({ silent: true });
-  });
-  window.addEventListener("online", () => syncReports({ silent: true, force: true }));
-}
-
-async function syncReports({ silent = true, force = false } = {}) {
-  if (!reportSyncAvailable || reportSyncInFlight) return;
-  if (!force && reportLastFailureAt && Date.now() - reportLastFailureAt < reportRetryIntervalMs) return;
-  reportSyncInFlight = true;
-  try {
-    const response = await fetch(reportApiUrl, {
-      headers: { Accept: "application/json" },
-      cache: "no-store"
-    });
-    if (response.status === 404 || response.status === 503) {
-      reportSyncAvailable = false;
-      return;
-    }
-    if (!response.ok) throw new Error(`reports ${response.status}`);
-    const payload = await response.json();
-    if (!payload?.ok || !Array.isArray(payload.reports)) throw new Error("invalid reports response");
-    mergeServerReports(payload.reports, true);
-    reportLastFailureAt = 0;
-    flushPendingReports();
-  } catch {
-    reportLastFailureAt = Date.now();
-    if (!silent) showToast(tr("reportLocalOnly"));
-  } finally {
-    reportSyncInFlight = false;
-  }
-}
-
-function mergeServerReports(rawReports, replaceServerSnapshot = false) {
-  if (!Array.isArray(rawReports)) return;
-  const serverReports = normalizeReports(rawReports.map((report) => ({
-    ...report,
-    spotId: report.spotId || report.placeId || report.place_id,
-    placeId: report.placeId || report.place_id,
-    risks: report.risks || report.tags,
-    createdAt: report.createdAt || report.created_at,
-    updatedAt: report.updatedAt || report.updated_at,
-    clientId: report.clientId || report.client_id,
-    remote: true,
-    pending: false
-  })));
-  const fingerprint = serverReports
-    .map((report) => `${report.id}:${report.updatedAt}:${report.agrees}:${report.disputes}`)
-    .join("|");
-  if (replaceServerSnapshot && fingerprint === reportServerFingerprint) return;
-
-  const serverIds = new Set(serverReports.map((report) => report.id));
-  const localOnly = state.reports.filter((report) => {
-    if (serverIds.has(report.id)) return false;
-    return !replaceServerSnapshot || !report.remote || report.pending;
-  });
-  state.reports = normalizeReports([...serverReports, ...localOnly])
-    .sort((a, b) => Date.parse(b.updatedAt || b.createdAt) - Date.parse(a.updatedAt || a.createdAt))
-    .slice(0, 160);
-  reportServerFingerprint = fingerprint;
-  invalidateReports();
-  persistReports();
-  renderQuickRail();
-  renderSheet();
-  renderMarkers();
-  refreshStatus();
-}
-
-async function flushPendingReports() {
-  const pending = state.reports.filter((report) => report.pending && !report.remote).slice(0, 5);
-  for (const report of pending) {
-    await sendReportToServer(report, { silent: true });
-  }
-}
-
-async function sendReportToServer(report, { silent = false } = {}) {
-  if (!reportSyncAvailable) return;
-  try {
-    const response = await fetch(reportApiUrl, {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "X-Client-ID": reportClientId
-      },
-      body: JSON.stringify({
-        id: report.id,
-        placeId: report.placeId,
-        place: report.place || snapshotSpotForReport(spotById.get(report.spotId)),
-        tags: report.risks,
-        recency: report.recency,
-        createdAt: report.createdAt
-      })
-    });
-    if (response.status === 404 || response.status === 503) {
-      reportSyncAvailable = false;
-      return;
-    }
-    if (!response.ok) throw new Error(`save report ${response.status}`);
-    const payload = await response.json();
-    if (payload?.report) mergeServerReports([payload.report], false);
-  } catch {
-    reportLastFailureAt = Date.now();
-    if (!silent) showToast(tr("reportLocalOnly"));
-  }
-}
-
-async function sendReportVote(reportId, vote) {
-  if (!reportSyncAvailable || !["agree", "dispute"].includes(vote)) return;
-  try {
-    const response = await fetch(`${reportApiUrl}/${encodeURIComponent(reportId)}/vote`, {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "X-Client-ID": reportClientId
-      },
-      body: JSON.stringify({ vote })
-    });
-    if (response.status === 404 || response.status === 503) {
-      reportSyncAvailable = false;
-      return;
-    }
-    if (!response.ok) throw new Error(`vote ${response.status}`);
-    const payload = await response.json();
-    if (payload?.report) mergeServerReports([payload.report], false);
-  } catch {
-    reportLastFailureAt = Date.now();
-  }
-}
-
-async function deleteRemoteReport(reportId) {
-  if (!reportSyncAvailable) return;
-  try {
-    const response = await fetch(`${reportApiUrl}/${encodeURIComponent(reportId)}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "X-Client-ID": reportClientId
-      }
-    });
-    if (response.status === 404 || response.status === 503) reportSyncAvailable = false;
-  } catch {
-    reportLastFailureAt = Date.now();
-  }
-}
-
-function getVisibleReportsForSpot(spotId) {
-  ensureReportDerivedCache();
-  return visibleReportsBySpot.get(spotId) || [];
-}
-
 function getLiveRisk(spot) {
-  ensureReportDerivedCache();
-  if (liveRiskBySpot.has(spot.id)) return liveRiskBySpot.get(spot.id);
-  const reports = getVisibleReportsForSpot(spot.id);
-  if (!reports.length) {
-    liveRiskBySpot.set(spot.id, spot.risk);
-    return spot.risk;
-  }
-  const counts = new Map();
-  reports.forEach((report) => {
-    report.risks.forEach((risk) => counts.set(risk, (counts.get(risk) || 0) + 1 + report.agrees - report.disputes));
-  });
-  const risk = [...counts.entries()]
-    .filter(([risk]) => allowedReportKeys.has(risk))
-    .sort((a, b) => b[1] - a[1])[0]?.[0] || spot.risk;
-  liveRiskBySpot.set(spot.id, risk);
-  return risk;
-}
-
-function ensureReportDerivedCache() {
-  if (reportDerivedVersion === reportVersion) return;
-  reportDerivedVersion = reportVersion;
-  visibleReportsBySpot = new Map();
-  liveRiskBySpot = new Map();
-  state.reports.forEach((report) => {
-    if (isHiddenReport(report)) return;
-    const list = visibleReportsBySpot.get(report.spotId) || [];
-    list.push(report);
-    visibleReportsBySpot.set(report.spotId, list);
-  });
-}
-
-function isHiddenReport(report) {
-  return report.disputes >= 3 && report.disputes > report.agrees;
-}
-
-function canDeleteReport(report) {
-  return !report.clientId || report.clientId === reportClientId;
-}
-
-function invalidateReports() {
-  reportVersion += 1;
-  reportDerivedVersion = -1;
-  filteredSpotsCacheKey = "";
-}
-
-function persistReports() {
-  writeJson("tripmarking:reports", state.reports.slice(0, 160));
-}
-
-function snapshotSpotForReport(spot) {
-  if (!spot) return null;
-  return {
-    id: spot.id,
-    name: spot.name.ko,
-    area: spot.area.ko,
-    nameKo: spot.name.ko,
-    areaKo: spot.area.ko,
-    nameEn: spot.name.en,
-    areaEn: spot.area.en,
-    city: spot.city,
-    category: spot.risk,
-    lat: spot.lat,
-    lng: spot.lng
-  };
+  return spot.risk;
 }
 
 function rememberSpot(id) {
@@ -4462,7 +3710,7 @@ function cityRepresentativeSpots(list) {
 }
 
 function markerPriority(spot) {
-  return spot.level + getVisibleReportsForSpot(spot.id).length * 4;
+  return spot.level;
 }
 
 function maxMarkerCountForZoom(zoom) {
@@ -4747,75 +3995,6 @@ function tr(key) {
 function readLanguage() {
   const value = readJson("tripmarking:lang", "ko");
   return value === "en" ? "en" : "ko";
-}
-
-function normalizeReports(reports) {
-  if (!Array.isArray(reports)) return [];
-  return reports
-    .map((report, index) => {
-      const spotId = cleanId(report?.spotId || report?.placeId || report?.place_id, "");
-      const risks = Array.isArray(report?.risks)
-        ? report.risks
-        : Array.isArray(report?.tags)
-          ? report.tags
-          : typeof report?.tags === "string"
-            ? parseJsonArray(report.tags)
-            : [];
-      return {
-        id: cleanId(report?.id, `legacy-${index}-${report?.createdAt || report?.created_at || Date.now()}`),
-        spotId: spots.some((spot) => spot.id === spotId) ? spotId : "",
-        placeId: spotId,
-        place: report?.place || null,
-        risks: [...new Set(risks.filter((risk) => allowedReportKeys.has(risk)))].slice(0, 6),
-        recency: ["today", "week", "month", "old"].includes(report?.recency) ? report.recency : "old",
-        createdAt: report?.createdAt || report?.created_at || new Date().toISOString(),
-        updatedAt: report?.updatedAt || report?.updated_at || report?.createdAt || report?.created_at || new Date().toISOString(),
-        agrees: clampCount(report?.agrees),
-        disputes: clampCount(report?.disputes),
-        clientId: cleanId(report?.clientId || report?.client_id || reportClientId, reportClientId),
-        pending: Boolean(report?.pending),
-        remote: Boolean(report?.remote)
-      };
-    })
-    .filter((report) => report.spotId && report.risks.length)
-    .slice(0, 160);
-}
-
-function readStableClientId(key) {
-  const existing = cleanId(readJson(key, ""), "");
-  if (existing) return existing;
-  const next = createId();
-  try {
-    localStorage.setItem(key, JSON.stringify(next));
-  } catch {
-    // Reporting still works as a local signal if storage is blocked.
-  }
-  return next;
-}
-
-function createId() {
-  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
-  return `report-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
-
-function cleanId(value, fallback) {
-  const id = String(value || fallback || "").replace(/[^a-zA-Z0-9:_-]/g, "").slice(0, 90);
-  return id || fallback;
-}
-
-function clampCount(value) {
-  const number = Number(value);
-  if (!Number.isFinite(number)) return 0;
-  return Math.max(0, Math.min(999, Math.floor(number)));
-}
-
-function parseJsonArray(value) {
-  try {
-    const parsed = JSON.parse(value);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
 }
 
 function escapeHtml(value) {

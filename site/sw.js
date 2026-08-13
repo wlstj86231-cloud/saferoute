@@ -1,8 +1,8 @@
-const CACHE_NAME = "tripmarking-v34-spot-fields";
+const CACHE_NAME = "tripmarking-v35-trust-sources";
 const LOCAL_ASSETS = [
   "/",
-  "/assets/styles.css?v=20260703-final3",
-  "/assets/app.js?v=20260703-spotfield1",
+  "/assets/styles.css?v=20260814-trust1",
+  "/assets/app.js?v=20260814-trust1",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",
@@ -31,7 +31,7 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
   if (url.origin !== location.origin) return;
-  if (url.pathname.startsWith("/api/")) return;
+  if (url.pathname === "/api" || url.pathname.startsWith("/api/")) return;
 
   event.respondWith(
     caches.match(event.request).then((cached) => {
@@ -43,7 +43,10 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       }).catch(() => {
-        if (event.request.mode === "navigate") return caches.match("/");
+        if (event.request.mode === "navigate") return new Response("오프라인 상태입니다.", {
+          status: 503,
+          headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" }
+        });
         throw new Error("offline");
       });
     })
