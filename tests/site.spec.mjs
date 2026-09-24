@@ -85,3 +85,21 @@ test("agricultural transport memo works on mobile and is discoverable from sourc
   await expect(memo).toContainText("미확인 — 제원·실측 확인 필요");
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
+
+test("transport quote comparison distinguishes known subtotal from missing costs", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/agri/`, { waitUntil: "load" });
+  await page.getByRole("link", { name: "농기계 탁송 견적 항목 비교표" }).click();
+  await expect(page).toHaveURL(/\/agri\/quote-compare\/$/);
+  const quoteA = page.locator("[data-quote]").first();
+  await quoteA.locator('[name="base"]').fill("100000");
+  await quoteA.locator('[name="load"]').fill("20000");
+  await page.getByRole("button", { name: "입력 금액 비교" }).click();
+  await expect(page.locator("#quote-result")).toContainText("입력 금액 합계: 120,000원");
+  await expect(page.locator("#quote-result")).toContainText("미확인 3항목");
+  for (const name of ["unload", "wait", "tax"]) await quoteA.locator(`[name="${name}"]`).fill("0");
+  await page.getByRole("button", { name: "입력 금액 비교" }).click();
+  await expect(page.locator("#quote-result")).toContainText("항목별 금액 합계: 120,000원");
+  await expect(page.locator("#quote-result")).not.toContainText("확정 총액으로 비교하지 마세요");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});

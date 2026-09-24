@@ -8,8 +8,16 @@ const siteRoot = path.join(root, "site");
 const siteUrl = "https://tripmarking.com";
 const lastmod = "2026-08-14";
 const buildDate = "Thu, 24 Sep 2026 21:00:00 +0900";
-const routeLastmod = new Map([["/agri/machinery-transport-plan/", "2026-09-24"]]);
-const routePubDate = new Map([["/agri/machinery-transport-plan/", buildDate]]);
+const routeLastmod = new Map([
+  ["/agri/", "2026-09-24"],
+  ["/agri/machinery-transport-plan/", "2026-09-24"],
+  ["/agri/quote-compare/", "2026-09-24"]
+]);
+const routePubDate = new Map([
+  ["/agri/", buildDate],
+  ["/agri/machinery-transport-plan/", buildDate],
+  ["/agri/quote-compare/", buildDate]
+]);
 const originalPubDate = "Fri, 14 Aug 2026 00:00:00 +0900";
 
 const nonFeedRoutes = new Set([

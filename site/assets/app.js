@@ -3004,7 +3004,8 @@ function renderHomeContentGuide() {
         { href: "/guide/", label: "예방 가이드", body: "여행 전 기본 원칙" },
         { href: "/field-notes/crowd-density-check/", label: "혼잡도 판단", body: "사람 많은 곳 읽기" },
         { href: "/spots/paris/chatelet-transfer/", label: "샤틀레 환승", body: "역 안에서 볼 신호" },
-        { href: "/cities/barcelona/", label: "바르셀로나 맥락", body: "사진·지하철·해변" }
+        { href: "/cities/barcelona/", label: "바르셀로나 맥락", body: "사진·지하철·해변" },
+        { href: "/agri/", label: "농기계 이동 준비", body: "현장·견적 비교 도구" }
       ]
     },
     en: {
@@ -3015,7 +3016,8 @@ function renderHomeContentGuide() {
         { href: "/guide/", label: "Prevention guide", body: "Before-trip basics" },
         { href: "/field-notes/crowd-density-check/", label: "Crowd check", body: "Read busy places" },
         { href: "/spots/paris/chatelet-transfer/", label: "Chatelet transfer", body: "Signals in station" },
-        { href: "/cities/barcelona/", label: "Barcelona context", body: "Photos, metro, beach" }
+        { href: "/cities/barcelona/", label: "Barcelona context", body: "Photos, metro, beach" },
+        { href: "/agri/", label: "Machinery transport", body: "Site and quote tools" }
       ]
     }
   }[state.lang] || {};

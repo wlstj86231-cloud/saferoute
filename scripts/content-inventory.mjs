@@ -16,6 +16,8 @@ const blockedAdPaths = new Set([
   "/terms/",
   "/contact/",
   "/sources/",
+  "/agri/",
+  "/agri/quote-compare/",
   "/agri/machinery-transport-plan/",
   "/guides/passport-loss/",
   "/lost-passport-card-response/"

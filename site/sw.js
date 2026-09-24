@@ -1,8 +1,8 @@
-const CACHE_NAME = "tripmarking-v35-trust-sources";
+const CACHE_NAME = "tripmarking-v36-agri-hub";
 const LOCAL_ASSETS = [
   "/",
   "/assets/styles.css?v=20260814-trust1",
-  "/assets/app.js?v=20260814-trust1",
+  "/assets/app.js?v=20260924-agri2",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",
