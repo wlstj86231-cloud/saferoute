@@ -65,3 +65,6 @@ document.getElementById("transport-plan-copy").addEventListener("click", async (
   }
 });
 document.getElementById("transport-plan-print").addEventListener("click", () => window.print());
+const submitButton = form.querySelector('button[type="submit"]');
+submitButton.textContent = "확인표 만들기";
+submitButton.disabled = false;
