@@ -91,6 +91,7 @@ test("transport quote comparison distinguishes known subtotal from missing costs
   await page.goto(`${baseURL}/agri/`, { waitUntil: "load" });
   await page.getByRole("link", { name: "농기계 탁송 견적 항목 비교표" }).click();
   await expect(page).toHaveURL(/\/agri\/quote-compare\/$/);
+  await page.waitForLoadState("load");
   const quoteA = page.locator("[data-quote]").first();
   await quoteA.locator('[name="base"]').fill("100000");
   await quoteA.locator('[name="load"]').fill("20000");
