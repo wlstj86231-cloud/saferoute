@@ -67,3 +67,20 @@ test("sources, true 404, disabled API and legacy redirects behave correctly", as
   expect(legacy.status()).toBe(301);
   expect(legacy.headers().location).toBe("https://tripmarking.com/cities/paris/?from=test");
 });
+
+test("agricultural transport memo works on mobile and is discoverable from sources", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/sources/`);
+  await page.getByRole("link", { name: "농기계 탁송 현장 확인표" }).click();
+  await expect(page).toHaveURL(/\/agri\/machinery-transport-plan\/$/);
+  await page.getByLabel("기계 종류").selectOption({ label: "트랙터" });
+  await page.getByLabel("출발 지역 또는 현장 특징").fill("충남 예산, 진입로 협소");
+  await page.getByLabel("도착 지역 또는 현장 특징").fill("경기 여주, 하차 공간 확인");
+  await page.getByLabel("작업기 상태").selectOption("attached");
+  await page.getByRole("button", { name: "확인표 만들기" }).click();
+  const memo = page.locator("#transport-plan-text");
+  await expect(memo).toContainText("충남 예산, 진입로 협소");
+  await expect(memo).toContainText("작업기를 장착한 전체 크기와 중량 재확인");
+  await expect(memo).toContainText("미확인 — 제원·실측 확인 필요");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});

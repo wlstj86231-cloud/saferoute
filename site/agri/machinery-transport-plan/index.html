@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>중고 농기계 탁송 현장 확인표 만들기 - 트립마킹</title>
+    <meta name="description" content="농기계 출발·도착 현장, 크기·중량, 작업기와 상하차 조건을 한 장으로 정리하는 무료 탁송 확인표. 운송업체와 견적을 비교하기 전에 확인할 항목을 만듭니다.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://tripmarking.com/agri/machinery-transport-plan/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="트립마킹">
+    <meta property="og:title" content="중고 농기계 탁송 현장 확인표 만들기">
+    <meta property="og:description" content="출발·도착 현장과 농기계 제원을 정리해 운송업체에 같은 조건으로 문의하세요.">
+    <meta property="og:url" content="https://tripmarking.com/agri/machinery-transport-plan/">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260924-agri1">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"농기계 탁송 현장 확인표","url":"https://tripmarking.com/agri/machinery-transport-plan/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"ko-KR","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"트립마킹","url":"https://tripmarking.com/"}}</script>
+    <script src="/assets/agri-transport-plan.js" defer></script>
+  </head>
+  <body>
+    <main class="static-shell">
+      <p><a href="/">트립마킹 홈</a> › 농촌 이동 준비</p>
+      <h1>중고 농기계 탁송 현장 확인표 만들기</h1>
+      <p>운송업체마다 다른 조건으로 견적을 받으면 가격을 비교하기 어렵습니다. 이 도구는 기계 제원과 출발·도착 현장의 조건을 한 장으로 정리합니다. 입력 내용은 이 브라우저 화면에서만 처리하며 서버에 보내거나 저장하지 않습니다.</p>
+      <div class="editor-note">
+        <strong>이 확인표의 범위</strong>
+        <p>차량 적재 가능 여부, 도로 통행 가능 여부, 운임·보험 보장은 계산하지 않습니다. 실제 크기·중량은 제조사 제원과 장착된 작업기 상태로 확인하고, 상하차 방법과 운송 가능 여부는 운송업체가 현장에서 결정해야 합니다.</p>
+      </div>
+
+      <form id="transport-plan-form" class="agri-plan-form">
+        <fieldset>
+          <legend>1. 기계와 현장</legend>
+          <label>기계 종류
+            <select name="machine" required>
+              <option value="">선택하세요</option>
+              <option>트랙터</option><option>경운기</option><option>관리기</option><option>콤바인</option><option>이앙기</option><option>기타 농기계</option>
+            </select>
+          </label>
+          <label>출발 지역 또는 현장 특징 <input name="pickup" maxlength="80" placeholder="예: 충남 예산, 진입로 폭 확인 필요" required></label>
+          <label>도착 지역 또는 현장 특징 <input name="dropoff" maxlength="80" placeholder="예: 경기 여주, 하차 공간 협의 필요" required></label>
+          <p class="agri-plan-note">개인 이름·전화번호·상세 주소 대신 지역과 현장 조건만 적어도 됩니다.</p>
+        </fieldset>
+        <fieldset>
+          <legend>2. 실측 또는 확인할 제원</legend>
+          <div class="agri-plan-grid">
+            <label>전체 길이 (m) <input name="length" type="number" min="0.1" max="100" step="0.01" placeholder="미확인 가능"></label>
+            <label>전체 너비 (m) <input name="width" type="number" min="0.1" max="100" step="0.01" placeholder="미확인 가능"></label>
+            <label>전체 높이 (m) <input name="height" type="number" min="0.1" max="100" step="0.01" placeholder="미확인 가능"></label>
+            <label>전체 중량 (kg) <input name="weight" type="number" min="1" max="100000" step="1" placeholder="미확인 가능"></label>
+          </div>
+          <label>작업기 상태
+            <select name="attachment"><option value="unknown">아직 확인하지 않음</option><option value="attached">장착한 채 운송 예정</option><option value="detached">분리해 별도 운송 예정</option><option value="none">작업기 없음</option></select>
+          </label>
+          <label>기계가 스스로 이동해 상차할 수 있는지
+            <select name="selfLoading"><option value="unknown">아직 확인하지 않음</option><option value="yes">가능 여부를 현장에서 확인함</option><option value="no">불가능하거나 불안정함</option></select>
+          </label>
+        </fieldset>
+        <button type="submit">확인표 만들기</button>
+      </form>
+
+      <section id="transport-plan-result" class="agri-plan-result" hidden aria-live="polite">
+        <h2>운송업체에 전달할 확인표</h2>
+        <p>아래는 문의용 메모입니다. 안전 승인이나 확정 견적서가 아닙니다.</p>
+        <pre id="transport-plan-text"></pre>
+        <div class="agri-plan-actions"><button type="button" id="transport-plan-copy">내용 복사</button><button type="button" id="transport-plan-print">인쇄</button></div>
+        <p id="transport-plan-status" role="status"></p>
+      </section>
+
+      <h2>견적을 받기 전에 같은 질문으로 확인하세요</h2>
+      <ol class="use-steps">
+        <li>제조사 제원과 실제 장착 작업기를 기준으로 길이·너비·높이·중량을 다시 확인합니다.</li>
+        <li>출발지·도착지의 진입로, 경사, 회차 공간, 상하차 장비와 담당자를 운송업체와 함께 확인합니다.</li>
+        <li>상차·운송·하차, 대기, 통행료, 파손 시 처리 범위가 견적에 각각 포함되는지 적어 비교합니다.</li>
+        <li>인수 전후의 기계 상태와 작업기·부속품을 사진으로 기록하고, 인계 장소와 시간을 맞춥니다.</li>
+      </ol>
+      <p>기계 상태와 운송비 질문을 더 살펴보려면 <a href="https://boribay.com/guides/farm-machinery-transport-checklist?utm_source=tripmarking.com&amp;utm_medium=owned_referral&amp;utm_campaign=agri_transport_plan">보리장터의 농기계 탁송 점검 안내</a>가 다음 단계입니다. 이 페이지의 확인표는 현장 조건 정리용이고, 링크된 글은 견적·계약 항목을 설명합니다.</p>
+      <!-- SOURCE_NOTE_START -->
+      <div class="editor-note source-note">
+        <strong>자료와 검수 범위</strong>
+        <p>농촌진흥청의 <a href="https://rda.go.kr/board/board.do?dataNo=100000809513&amp;mode=view&amp;prgId=day_farmprmninfoEntry">농기계 자가 점검·안전관리 요령</a>을 출발 전 기계 상태 확인의 참고 자료로 확인했습니다(2026-09-24). 이 자료는 개별 운송 차량의 적재·통행 적합성 판정 자료가 아닙니다. <a href="/sources/">출처·편집 방법</a>과 <a href="/contact/">수정 제안</a>도 확인할 수 있습니다.</p>
+      </div>
+      <!-- SOURCE_NOTE_END -->
+    </main>
+  </body>
+</html>

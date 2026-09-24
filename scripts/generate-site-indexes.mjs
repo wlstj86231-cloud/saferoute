@@ -7,7 +7,10 @@ const root = path.resolve(__dirname, "..");
 const siteRoot = path.join(root, "site");
 const siteUrl = "https://tripmarking.com";
 const lastmod = "2026-08-14";
-const buildDate = "Fri, 14 Aug 2026 00:00:00 +0900";
+const buildDate = "Thu, 24 Sep 2026 21:00:00 +0900";
+const routeLastmod = new Map([["/agri/machinery-transport-plan/", "2026-09-24"]]);
+const routePubDate = new Map([["/agri/machinery-transport-plan/", buildDate]]);
+const originalPubDate = "Fri, 14 Aug 2026 00:00:00 +0900";
 
 const nonFeedRoutes = new Set([
   "/",
@@ -49,7 +52,7 @@ function routeFromFile(filePath) {
 
 function isFeedRoute(route) {
   if (nonFeedRoutes.has(route)) return false;
-  return ["/guide/", "/guides/", "/cities/", "/field-notes/", "/spots/"]
+  return ["/guide/", "/guides/", "/cities/", "/field-notes/", "/spots/", "/agri/"]
     .some((prefix) => route === prefix || route.startsWith(prefix));
 }
 
@@ -58,6 +61,7 @@ function priority(route) {
   if (["/guide/", "/guides/", "/cities/", "/field-notes/"].includes(route)) return "0.8";
   if (route.startsWith("/cities/") || route.startsWith("/guides/")) return "0.7";
   if (route.startsWith("/spots/") || route.startsWith("/field-notes/")) return "0.6";
+  if (route.startsWith("/agri/")) return "0.7";
   return "0.4";
 }
 
@@ -93,7 +97,7 @@ pages.sort((a, b) => {
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(({ route }) => `  <url><loc>${siteUrl}${escapeXml(route)}</loc><lastmod>${lastmod}</lastmod><changefreq>${route === "/" ? "weekly" : "monthly"}</changefreq><priority>${priority(route)}</priority></url>`).join("\n")}
+${pages.map(({ route }) => `  <url><loc>${siteUrl}${escapeXml(route)}</loc><lastmod>${routeLastmod.get(route) ?? lastmod}</lastmod><changefreq>${route === "/" ? "weekly" : "monthly"}</changefreq><priority>${priority(route)}</priority></url>`).join("\n")}
 </urlset>
 `;
 
@@ -103,14 +107,14 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
   <channel>
     <title>트립마킹</title>
     <link>${siteUrl}/</link>
-    <description>공식 여행안전 안내를 여행자의 행동 기준으로 풀어 쓴 도시·상황별 가이드.</description>
+    <description>여행 안전 자료와 현장 이동 조건을 확인하는 트립마킹의 가이드·도구.</description>
     <language>ko-KR</language>
     <lastBuildDate>${buildDate}</lastBuildDate>
 ${feedPages.map(({ route, title, description }) => `    <item>
       <title>${escapeXml(title.replace(/\s+-\s+트립마킹$/, ""))}</title>
       <link>${siteUrl}${escapeXml(route)}</link>
       <guid>${siteUrl}${escapeXml(route)}</guid>
-      <pubDate>${buildDate}</pubDate>
+      <pubDate>${routePubDate.get(route) ?? originalPubDate}</pubDate>
       <description>${escapeXml(description)}</description>
     </item>`).join("\n")}
   </channel>

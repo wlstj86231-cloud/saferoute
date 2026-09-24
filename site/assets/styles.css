@@ -2033,6 +2033,49 @@ button.spot-card {
   background: var(--surface-soft);
 }
 
+.agri-plan-form fieldset {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.agri-plan-form legend { font-weight: 700; }
+.agri-plan-form label { display: grid; gap: 5px; font-weight: 600; }
+.agri-plan-form input, .agri-plan-form select {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+}
+.agri-plan-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.agri-plan-note { margin: 0; font-size: 14px; color: var(--muted); }
+.agri-plan-form button, .agri-plan-actions button {
+  min-height: 42px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: #126653;
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.agri-plan-result { margin: 24px 0; padding: 18px; border: 1px solid var(--line); border-radius: 10px; }
+.agri-plan-result pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.agri-plan-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 560px) { .agri-plan-grid { grid-template-columns: 1fr; } }
+@media print {
+  .agri-plan-form, .agri-plan-actions, .static-shell > h2, .static-shell > ol, .static-shell > .editor-note { display: none; }
+  .agri-plan-result { border: 0; }
+}
+
 @media (min-width: 780px) {
   .topbar,
   .search-panel,

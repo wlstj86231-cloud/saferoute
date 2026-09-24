@@ -16,6 +16,7 @@ const blockedAdPaths = new Set([
   "/terms/",
   "/contact/",
   "/sources/",
+  "/agri/machinery-transport-plan/",
   "/guides/passport-loss/",
   "/lost-passport-card-response/"
 ]);
@@ -36,7 +37,8 @@ const contentEntryPrefixes = [
   "/field-notes/",
   "/cities/",
   "/guides/",
-  "/spots/"
+  "/spots/",
+  "/agri/"
 ];
 
 const minContentTextLength = 900;
