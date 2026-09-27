@@ -7,7 +7,7 @@ const REDIRECT_HOSTS = new Set([
 // Keep this map deliberately exact. Add only root-relative source and target
 // paths, including their intended trailing-slash form.
 const EXACT_LEGACY_REDIRECTS = new Map([
-  ["/review-readiness/", "/about/"],
+  ["/review-readiness/", "/travel/about/"],
   ["/paris-pickpocket-guide/", "/cities/paris/"],
   ["/rome-pickpocket-guide/", "/cities/rome/"],
   ["/barcelona-pickpocket-guide/", "/cities/barcelona/"],

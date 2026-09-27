@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://tripmarking.com/</loc><lastmod>2026-08-14</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://tripmarking.com/about/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://tripmarking.com/agri/</loc><lastmod>2026-09-24</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tripmarking.com/agri/machinery-transport-plan/</loc><lastmod>2026-09-24</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tripmarking.com/agri/quote-compare/</loc><lastmod>2026-09-24</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tripmarking.com/</loc><lastmod>2026-09-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://tripmarking.com/about/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://tripmarking.com/agri/</loc><lastmod>2026-09-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tripmarking.com/agri/machinery-transport-plan/</loc><lastmod>2026-09-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tripmarking.com/agri/quote-compare/</loc><lastmod>2026-09-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tripmarking.com/cities/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tripmarking.com/cities/amsterdam/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tripmarking.com/cities/bangkok/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -18,7 +18,7 @@
   <url><loc>https://tripmarking.com/cities/tokyo/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tripmarking.com/contact/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://tripmarking.com/editorial-policy/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://tripmarking.com/editorial/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://tripmarking.com/editorial/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://tripmarking.com/field-notes/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tripmarking.com/field-notes/bag-position-decision/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://tripmarking.com/field-notes/crowd-density-check/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -36,7 +36,7 @@
   <url><loc>https://tripmarking.com/guides/pickpocket/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tripmarking.com/guides/taxi-app-check/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tripmarking.com/privacy/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://tripmarking.com/sources/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://tripmarking.com/sources/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://tripmarking.com/spots/amsterdam/central-station-bike-area/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://tripmarking.com/spots/bangkok/night-market-bag-check/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://tripmarking.com/spots/barcelona/catalunya-transfer/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -49,4 +49,6 @@
   <url><loc>https://tripmarking.com/spots/rome/termini-station/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://tripmarking.com/spots/rome/trevi-fountain-crowd/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://tripmarking.com/terms/</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://tripmarking.com/travel/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://tripmarking.com/travel/about/</loc><lastmod>2026-09-27</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
 </urlset>

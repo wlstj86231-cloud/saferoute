@@ -7,16 +7,22 @@ const root = path.resolve(__dirname, "..");
 const siteRoot = path.join(root, "site");
 const siteUrl = "https://tripmarking.com";
 const lastmod = "2026-08-14";
-const buildDate = "Thu, 24 Sep 2026 21:00:00 +0900";
+const buildDate = "Sun, 27 Sep 2026 12:00:00 +0900";
 const routeLastmod = new Map([
+  ["/", "2026-09-27"],
+  ["/about/", "2026-09-27"],
+  ["/editorial/", "2026-09-27"],
+  ["/sources/", "2026-09-27"],
   ["/agri/", "2026-09-24"],
   ["/agri/machinery-transport-plan/", "2026-09-24"],
-  ["/agri/quote-compare/", "2026-09-24"]
+  ["/agri/quote-compare/", "2026-09-24"],
+  ["/travel/", "2026-09-27"],
+  ["/travel/about/", "2026-09-27"]
 ]);
 const routePubDate = new Map([
-  ["/agri/", buildDate],
-  ["/agri/machinery-transport-plan/", buildDate],
-  ["/agri/quote-compare/", buildDate]
+  ["/agri/", "Thu, 24 Sep 2026 21:00:00 +0900"],
+  ["/agri/machinery-transport-plan/", "Thu, 24 Sep 2026 21:00:00 +0900"],
+  ["/agri/quote-compare/", "Thu, 24 Sep 2026 21:00:00 +0900"]
 ]);
 const originalPubDate = "Fri, 14 Aug 2026 00:00:00 +0900";
 
@@ -69,7 +75,7 @@ function priority(route) {
   if (["/guide/", "/guides/", "/cities/", "/field-notes/"].includes(route)) return "0.8";
   if (route.startsWith("/cities/") || route.startsWith("/guides/")) return "0.7";
   if (route.startsWith("/spots/") || route.startsWith("/field-notes/")) return "0.6";
-  if (route.startsWith("/agri/")) return "0.7";
+  if (route.startsWith("/agri/")) return "0.8";
   return "0.4";
 }
 

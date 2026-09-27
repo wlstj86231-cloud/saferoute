@@ -1,0 +1,27 @@
+:root{font-family:"Pretendard","Noto Sans KR",system-ui,sans-serif;color:#26352c;background:#f5f6ef;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0}
+a{color:#245f39;text-underline-offset:3px}
+a:focus-visible{outline:3px solid #9bbf73;outline-offset:4px;border-radius:3px}
+.wrap{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+.skip{position:absolute;top:-70px;left:12px;background:white;padding:10px;z-index:10}.skip:focus{top:12px}
+.site-header{background:#fff;border-bottom:1px solid #dce4d7}
+.header-row,.footer-row{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.header-row{min-height:82px}
+.identity{display:inline-flex;align-items:center;gap:11px;color:#183d2a;text-decoration:none}
+.identity strong,.identity small{display:block}.identity strong{font-size:19px;letter-spacing:-.04em}.identity small{font-size:12px;color:#62766a;margin-top:2px}
+.mark{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:#315f3d;color:#fff;font-weight:800;font-size:21px}
+nav{display:flex;align-items:center;gap:25px;flex-wrap:wrap}nav a{font-size:14px;font-weight:650;color:#345343;text-decoration:none}nav a:hover{text-decoration:underline}
+.hero{padding-block:72px 84px;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(310px,.8fr);gap:70px;align-items:center}
+.eyebrow,.panel-kicker,.card-number{font-size:13px;font-weight:800;letter-spacing:.04em;color:#507c4a}
+h1,h2,h3,p{margin-top:0}h1{font-size:clamp(40px,5vw,65px);letter-spacing:-.075em;line-height:1.18;color:#1d3f2b;margin-bottom:25px}h2{font-size:clamp(26px,2.5vw,35px);letter-spacing:-.055em;line-height:1.28;color:#1d3f2b}h3{font-size:22px;letter-spacing:-.04em;color:#223c2d}
+.lead{font-size:18px;line-height:1.8;color:#42554a;max-width:620px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin:30px 0 20px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:13px 19px;border-radius:10px;font-size:15px;font-weight:750;text-decoration:none}.primary{background:#245d39;color:#fff}.primary:hover{background:#1a4a2e}.secondary{color:#245d39;background:#fff;border:1px solid #bacdb9}
+.scope{font-size:13px;color:#67766c;line-height:1.7;max-width:620px}
+.hero-panel{background:#e8eee1;border:1px solid #cbd9c7;border-radius:22px;padding:30px;box-shadow:15px 20px 0 #eef1e8}
+.hero-panel ol{padding:0;margin:20px 0;list-style:none}.hero-panel li{display:flex;gap:14px;align-items:center;border-top:1px solid #c8d5c3;padding:19px 0}.hero-panel li:last-child{border-bottom:1px solid #c8d5c3}.hero-panel li>span{font-weight:800;color:#67945d;font-size:18px}.hero-panel strong,.hero-panel small{display:block}.hero-panel small{color:#627268;margin-top:5px;font-size:13px}.hero-panel>p:last-child{margin-bottom:0;font-size:14px;line-height:1.6}
+.band{background:#fff;padding-block:72px 80px;border-block:1px solid #e0e8dc}.section-head{margin-bottom:29px}.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{padding:28px;border:1px solid #dbe5d8;border-radius:16px;background:#fbfcf8}.card h3{margin:19px 0 13px}.card p{color:#53655a;line-height:1.72;font-size:15px;min-height:130px}.card a{font-weight:800}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;padding-block:78px 86px}.detail-grid p{line-height:1.8;color:#4a5b50}.detail-grid a{font-weight:700}
+.site-footer{background:#223b2b;color:#dae5d9;padding-block:28px}.site-footer nav a{color:#e1e9db}.site-footer span{font-size:14px}
+@media(max-width:850px){.hero{grid-template-columns:1fr;gap:25px;padding-block:52px}.hero-panel{box-shadow:none}.card-grid{grid-template-columns:1fr}.card p{min-height:0}.detail-grid{grid-template-columns:1fr;gap:24px}.header-row{align-items:flex-start;flex-direction:column;padding-block:16px;gap:15px}.header-row nav{gap:16px}.footer-row{align-items:flex-start;flex-direction:column}}
+@media(max-width:500px){.wrap{width:min(100% - 28px,1120px)}.hero{padding-block:40px 48px}h1{font-size:39px}.lead{font-size:16px}.hero-actions{display:grid}.button{width:100%}.band{padding-block:52px}.detail-grid{padding-block:52px}.site-footer nav{gap:15px}}

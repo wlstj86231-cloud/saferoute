@@ -4,13 +4,26 @@ const baseURL = process.env.SITE_URL || "http://127.0.0.1:4198";
 
 test.use({ serviceWorkers: "block" });
 
+test("agricultural home opens the transport tool and retains the travel map", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/`, { waitUntil: "load" });
+  await expect(page).toHaveTitle(/농기계 이동 준비/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("농기계 이동 조건");
+  await page.getByRole("link", { name: /현장 확인표 만들기/ }).click();
+  await expect(page).toHaveURL(/\/agri\/machinery-transport-plan\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("농기계");
+  await page.goto(`${baseURL}/travel/`, { waitUntil: "networkidle" });
+  await expect(page.locator("[data-spot-marker]").first()).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});
+
 test("desktop map keeps its layout and removes misleading community signals", async ({ page }) => {
   const consoleErrors = [];
   page.on("console", (message) => {
     if (message.type() === "error") consoleErrors.push(message.text());
   });
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+  await page.goto(`${baseURL}/travel/`, { waitUntil: "networkidle" });
 
   await expect(page.locator(".topbar")).toBeVisible();
   await expect(page.locator(".bottom-nav")).toBeVisible();
@@ -28,7 +41,7 @@ test("desktop map keeps its layout and removes misleading community signals", as
 
 test("mobile map remains usable without horizontal overflow", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+  await page.goto(`${baseURL}/travel/`, { waitUntil: "networkidle" });
   await expect(page.locator("[data-spot-marker]").first()).toBeVisible();
 
   const overflow = await page.evaluate(() => ({

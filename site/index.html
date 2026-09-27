@@ -1,146 +1,112 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>트립마킹 - 해외여행 도난·스캠 주의 지도</title>
-    <meta name="description" content="공식 여행안전 안내를 바탕으로 한국인 해외여행자의 소지품 관리와 피해 직후 행동을 돕는 여행 지도.">
-    <meta name="theme-color" content="#f5f2e9">
-    <link rel="canonical" href="https://tripmarking.com/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="트립마킹">
-    <meta property="og:title" content="트립마킹 - 해외여행 도난·스캠 주의 지도">
-    <meta property="og:description" content="공식 여행안전 안내를 바탕으로 장소별 확인 행동과 피해 직후 순서를 지도에서 빠르게 확인하세요.">
-    <meta property="og:url" content="https://tripmarking.com/">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="트립마킹 - 해외여행 도난·스캠 주의 지도">
-    <meta name="twitter:description" content="한국인 해외여행자를 위한 도난·스캠 주의 지도와 현장 대처 가이드.">
-    <meta name="google-adsense-account" content="ca-pub-7217591196020054">
-    <meta name="naver-site-verification" content="c06d1248da3e65e670fc0dd22847f11765c946d5">
-    <meta name="google-site-verification" content="UDKZhW7Zh4CFIqIGz8Oif7QR_XjBFwxWFiBbBsDPs7Q">
-    <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="icon" href="/assets/icon.svg?v=20260509-tripmarking7" type="image/svg+xml">
-    <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="https://tripmarking.com/feed.xml">
-    <link rel="preconnect" href="https://basemaps.cartocdn.com">
-    <link rel="dns-prefetch" href="https://basemaps.cartocdn.com">
-    <link rel="preload" href="/assets/vendor/leaflet/leaflet.css" as="style">
-    <link rel="preload" href="/assets/styles.css?v=20260814-trust1" as="style">
-    <link rel="preload" href="/assets/vendor/leaflet/leaflet.js" as="script">
-    <link rel="modulepreload" href="/assets/app.js?v=20260814-trust1">
-    <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-    <link rel="stylesheet" href="/assets/styles.css?v=20260814-trust1">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "트립마킹",
-        "url": "https://tripmarking.com/",
-        "applicationCategory": "TravelApplication",
-        "operatingSystem": "Web",
-        "inLanguage": "ko-KR",
-        "description": "공식 여행안전 안내를 바탕으로 한국인 해외여행자의 소지품 관리와 피해 직후 행동을 돕는 여행 지도."
-      }
-    </script>
-  </head>
-  <body>
-    <div class="app-shell">
-      <div id="map" class="map-surface" aria-label="트립마킹 지도"></div>
-
-      <header class="topbar" aria-label="상단 탐색">
-        <a class="brand" href="/" aria-label="트립마킹 홈">
-          <span class="brand-mark" aria-hidden="true"><img src="/assets/icon.svg?v=20260509-tripmarking7" alt=""></span>
-          <span>
-            <strong data-i18n="brand">트립마킹</strong>
-            <small data-i18n="tagline">여행자 주의 지도</small>
-          </span>
-        </a>
-        <div class="top-actions">
-          <button class="icon-button" id="locateButton" type="button" aria-label="현재 위치">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="1.5"/></svg>
-          </button>
-          <button class="icon-button" id="searchToggle" type="button" aria-label="검색 열기" aria-controls="searchPanel" aria-expanded="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
-          </button>
-          <button class="icon-button language-button" id="languageToggle" type="button" aria-label="영어로 번역" aria-pressed="false">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
-            <span class="language-code" aria-hidden="true">EN</span>
-          </button>
-          <button class="icon-button sibling-button" id="siblingButton" type="button" aria-label="공식 출처와 편집 방법 보기">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/><path d="M11 7h2.5A3.5 3.5 0 0 1 17 10.5V13"/><path d="M13 17h-2.5A3.5 3.5 0 0 1 7 13.5V11"/></svg>
-          </button>
-          <button class="icon-button feedback-button" id="feedbackButton" type="button" aria-label="오류 또는 수정 제안 보내기">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.3 8.7 8.7 0 0 1-3.8-.9L3 20l1.4-4.4A8 8 0 0 1 3 11.5a8.5 8.5 0 0 1 9-8.3 8.5 8.5 0 0 1 9 8.3Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>
-            <span class="feedback-dot" aria-hidden="true"></span>
-          </button>
-        </div>
-      </header>
-
-      <section class="search-panel" id="searchPanel" hidden>
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
-          <input id="spotSearch" type="search" placeholder="도시·장소·유형 검색" autocomplete="off">
-          <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기" hidden>×</button>
-        </div>
-        <div class="city-strip" aria-label="도시 빠른 이동">
-          <button type="button" data-city="barcelona">바르셀로나</button>
-          <button type="button" data-city="paris">파리</button>
-          <button type="button" data-city="rome">로마</button>
-          <button type="button" data-city="london">런던</button>
-          <button type="button" data-city="bangkok">방콕</button>
-          <button type="button" data-city="hochiminh">호치민</button>
-          <button type="button" data-city="tokyo">도쿄</button>
-          <button type="button" data-city="newyork">뉴욕</button>
-          <button type="button" data-city="istanbul">이스탄불</button>
-          <button type="button" data-city="amsterdam">암스테르담</button>
-          <button type="button" data-city="madrid">마드리드</button>
-          <button type="button" data-city="lisbon">리스본</button>
-          <button type="button" data-city="athens">아테네</button>
-          <button type="button" data-city="prague">프라하</button>
-          <button type="button" data-city="budapest">부다페스트</button>
-          <button type="button" data-city="mexicocity">멕시코시티</button>
-        </div>
-      </section>
-
-      <aside class="status-pill" id="statusPill">📍 0곳 표시</aside>
-      <div class="quick-rail" id="quickRail" aria-label="상황 빠른 보기"></div>
-      <main class="bottom-sheet is-collapsed" id="sheet" aria-live="polite"></main>
-
-      <nav class="bottom-nav" aria-label="주요 메뉴">
-        <button type="button" class="nav-button is-active" data-panel="map">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>
-          <span>주의</span>
-        </button>
-        <button type="button" class="nav-button" data-panel="cities">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 6v12M16 6v12"/></svg>
-          <span>도시</span>
-        </button>
-        <button type="button" class="nav-button nav-panic" data-panel="panic">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg>
-          <span>대처</span>
-        </button>
-        <button type="button" class="nav-button" data-panel="saved">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-3.5L6 21V4Z"/></svg>
-          <span>저장</span>
-        </button>
-        <button type="button" class="nav-button" data-panel="check">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 11 2 2 4-5"/><path d="M20 6 9 17l-5-5"/></svg>
-          <span>체크</span>
-        </button>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>농기계 이동 준비·탁송 견적 비교 | 트립마킹</title>
+  <meta name="description" content="중고 농기계 이동 전에 기계 제원과 상하차 현장 조건을 정리하고, 받은 탁송 견적의 비용 항목을 같은 기준으로 비교하는 도구.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://tripmarking.com/">
+  <link rel="icon" href="/assets/icon.svg?v=20260509-tripmarking7" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="alternate" type="application/rss+xml" title="트립마킹 자료" href="/feed.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="트립마킹">
+  <meta property="og:title" content="농기계 이동 준비·탁송 견적 비교 | 트립마킹">
+  <meta property="og:description" content="상하차 현장 확인표와 견적 비교표로 중고 농기계 이동 조건을 빠짐없이 정리하세요.">
+  <meta property="og:url" content="https://tripmarking.com/">
+  <meta name="theme-color" content="#f5f6ef">
+  <link rel="stylesheet" href="/assets/agri-home.css?v=20260927">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "트립마킹",
+    "url": "https://tripmarking.com/",
+    "inLanguage": "ko-KR",
+    "description": "중고 농기계 이동 현장 조건과 탁송 견적 항목을 정리하는 도구"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="identity" href="/" aria-label="트립마킹 홈"><span class="mark">T</span><span><strong>트립마킹</strong><small>농기계 이동 준비 도구</small></span></a>
+      <nav aria-label="주요 메뉴">
+        <a href="/agri/machinery-transport-plan/">현장 확인표</a>
+        <a href="/agri/quote-compare/">견적 비교</a>
+        <a href="/about/">소개·방법</a>
       </nav>
-
-      <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
+  </header>
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">농기계 거래 뒤, 이동을 결정하기 전</p>
+        <h1>농기계 이동 조건을<br>한 장으로 정리하세요</h1>
+        <p class="lead">트랙터나 관리기 이름만으로는 어떤 차량과 상하차 장비가 필요한지 알 수 없습니다. 실제 제원과 출발·도착 현장을 기록해 같은 조건으로 업체에 문의하고, 받은 견적은 항목별로 비교하세요.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="/agri/machinery-transport-plan/">현장 확인표 만들기 <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="/agri/quote-compare/">받은 견적 비교하기</a>
+        </div>
+        <p class="scope">입력 내용은 도구 안에서만 처리합니다. 차량 적재 가능 여부·운행 허가·보험 보장은 운송업체와 관계 기관에 확인해야 합니다.</p>
+      </div>
+      <div class="hero-panel" aria-label="이동 전 확인 흐름">
+        <p class="panel-kicker">이동 전 3단계</p>
+        <ol>
+          <li><span>01</span><div><strong>기계의 실제 제원</strong><small>작업기 포함 길이·너비·높이·중량</small></div></li>
+          <li><span>02</span><div><strong>양쪽 현장 조건</strong><small>진입로·경사·회차·상하차 장비</small></div></li>
+          <li><span>03</span><div><strong>견적과 인도 기록</strong><small>포함 비용·사진·책임 범위</small></div></li>
+        </ol>
+        <p>모르는 값은 추정하지 않고 <strong>미확인</strong>으로 남깁니다.</p>
+      </div>
+    </section>
 
-    <noscript>
-      <main class="static-shell">
-        <h1>트립마킹은 해외여행 도난·스캠 주의 지도를 제공합니다</h1>
-        <p>트립마킹은 특정 개인이나 집단을 지목하지 않고, 공식 여행안전 안내를 여행자가 바로 확인할 수 있는 장소 유형과 행동 시나리오로 바꿔 보여줍니다.</p>
-        <p>이 사이트는 경찰 신고나 대사관 안내를 대체하지 않습니다. 실제 피해가 발생하면 현지 경찰, 카드사, 보험사, 여권 발급 기관에 즉시 연락해야 합니다.</p>
-        <p><a href="/guide/">예방 가이드</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/cities/">도시별 주의 맥락</a> · <a href="/agri/">농기계 이동 준비 도구</a> · <a href="/sources/">공식 출처와 편집 방법</a> · <a href="/about/">서비스 소개</a> · <a href="/privacy/">개인정보 처리방침</a> · <a href="/contact/">수정 제안</a></p>
-      </main>
-    </noscript>
+    <section class="band" aria-labelledby="tool-title">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">실제로 사용할 수 있는 도구</p><h2 id="tool-title">필요한 순서대로 진행하세요</h2></div>
+        <div class="card-grid">
+          <article class="card">
+            <span class="card-number">01 · 출발 전</span>
+            <h3>탁송 현장 확인표</h3>
+            <p>기계 종류와 제원, 작업기 장착 상태, 출발·도착지 진입 조건을 정리합니다. 비어 있는 제원은 미확인으로 남겨 업체에 같은 질문을 보낼 수 있습니다.</p>
+            <a href="/agri/machinery-transport-plan/">확인표 작성하기 <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="card">
+            <span class="card-number">02 · 견적을 받은 뒤</span>
+            <h3>탁송 견적 항목 비교</h3>
+            <p>업체 세 곳의 기본 운임·상차·하차·대기·통행료·부가세 금액을 나란히 놓습니다. 미확인 항목이 남으면 완전한 총액이라고 표시하지 않습니다.</p>
+            <a href="/agri/quote-compare/">견적 비교하기 <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="card">
+            <span class="card-number">03 · 현장 인도</span>
+            <h3>상태와 인계 기록</h3>
+            <p>상차 전과 하차 직후의 기계·작업기·부속품을 같은 각도에서 기록하고 담당자와 시간을 확인합니다. 분쟁 시 필요한 계약 조건은 업체에 직접 묻습니다.</p>
+            <a href="/agri/">전체 이동 준비 순서 보기 <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
-    <script src="/assets/app.js?v=20260924-agri2" type="module"></script>
-  </body>
+    <section class="wrap detail-grid" aria-label="자료 범위와 다음 확인">
+      <article>
+        <p class="eyebrow">판단 경계</p>
+        <h2>계산값은 실제 운송 승인이나 확정 운임이 아닙니다</h2>
+        <p>현장 확인표는 연락용 메모이며, 견적 비교표는 이용자가 적은 숫자의 산술 합계입니다. 적재 장비, 고정 방법, 노선의 제한, 작업자와 보험 조건은 기계와 현장을 확인한 업체가 판단해야 합니다.</p>
+        <p>기계 구매·인도 계약 자체의 확인 순서는 <a href="https://boribay.com/guides/farm-machinery-transport-checklist">보리장터 농기계 탁송 점검 안내</a>에서 이어서 볼 수 있습니다.</p>
+      </article>
+      <article>
+        <p class="eyebrow">자료 기준</p>
+        <h2>출처와 수정 경로를 공개합니다</h2>
+        <p>기계 상태 확인 항목에는 <a href="https://rda.go.kr/board/board.do?dataNo=100000809513&amp;mode=view&amp;prgId=day_farmprmninfoEntry">농촌진흥청의 농기계 자가 점검·안전관리 안내</a>를 참고했습니다. 이 자료는 개별 기계의 적재 적합성이나 운송료를 판정하지 않습니다.</p>
+        <p>원문 접속 확인: 2026-09-27. 잘못된 링크나 도구 계산 오류는 <a href="/contact/">수정 제안</a>으로 알려주세요.</p>
+      </article>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-row"><span>© 트립마킹</span><nav aria-label="보조 메뉴"><a href="/about/">소개</a><a href="/sources/">출처</a><a href="/editorial/">편집 원칙</a><a href="/travel/">이전 여행 안전 지도</a><a href="/privacy/">개인정보</a><a href="/contact/">문의</a></nav></div>
+  </footer>
+  <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});</script>
+</body>
 </html>

@@ -2112,7 +2112,7 @@ function bindEvents() {
   searchToggle.addEventListener("click", () => setSearchPanel(searchPanel.hidden, true));
   searchClear.addEventListener("click", clearSearch);
   languageToggle.addEventListener("click", toggleLanguage);
-  siblingButton?.addEventListener("click", () => window.location.assign("/sources/"));
+  siblingButton?.addEventListener("click", () => window.location.assign("/sources/#travel"));
   feedbackButton?.addEventListener("click", () => window.open(correctionUrl, "_blank", "noopener,noreferrer"));
   locateButton.addEventListener("click", locateUser);
 
@@ -2590,7 +2590,7 @@ function renderCities() {
     }).join("")}
     <div class="guide-card">
       <strong>${tr("sourceNote")}</strong>
-      <p><a href="/sources/">${tr("sourceReviewed")}</a> · <a href="${correctionUrl}" target="_blank" rel="noreferrer">${tr("correction")}</a></p>
+      <p><a href="/sources/#travel">${tr("sourceReviewed")}</a> · <a href="${correctionUrl}" target="_blank" rel="noreferrer">${tr("correction")}</a></p>
     </div>
   `;
 }
@@ -3207,7 +3207,7 @@ function renderSpotDetail(spot) {
       </ul>
       ${renderSpotPlaybook(spot)}
       ${renderRelatedSpots(spot)}
-      <div class="guide-card"><strong>${tr("sourceReviewed")}</strong><p><a href="/sources/">${tr("sourceNote")}</a></p></div>
+      <div class="guide-card"><strong>${tr("sourceReviewed")}</strong><p><a href="/sources/#travel">${tr("sourceNote")}</a></p></div>
     </section>
   `;
 }

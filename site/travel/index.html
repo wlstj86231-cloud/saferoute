@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>해외여행 도난·스캠 주의 지도 | 트립마킹 여행 자료</title>
+    <meta name="description" content="공식 여행안전 안내를 바탕으로 한국인 해외여행자의 소지품 관리와 피해 직후 행동을 돕는 여행 지도.">
+    <meta name="theme-color" content="#f5f2e9">
+    <link rel="canonical" href="https://tripmarking.com/travel/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="트립마킹">
+    <meta property="og:title" content="트립마킹 - 해외여행 도난·스캠 주의 지도">
+    <meta property="og:description" content="공식 여행안전 안내를 바탕으로 장소별 확인 행동과 피해 직후 순서를 지도에서 빠르게 확인하세요.">
+    <meta property="og:url" content="https://tripmarking.com/travel/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="트립마킹 - 해외여행 도난·스캠 주의 지도">
+    <meta name="twitter:description" content="한국인 해외여행자를 위한 도난·스캠 주의 지도와 현장 대처 가이드.">
+    <meta name="google-adsense-account" content="ca-pub-7217591196020054">
+    <meta name="naver-site-verification" content="c06d1248da3e65e670fc0dd22847f11765c946d5">
+    <meta name="google-site-verification" content="UDKZhW7Zh4CFIqIGz8Oif7QR_XjBFwxWFiBbBsDPs7Q">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/assets/icon.svg?v=20260509-tripmarking7" type="image/svg+xml">
+    <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="https://tripmarking.com/feed.xml">
+    <link rel="preconnect" href="https://basemaps.cartocdn.com">
+    <link rel="dns-prefetch" href="https://basemaps.cartocdn.com">
+    <link rel="preload" href="/assets/vendor/leaflet/leaflet.css" as="style">
+    <link rel="preload" href="/assets/styles.css?v=20260814-trust1" as="style">
+    <link rel="preload" href="/assets/vendor/leaflet/leaflet.js" as="script">
+    <link rel="modulepreload" href="/assets/app.js?v=20260927-travel1">
+    <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260814-trust1">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "트립마킹",
+        "url": "https://tripmarking.com/travel/",
+        "applicationCategory": "TravelApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "ko-KR",
+        "description": "공식 여행안전 안내를 바탕으로 한국인 해외여행자의 소지품 관리와 피해 직후 행동을 돕는 여행 지도."
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div id="map" class="map-surface" aria-label="트립마킹 지도"></div>
+
+      <header class="topbar" aria-label="상단 탐색">
+        <a class="brand" href="/travel/" aria-label="트립마킹 여행 지도 홈">
+          <span class="brand-mark" aria-hidden="true"><img src="/assets/icon.svg?v=20260509-tripmarking7" alt=""></span>
+          <span>
+            <strong data-i18n="brand">트립마킹</strong>
+            <small data-i18n="tagline">여행자 주의 지도</small>
+          </span>
+        </a>
+        <div class="top-actions">
+          <button class="icon-button" id="locateButton" type="button" aria-label="현재 위치">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="1.5"/></svg>
+          </button>
+          <button class="icon-button" id="searchToggle" type="button" aria-label="검색 열기" aria-controls="searchPanel" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+          </button>
+          <button class="icon-button language-button" id="languageToggle" type="button" aria-label="영어로 번역" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
+            <span class="language-code" aria-hidden="true">EN</span>
+          </button>
+          <button class="icon-button sibling-button" id="siblingButton" type="button" aria-label="공식 출처와 편집 방법 보기">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/><path d="M11 7h2.5A3.5 3.5 0 0 1 17 10.5V13"/><path d="M13 17h-2.5A3.5 3.5 0 0 1 7 13.5V11"/></svg>
+          </button>
+          <button class="icon-button feedback-button" id="feedbackButton" type="button" aria-label="오류 또는 수정 제안 보내기">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.3 8.7 8.7 0 0 1-3.8-.9L3 20l1.4-4.4A8 8 0 0 1 3 11.5a8.5 8.5 0 0 1 9-8.3 8.5 8.5 0 0 1 9 8.3Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>
+            <span class="feedback-dot" aria-hidden="true"></span>
+          </button>
+        </div>
+      </header>
+
+      <section class="search-panel" id="searchPanel" hidden>
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+          <input id="spotSearch" type="search" placeholder="도시·장소·유형 검색" autocomplete="off">
+          <button class="search-clear" id="searchClear" type="button" aria-label="검색어 지우기" hidden>×</button>
+        </div>
+        <div class="city-strip" aria-label="도시 빠른 이동">
+          <button type="button" data-city="barcelona">바르셀로나</button>
+          <button type="button" data-city="paris">파리</button>
+          <button type="button" data-city="rome">로마</button>
+          <button type="button" data-city="london">런던</button>
+          <button type="button" data-city="bangkok">방콕</button>
+          <button type="button" data-city="hochiminh">호치민</button>
+          <button type="button" data-city="tokyo">도쿄</button>
+          <button type="button" data-city="newyork">뉴욕</button>
+          <button type="button" data-city="istanbul">이스탄불</button>
+          <button type="button" data-city="amsterdam">암스테르담</button>
+          <button type="button" data-city="madrid">마드리드</button>
+          <button type="button" data-city="lisbon">리스본</button>
+          <button type="button" data-city="athens">아테네</button>
+          <button type="button" data-city="prague">프라하</button>
+          <button type="button" data-city="budapest">부다페스트</button>
+          <button type="button" data-city="mexicocity">멕시코시티</button>
+        </div>
+      </section>
+
+      <aside class="status-pill" id="statusPill">📍 0곳 표시</aside>
+      <div class="quick-rail" id="quickRail" aria-label="상황 빠른 보기"></div>
+      <main class="bottom-sheet is-collapsed" id="sheet" aria-live="polite"></main>
+
+      <nav class="bottom-nav" aria-label="주요 메뉴">
+        <button type="button" class="nav-button is-active" data-panel="map">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>
+          <span>주의</span>
+        </button>
+        <button type="button" class="nav-button" data-panel="cities">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 6v12M16 6v12"/></svg>
+          <span>도시</span>
+        </button>
+        <button type="button" class="nav-button nav-panic" data-panel="panic">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg>
+          <span>대처</span>
+        </button>
+        <button type="button" class="nav-button" data-panel="saved">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-3.5L6 21V4Z"/></svg>
+          <span>저장</span>
+        </button>
+        <button type="button" class="nav-button" data-panel="check">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 11 2 2 4-5"/><path d="M20 6 9 17l-5-5"/></svg>
+          <span>체크</span>
+        </button>
+      </nav>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <noscript>
+      <main class="static-shell">
+        <h1>트립마킹은 해외여행 도난·스캠 주의 지도를 제공합니다</h1>
+        <p>트립마킹은 특정 개인이나 집단을 지목하지 않고, 공식 여행안전 안내를 여행자가 바로 확인할 수 있는 장소 유형과 행동 시나리오로 바꿔 보여줍니다.</p>
+        <p>이 사이트는 경찰 신고나 대사관 안내를 대체하지 않습니다. 실제 피해가 발생하면 현지 경찰, 카드사, 보험사, 여권 발급 기관에 즉시 연락해야 합니다.</p>
+        <p><a href="/guide/">예방 가이드</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/cities/">도시별 주의 맥락</a> · <a href="/">농기계 이동 서비스 홈</a> · <a href="/sources/#travel">여행 자료 출처</a> · <a href="/travel/about/">여행 지도 소개</a> · <a href="/privacy/">개인정보 처리방침</a> · <a href="/contact/">수정 제안</a></p>
+      </main>
+    </noscript>
+
+    <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
+    <script src="/assets/app.js?v=20260927-travel1" type="module"></script>
+  </body>
+</html>

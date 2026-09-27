@@ -1,8 +1,10 @@
-const CACHE_NAME = "tripmarking-v36-agri-hub";
+const CACHE_NAME = "tripmarking-v37-agriculture-home";
 const LOCAL_ASSETS = [
   "/",
+  "/travel/",
+  "/assets/agri-home.css?v=20260927",
   "/assets/styles.css?v=20260814-trust1",
-  "/assets/app.js?v=20260924-agri2",
+  "/assets/app.js?v=20260927-travel1",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",
@@ -33,6 +35,14 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== location.origin) return;
   if (url.pathname === "/api" || url.pathname.startsWith("/api/")) return;
 
+  if (event.request.mode === "navigate") {
+    event.respondWith(fetch(event.request).catch(() => new Response("오프라인 상태입니다.", {
+      status: 503,
+      headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" }
+    })));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
@@ -43,10 +53,6 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       }).catch(() => {
-        if (event.request.mode === "navigate") return new Response("오프라인 상태입니다.", {
-          status: 503,
-          headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" }
-        });
         throw new Error("offline");
       });
     })
