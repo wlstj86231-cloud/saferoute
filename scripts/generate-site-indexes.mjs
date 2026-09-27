@@ -13,9 +13,9 @@ const routeLastmod = new Map([
   ["/about/", "2026-09-27"],
   ["/editorial/", "2026-09-27"],
   ["/sources/", "2026-09-27"],
-  ["/agri/", "2026-09-24"],
-  ["/agri/machinery-transport-plan/", "2026-09-24"],
-  ["/agri/quote-compare/", "2026-09-24"],
+  ["/agri/", "2026-09-27"],
+  ["/agri/machinery-transport-plan/", "2026-09-27"],
+  ["/agri/quote-compare/", "2026-09-27"],
   ["/travel/", "2026-09-27"],
   ["/travel/about/", "2026-09-27"]
 ]);
