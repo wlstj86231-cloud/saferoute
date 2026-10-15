@@ -9,8 +9,8 @@ const fields = [
 ];
 const won = new Intl.NumberFormat("ko-KR");
 
-form?.addEventListener("submit", (event) => {
-  event.preventDefault();
+function render() {
+  if (!form.reportValidity()) return false;
   output.replaceChildren();
   let filled = 0;
   for (const [index, group] of [...form.querySelectorAll("[data-quote]")].entries()) {
@@ -28,6 +28,9 @@ form?.addEventListener("submit", (event) => {
     const heading = document.createElement("h2");
     heading.textContent = name;
     article.append(heading);
+    const memo = document.createElement("p");
+    memo.textContent = `견적일: ${group.elements.namedItem("quotedAt").value || "미입력"} · 유효기한: ${group.elements.namedItem("validUntil").value || "미입력"} · 근거: ${group.elements.namedItem("basis").value.trim() || "미입력"}`;
+    article.append(memo);
     const invalid = values.filter(({ invalid }) => invalid);
     if (invalid.length) {
       const error = document.createElement("p");
@@ -61,4 +64,13 @@ form?.addEventListener("submit", (event) => {
     empty.textContent = "비교할 견적 금액이 없습니다. 견적서에 적힌 항목을 하나 이상 입력하세요.";
     output.append(empty);
   }
-});
+  if (filled) {
+    const note=document.createElement("p");
+    note.textContent="결과 작성: "+new Date().toLocaleString("ko-KR")+" · 계산식: 기본 운임 + 상차 + 하차 + 대기·통행료 + 부가세. 미확인 항목은 소계에서 제외합니다. 보험·안전·운송 적합성을 평가하지 않습니다. 도구: "+location.origin+location.pathname;
+    output.append(note);
+  }
+  return filled > 0;
+}
+form?.addEventListener("submit", event => {event.preventDefault();render();});
+document.querySelector("#quote-copy")?.addEventListener("click",async()=>{if(!render())return;try{await navigator.clipboard.writeText(output.innerText);document.querySelector("#quote-copy").textContent="복사 완료";}catch{document.querySelector("#quote-copy").textContent="결과를 선택해 복사하세요";}});
+document.querySelector("#quote-print")?.addEventListener("click",()=>{if(render())window.print();});
