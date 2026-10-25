@@ -10,7 +10,7 @@ const lastmod = "2026-08-14";
 const buildDate = "Sun, 27 Sep 2026 12:00:00 +0900";
 const routeLastmod = new Map([
   ["/", "2026-09-27"],
-  ["/about/", "2026-09-27"],
+  ["/about/", "2026-10-26"],
   ["/editorial/", "2026-09-27"],
   ["/sources/", "2026-09-27"],
   ["/agri/", "2026-09-27"],
