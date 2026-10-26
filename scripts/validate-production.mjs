@@ -76,11 +76,49 @@ for (const anchor of ["law", "ts", "rda", "agri", "methodology"]) {
   assert.match(sources, new RegExp(`id=["']${anchor}["']`), `missing source anchor ${anchor}`);
 }
 
+for (const phrase of ["adssettings.google.com", "policies.google.com/technologies/ads", "consultingjinjeong@gmail.com", "010-2846-2011"]) {
+  assert.ok(privacy.includes(phrase), `privacy page must mention ${phrase}`);
+}
+const contact = await fs.readFile(path.join(siteRoot, "contact", "index.html"), "utf8");
+for (const phrase of ["tel:010-2846-2011", "mailto:consultingjinjeong@gmail.com", "https://open.kakao.com/o/scuvl1wi", "https://open.kakao.com/o/p6HiJ9Pi", "의료원로 80-8"]) {
+  assert.ok(contact.includes(phrase), `contact page must list ${phrase}`);
+}
+
+// Every page shares the operator footer; every indexable page carries the
+// AdSense ownership meta and points its JSON-LD at the one Organization node.
+// Content pages under /agri/ also show who maintains them, real dates, a
+// source list whose count matches the meta line, and a scope note.
 for (const file of await collectHtml(siteRoot)) {
   const html = await fs.readFile(file, "utf8");
-  assert.doesNotMatch(html, /트립마킹|assets\/app\.js|leaflet|href="\/(travel|cities|guides|guide|spots|field-notes)\//i, `legacy travel reference in ${path.relative(siteRoot, file)}`);
+  const rel = path.relative(siteRoot, file).replaceAll(path.sep, "/");
+  assert.doesNotMatch(html, /트립마킹|assets\/app\.js|leaflet|href="\/(travel|cities|guides|guide|spots|field-notes)\//i, `legacy travel reference in ${rel}`);
+  const graphs = [];
   for (const match of html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)) {
-    JSON.parse(match[1]);
+    graphs.push(JSON.parse(match[1]));
+  }
+  if (/^google[0-9a-f]+\.html$/.test(rel)) continue;
+  const footer = html.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)?.[0] || "";
+  assert.match(footer, /제이 미디어 · 대표 이정우 · 사업자등록번호 456-33-01705 · 고객센터/, `operator line missing in footer of ${rel}`);
+  for (const href of ["/about/", "/contact/", "/editorial/", "/privacy/", "/terms/"]) {
+    assert.ok(footer.includes(`href="${href}"`), `footer of ${rel} must link ${href}`);
+  }
+  if (rel === "404.html") continue;
+  assert.match(html, /<meta name="google-adsense-account" content="ca-pub-5877883031077615">/, `AdSense ownership meta missing on ${rel}`);
+  const nodes = graphs.flatMap((g) => g["@graph"] || [g]);
+  assert.ok(nodes.some((n) => n["@type"] === "Organization" && n["@id"] === "https://jnewmedia.com/#organization" && n.telephone && n.address), `Organization node missing on ${rel}`);
+  for (const n of nodes.filter((x) => ["Article", "WebPage", "AboutPage", "ContactPage", "CollectionPage", "WebApplication"].includes(x["@type"]))) {
+    assert.equal(n.publisher?.["@id"], "https://jnewmedia.com/#organization", `${n["@type"]} publisher on ${rel}`);
+  }
+  if (rel.startsWith("agri/")) {
+    const metaLine = html.match(/<p class="page-meta">([\s\S]*?)<\/p>/)?.[1] || "";
+    assert.match(metaLine, /작성·관리: <a href="\/editorial\/">제이 미디어 편집팀<\/a> \(운영 책임: 대표 이정우\)/, `byline missing on ${rel}`);
+    assert.match(metaLine, /게시일 <time datetime="\d{4}-\d{2}-\d{2}">/, `published date missing on ${rel}`);
+    assert.match(metaLine, /최종 확인일 <time datetime="\d{4}-\d{2}-\d{2}">/, `checked date missing on ${rel}`);
+    const listed = (html.match(/<ol class="source-list">([\s\S]*?)<\/ol>/)?.[1].match(/<li>/g) || []).length;
+    assert.equal(Number(metaLine.match(/출처 (\d+)건/)?.[1]), listed, `source count on ${rel}`);
+    assert.match(html, /<section class="note warn scope-note"[^>]*>\s*<h2 id="scope-title">범위와 한계<\/h2>/, `scope note missing on ${rel}`);
+    const article = nodes.find((n) => n["@type"] === "Article");
+    if (article) assert.equal(article.author?.["@id"], "https://jnewmedia.com/#organization", `Article author on ${rel}`);
   }
 }
 

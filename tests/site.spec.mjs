@@ -159,11 +159,18 @@ test("retired travel pages answer 410 and moved pages redirect", async ({ reques
 
 test("guides cite official sources and link back to the tools", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  for (const path of ["/agri/guides/loading-limits/", "/agri/guides/transport-safety/", "/agri/guides/reading-quotes/"]) {
+  for (const path of ["/agri/guides/loading-limits/", "/agri/guides/transport-safety/", "/agri/guides/reading-quotes/", "/agri/guides/machine-types/", "/agri/guides/loading-methods/", "/agri/guides/damage-claims/"]) {
     await page.goto(`${baseURL}${path}`, { waitUntil: "load" });
     await expect(page.locator(".source-note")).toContainText("2026-10-26");
+    await expect(page.locator(".page-meta")).toContainText("작성·관리: 제이 미디어 편집팀");
+    await expect(page.locator("#scope-title")).toHaveText("범위와 한계");
     await expect(page.locator('main a[href="/agri/quote-compare/"]').first()).toBeVisible();
+    await expect(page.locator(".site-footer")).toContainText("사업자등록번호 456-33-01705");
   }
+  await page.goto(`${baseURL}/contact/`);
+  await expect(page.locator('main a[href="tel:010-2846-2011"]')).toBeVisible();
+  await expect(page.locator('main a[href="mailto:consultingjinjeong@gmail.com"]')).toBeVisible();
+  await expect(page.locator('main a[href="https://open.kakao.com/o/scuvl1wi"]')).toBeVisible();
   await page.goto(`${baseURL}/sources/`);
   await expect(page).toHaveTitle(/공식 출처와 검수 기준/);
   await expect(page.locator("#law")).toBeVisible();
