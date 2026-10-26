@@ -1,9 +1,9 @@
-const CACHE_NAME = "tripmarking-v39-transport-quotes";
+const CACHE_NAME = "tripmarking-v40-transport-quotes";
 const LOCAL_ASSETS = [
   "/",
   "/assets/site.css?v=20261026",
-  "/assets/quote-request-20261026.js",
-  "/assets/quote-compare-20261026.js",
+  "/assets/quote-request-20261026b.js",
+  "/assets/quote-compare-20261026b.js",
   "/assets/icon.svg?v=20261026",
   "/manifest.webmanifest"
 ];

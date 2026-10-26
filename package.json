@@ -6,7 +6,7 @@
   "scripts": {
     "content:inventory": "node scripts/content-inventory.mjs",
     "site:indexes": "node scripts/generate-site-indexes.mjs",
-    "validate": "node --check site/assets/quote-request-20261026.js && node --check site/assets/quote-compare-20261026.js && node --check functions/_middleware.js && node scripts/validate-production.mjs && npm run content:inventory -- --json",
+    "validate": "node --check site/assets/quote-request-20261026b.js && node --check site/assets/quote-compare-20261026b.js && node --check functions/_middleware.js && node scripts/validate-production.mjs && npm run content:inventory -- --json",
     "test:e2e": "playwright test tests/site.spec.mjs --workers=1",
     "serve": "python -m http.server 4197 --directory site --bind 127.0.0.1"
   },

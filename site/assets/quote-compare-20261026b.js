@@ -24,15 +24,41 @@
   const groups = [...form.querySelectorAll("[data-quote]")];
   const LETTERS = "ABCDE";
 
+  // '포함·없음·무료'는 0원, '모름·별도·미확인'은 빈 칸(미확인)과 같게 봅니다.
+  const ZERO_WORDS = new Set(["포함", "없음", "무료", "해당없음"]);
+  const BLANK_WORDS = new Set(["모름", "미확인", "별도", "?"]);
+
+  // 만 아래 자리: 5000, 5천, 5천500, 3백5십, 1.2백 등. 단위 앞 숫자가 없으면 1로 봅니다(천 = 1천).
+  // 단위 없는 끝자리 숫자의 소수점은 '35.5만'처럼 만 앞에서만 받습니다.
+  function parseBelowMan(text, allowDecimal) {
+    if (text === "") return 0;
+    const m = text.match(/^(?:(\d*(?:\.\d+)?)천)?(?:(\d*(?:\.\d+)?)백)?(?:(\d*(?:\.\d+)?)십)?(\d+(?:\.\d+)?)?$/);
+    if (!m || (!allowDecimal && m[4]?.includes("."))) return NaN;
+    let total = m[4] ? Number(m[4]) : 0;
+    for (const [digits, unit] of [[m[1], 1000], [m[2], 100], [m[3], 10]]) {
+      if (digits !== undefined) total += (digits === "" ? 1 : Number(digits)) * unit;
+    }
+    return total;
+  }
+
   function parseWon(raw) {
-    const text = String(raw).replace(/[\s,]/g, "").replace(/원$/, "");
-    if (text === "") return null;
-    if (/^\d+$/.test(text)) return Number(text);
-    const man = text.match(/^(\d+(?:\.\d+)?)만(?:(\d+)천)?$/);
-    if (man) return Math.round(Number(man[1]) * 10000 + Number(man[2] || 0) * 1000);
-    const cheon = text.match(/^(\d+)천$/);
-    if (cheon) return Number(cheon[1]) * 1000;
-    return NaN;
+    const text = String(raw)
+      .replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xfee0))
+      .replace(/[\s,₩￦]/g, "")
+      .replace(/원(정)?$/, "");
+    if (text === "" || BLANK_WORDS.has(text)) return null;
+    if (ZERO_WORDS.has(text)) return 0;
+    const at = text.indexOf("만");
+    if (at === -1) return Math.round(parseBelowMan(text, false));
+    const rest = text.slice(at + 1);
+    // 만 뒤에 단위 없이 숫자만 오면 네 자리(35만5000)만 받습니다. '35만5'처럼 뜻이 애매한 값은 다시 묻습니다.
+    if (/^\d+$/.test(rest) && rest.length !== 4) return NaN;
+    return Math.round((at === 0 ? 1 : parseBelowMan(text.slice(0, at), true)) * 10000 + parseBelowMan(rest, false));
+  }
+
+  function invalidMessage(raw) {
+    if (/^\s*-/.test(raw)) return "음수는 적을 수 없습니다. 할인을 받았다면 할인된 금액을 적어 주세요.";
+    return "숫자로 적어 주세요. 예: 350000, 35만, 35만5천 (포함이면 0, 모르면 비움)";
   }
 
   function fieldOf(group, name) { return group.querySelector(`[name="${name}"]`); }
@@ -70,7 +96,7 @@
         setError(input, "");
         if (Number.isNaN(parsed)) {
           errors.push(input);
-          setError(input, "숫자로 적어 주세요. 예: 350000 또는 35만");
+          setError(input, invalidMessage(input.value));
           return { key, title, ask, value: null, invalid: true };
         }
         if (parsed !== null && parsed > 999999999) {
@@ -137,7 +163,7 @@
       lines.push(["warn", "모든 비용 항목이 확인된 견적이 아직 없습니다. 지금 합계는 빠진 비용을 뺀 금액이라 실제로 내는 돈보다 적을 수 있습니다. 아래 질문을 먼저 보내세요."]);
     }
     for (const q of partial) {
-      let text = `${q.name}: ${q.missing.map((c) => c.title).join("·")} 미확인. 확인된 금액만 더하면 ${won(q.total)}원이며 실제 금액은 이보다 늘어날 수 있습니다.`;
+      let text = `${q.name}: ${q.missing.map((c) => c.title).join(", ")} 미확인. 확인된 금액만 더하면 ${won(q.total)}원이며 실제 금액은 이보다 늘어날 수 있습니다.`;
       if (complete.length && q.total > complete[0].total) text += ` 확인된 금액만으로도 ${complete[0].name}보다 ${won(q.total - complete[0].total)}원 높습니다.`;
       lines.push(["warn", text]);
     }
@@ -149,6 +175,7 @@
     if (noExtra.length) lines.push(["", `추가 요금 조건을 받지 않은 견적: ${noExtra.map((q) => q.name).join(", ")}. 대기 초과, 크레인 추가, 일정 변경·취소 때 요금이 붙는지 물어보세요.`]);
     const now = today();
     for (const q of quotes) {
+      if (q.costs[0].value === 0) lines.push(["warn", `${q.name}의 기본 운임이 0원입니다. 총액만 들었다면 총액을 기본 운임 칸에 적고, 그 안에 포함된 항목에 0을 적으세요.`]);
       if (q.validUntil && q.validUntil < now) lines.push(["warn", `${q.name}의 견적 유효기한(${q.validUntil})이 지났습니다. 금액이 그대로인지 다시 확인하세요.`]);
       if (q.total > 10000000) lines.push(["warn", `${q.name}의 합계가 1천만 원을 넘습니다. 금액에 0이 더 붙지 않았는지 확인하세요.`]);
     }
@@ -217,7 +244,7 @@
   function quoteToText(q) {
     const lines = [`■ ${q.name} (견적일 ${q.quotedAt || "-"}, 유효기한 ${q.validUntil || "미확인"})`];
     lines.push(q.costs.map((c) => `${c.title} ${c.value === null ? "미확인" : `${won(c.value)}원`}`).join(" / "));
-    lines.push(`확인된 합계 ${won(q.total)}원${q.missing.length ? ` (미확인 ${q.missing.length}개: ${q.missing.map((c) => c.title).join("·")})` : " (미확인 없음)"}`);
+    lines.push(`확인된 합계 ${won(q.total)}원${q.missing.length ? ` (미확인 ${q.missing.length}개: ${q.missing.map((c) => c.title).join(", ")})` : " (미확인 없음)"}`);
     lines.push(`파손 보상: ${INSURANCE[q.insurance]}${q.insuranceNote ? ` · ${q.insuranceNote}` : ""}`);
     lines.push(`추가 요금 조건: ${q.extra || "받지 않음"}`);
     if (q.basis) lines.push(`근거: ${q.basis}`);
@@ -250,6 +277,9 @@
     if (errors.length) {
       errorBox.textContent = `고칠 곳이 ${errors.length}군데 있습니다. 빨간 글씨를 확인해 주세요.`;
       errorBox.hidden = false;
+      // 고치기 전의 결과가 남아 있으면 틀린 표를 복사할 수 있으므로 지웁니다.
+      output.replaceChildren(el("p", {}, "빨간 글씨를 고친 뒤 '견적 비교하기'를 다시 누르세요."));
+      lastText = "";
       errors[0].focus();
       return false;
     }

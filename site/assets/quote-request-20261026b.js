@@ -27,10 +27,19 @@
   const value = (name) => (form.elements.namedItem(name)?.value || "").trim();
   const fmt = (n, digits = 0) => n.toLocaleString("ko-KR", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 
-  function parseNumber(raw) {
-    const text = String(raw).replace(/[\s,]/g, "");
+  function parseNumber(raw, suffix = /$/) {
+    const text = String(raw).replace(/[\s,]/g, "").toLowerCase().replace(suffix, "");
     if (text === "") return null;
     return /^\d+(\.\d+)?$/.test(text) ? Number(text) : NaN;
+  }
+
+  // 제원표 값을 단위째 붙여 넣은 경우(3,450mm, 345cm, 3.45m)는 적힌 단위를 따릅니다.
+  function parseLength(raw, unit) {
+    const text = String(raw).replace(/[\s,]/g, "").toLowerCase();
+    const m = text.match(/^(.*?)(mm|cm|m|밀리|센티|미터)$/);
+    if (!m) return { raw: parseNumber(text), unit };
+    const named = { mm: "mm", cm: "cm", m: "m", 밀리: "mm", 센티: "cm", 미터: "m" }[m[2]];
+    return { raw: parseNumber(m[1]), unit: named };
   }
 
   function parseWeight(raw) {
@@ -56,10 +65,9 @@
   }
 
   function readSpecs(errors) {
-    const unit = value("dimUnit") || "m";
     const dims = {};
     for (const [name, title, min, max] of DIMENSIONS) {
-      const raw = parseNumber(value(name));
+      const { raw, unit } = parseLength(value(name), value("dimUnit") || "m");
       setError(name, "");
       if (raw === null) { dims[name] = null; continue; }
       const meters = Number.isNaN(raw) ? NaN : raw * UNIT[unit];
@@ -81,7 +89,7 @@
       else if (weight < 20) errors.push(["weight", `${fmt(weight)}kg은 너무 가볍습니다. 톤 단위라면 '2.1톤'처럼 적어 주세요.`]);
       else if (weight > 40000) errors.push(["weight", "40,000kg을 넘는 값입니다. 0이 더 붙지 않았는지 확인하세요."]);
     }
-    const hp = parseNumber(value("hp"));
+    const hp = parseNumber(value("hp"), /(마력|ps|hp)$/);
     setError("hp", "");
     if (hp !== null && (Number.isNaN(hp) || hp < 1 || hp > 1000)) errors.push(["hp", "마력은 1~1000 사이 숫자로 적어 주세요. 모르면 비워 두세요."]);
     return { dims, weight: Number.isNaN(weight) ? null : weight, hp: Number.isNaN(hp) ? null : hp };
@@ -175,7 +183,7 @@
       }
     }
     if (dims.width !== null && dims.width > 2.5) {
-      flags.push(["warn", `너비가 ${fmt(dims.width, 2)}m입니다. 도로법 시행령 제79조는 폭 2.5m를 넘는 차량을 운행 제한 대상으로 정합니다. 실은 상태의 폭과 운행 허가 필요 여부를 업체에 확인하세요.`]);
+      flags.push(["warn", `너비가 ${fmt(dims.width, 2)}m입니다. 도로법 시행령 제79조는 폭 2.5m를 넘는 차량을 도로관리청이 운행을 제한할 수 있는 차량으로 정합니다. 실은 상태의 폭과 도로관리청 운행허가가 필요한지 업체에 확인하세요.`]);
     }
     const waits = [value("pickupWait"), value("dropWait")];
     if (waits.includes("over") || waits.includes("unknown")) flags.push(["", "대기 시간이 길거나 정해지지 않았다면 대기료가 붙을 수 있습니다. 무료로 기다려 주는 시간과 초과 요금을 견적에서 따로 받으세요."]);
@@ -196,6 +204,9 @@
       for (const [name, message] of errors) setError(name, message);
       errorBox.textContent = `고칠 곳이 ${errors.length}군데 있습니다. 빨간 글씨를 확인해 주세요.`;
       errorBox.hidden = false;
+      // 고치기 전에 만든 요청서가 남아 있으면 틀린 내용을 복사할 수 있으므로 숨깁니다.
+      result.hidden = true;
+      status.textContent = "";
       form.elements.namedItem(errors[0][0])?.focus();
       return;
     }

@@ -3,8 +3,8 @@
 중고 농기계를 옮기기 전에 기계 제원과 상하차 조건으로 표준 견적 요청서를 만들고, 받은 탁송 견적을 같은 항목으로 비교하는 정적 웹 도구입니다. 운영: 제이 미디어(J MEDIA).
 
 - `/`: 홈
-- `/agri/machinery-transport-plan/`: 견적 요청서 만들기 (`site/assets/quote-request-20261026.js`)
-- `/agri/quote-compare/`: 업체별 견적 비교표 (`site/assets/quote-compare-20261026.js`)
+- `/agri/machinery-transport-plan/`: 견적 요청서 만들기 (`site/assets/quote-request-20261026b.js`)
+- `/agri/quote-compare/`: 업체별 견적 비교표 (`site/assets/quote-compare-20261026b.js`)
 - `/agri/`: 운송 안내 모음, `/agri/guides/*`: 적재 기준·운송 안전·견적서 읽는 법
 - 이전 해외여행 지도(`/travel/`, `/cities/`, `/guides/`, `/guide/`, `/spots/`, `/field-notes/`)는 2026-10-26 종료했고 `functions/_middleware.js`가 410 안내를 돌려줍니다.
 

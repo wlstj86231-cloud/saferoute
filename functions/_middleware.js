@@ -6,6 +6,7 @@ const REDIRECT_HOSTS = new Set([
 
 // Pages that still have a real successor on the current site. Keep this map
 // exact: root-relative source and target paths with their trailing slash.
+// A request for the source without its trailing slash matches too.
 const EXACT_LEGACY_REDIRECTS = new Map([
   ["/review-readiness/", "/about/"],
   ["/travel/about/", "/about/"],
@@ -45,7 +46,7 @@ function isRetiredPath(pathname) {
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
-  const legacyTarget = EXACT_LEGACY_REDIRECTS.get(url.pathname);
+  const legacyTarget = EXACT_LEGACY_REDIRECTS.get(url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`);
   const needsCanonicalHost = REDIRECT_HOSTS.has(url.hostname);
 
   if (needsCanonicalHost || legacyTarget) {

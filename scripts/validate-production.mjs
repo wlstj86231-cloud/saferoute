@@ -24,7 +24,7 @@ const pagesDev = await callMiddleware("https://saferoute-4hu.pages.dev/agri/");
 assert.equal(pagesDev.status, 301);
 assert.equal(pagesDev.headers.get("location"), "https://tripmarking.com/agri/");
 
-for (const [from, to] of [["/travel/about/", "/about/"], ["/review-readiness/", "/about/"], ["/editorial-policy/", "/editorial/"]]) {
+for (const [from, to] of [["/travel/about/", "/about/"], ["/review-readiness/", "/about/"], ["/editorial-policy/", "/editorial/"], ["/travel/about", "/about/"], ["/review-readiness", "/about/"], ["/editorial-policy", "/editorial/"]]) {
   const moved = await callMiddleware(`https://tripmarking.com${from}?utm_source=old`);
   assert.equal(moved.status, 301, from);
   assert.equal(moved.headers.get("location"), `https://tripmarking.com${to}?utm_source=old`);
@@ -52,7 +52,7 @@ assert.equal(missing.status, 404);
 assert.match(missing.headers.get("cache-control") || "", /no-store/);
 assert.match(missing.headers.get("x-robots-tag") || "", /noindex/);
 
-for (const script of ["quote-request-20261026.js", "quote-compare-20261026.js"]) {
+for (const script of ["quote-request-20261026b.js", "quote-compare-20261026b.js"]) {
   const code = await fs.readFile(path.join(siteRoot, "assets", script), "utf8");
   assert.doesNotMatch(code, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|sendBeacon/, `${script} must keep input in the browser`);
 }
