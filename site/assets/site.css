@@ -51,6 +51,16 @@ main{display:block}
 .note > :last-child{margin-bottom:0}
 .note strong:first-child{display:block;margin-bottom:4px}
 .source-note{font-size:16px}
+.note h2{font-size:20px;margin:0 0 8px}
+.page-meta{font-size:16px;color:var(--muted);border-block:1px solid var(--line);padding:10px 0;margin:0 0 18px}
+.page-meta a{color:var(--brand)}
+.page-meta time,.source-list time{white-space:nowrap}
+.source-list{padding-left:1.4em;margin:0 0 .8em}
+.source-list li{margin:.4em 0}
+.facts th{white-space:nowrap}
+.changelog{list-style:none;padding:0}
+.changelog > li{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:0 0 14px}
+.changelog time{display:block;font-weight:800;color:#16301f}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:52px;padding:12px 20px;border-radius:10px;font:inherit;font-size:17px;font-weight:800;text-decoration:none;cursor:pointer;border:2px solid transparent;line-height:1.3;text-align:center}
 .btn-primary{background:var(--brand);color:#fff}
 .btn-primary:hover{background:var(--brand-dark);color:#fff}

@@ -5,7 +5,8 @@
 - `/`: 홈
 - `/agri/machinery-transport-plan/`: 견적 요청서 만들기 (`site/assets/quote-request-20261026b.js`)
 - `/agri/quote-compare/`: 업체별 견적 비교표 (`site/assets/quote-compare-20261026b.js`)
-- `/agri/`: 운송 안내 모음, `/agri/guides/*`: 적재 기준·운송 안전·견적서 읽는 법
+- `/agri/`: 운송 안내 모음, `/agri/guides/*`: 적재 기준·기종별 준비·상하차 방법·운송 안전·견적서 읽는 법·파손·분실
+- `/about/`·`/contact/`·`/editorial/`·`/corrections/`·`/privacy/`·`/terms/`·`/sources/`: 운영자 정보와 신뢰 페이지 (수정 기록은 `/corrections/`에 날짜와 함께 남깁니다)
 - 이전 해외여행 지도(`/travel/`, `/cities/`, `/guides/`, `/guide/`, `/spots/`, `/field-notes/`)는 2026-10-26 종료했고 `functions/_middleware.js`가 410 안내를 돌려줍니다.
 
 도구 스크립트와 `site.css`는 `/assets/*` 1년 캐시 대상이므로 내용을 바꾸면 파일명 또는 `?v=` 값을 올리고 `site/sw.js`의 `CACHE_NAME`도 함께 바꿉니다.

@@ -22,6 +22,7 @@ const nonFeedRoutes = new Set([
   "/",
   "/about/",
   "/contact/",
+  "/corrections/",
   "/editorial/",
   "/editorial-policy/",
   "/privacy/",

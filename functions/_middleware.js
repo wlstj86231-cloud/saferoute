@@ -87,7 +87,7 @@ function retiredResponse() {
 <title>종료된 해외여행 안전 자료 - 농기계 탁송 견적 비교</title>
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="/assets/icon.svg?v=20261026" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/site.css?v=20261026">
+<link rel="stylesheet" href="/assets/site.css?v=20261026b">
 </head>
 <body>
 <main id="main" class="narrow page">

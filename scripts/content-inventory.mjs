@@ -15,6 +15,7 @@ const blockedAdPaths = new Set([
   "/terms/",
   "/contact/",
   "/sources/",
+  "/corrections/",
   "/agri/",
   "/agri/quote-compare/",
   "/agri/machinery-transport-plan/"
@@ -28,7 +29,8 @@ const nonContentPaths = new Set([
   "/privacy/",
   "/terms/",
   "/contact/",
-  "/sources/"
+  "/sources/",
+  "/corrections/"
 ]);
 
 const contentEntryPrefixes = [
