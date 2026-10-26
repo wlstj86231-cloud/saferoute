@@ -3,77 +3,148 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>업체별 견적 항목 비교표 - 농기계 탁송 견적 비교</title>
-  <meta name="description" content="농기계 탁송 업체 3곳의 기본 운임·상차·하차·대기·통행료·부가세 항목을 같은 기준으로 비교합니다. 비어 있는 비용은 미확인으로 표시합니다.">
+  <title>업체별 탁송 견적 비교표 - 농기계 탁송 견적 비교</title>
+  <meta name="description" content="농기계 탁송 견적 세 곳의 기본 운임·상차비·하차비·대기료·통행료·작업기 비용·부가세와 파손 보상, 추가 요금 조건을 한 표로 맞춰 보고, 빠진 항목은 업체에 다시 물어볼 문자로 만들어 줍니다.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://tripmarking.com/agri/quote-compare/">
-  <link rel="stylesheet" href="/assets/styles.css?v=20260924-agri1">
-  <style>
-    .quote-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0}
-    .quote-card{border:1px solid #d8ddd5;border-radius:12px;padding:18px;min-width:0}
-    .quote-card legend{font-weight:800;padding:0 5px}
-    .quote-card label{display:grid;gap:5px;margin:12px 0;font-size:14px}
-    .quote-card input{width:100%;min-width:0;border:1px solid #abb9ae;border-radius:7px;padding:10px;font:inherit}
-    .quote-actions button{border:0;border-radius:8px;background:#176344;color:white;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer}
-    .quote-results{margin:20px 0;display:grid;gap:12px}
-    .quote-results article{border:1px solid #d8ddd5;border-radius:10px;padding:15px}
-    .quote-results strong{display:block;font-size:20px}
-    .quote-results ul{margin-bottom:0}
-    @media print{.quote-actions,nav{display:none!important}.quote-grid{display:block}.quote-card,.quote-results article{break-inside:avoid}input{border:0}body{background:white}}@media(max-width:800px){.quote-grid{grid-template-columns:1fr}}
-  </style>
-  <script src="/assets/agri-quote-compare-20261015.js" defer></script>
+  <link rel="icon" href="/assets/icon.svg?v=20261026" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="농기계 탁송 견적 비교">
+  <meta property="og:title" content="업체별 탁송 견적 비교표 - 농기계 탁송 견적 비교">
+  <meta property="og:description" content="농기계 탁송 견적 세 곳의 기본 운임·상차비·하차비·대기료·통행료·작업기 비용·부가세와 파손 보상, 추가 요금 조건을 한 표로 맞춰 보고, 빠진 항목은 업체에 다시 물어볼 문자로 만들어 줍니다.">
+  <meta property="og:url" content="https://tripmarking.com/agri/quote-compare/">
+  <meta name="theme-color" content="#f6f7f1">
+  <link rel="alternate" type="application/rss+xml" title="농기계 탁송 견적 비교 자료" href="/feed.xml">
+  <link rel="stylesheet" href="/assets/site.css?v=20261026">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"업체별 탁송 견적 비교표","url":"https://tripmarking.com/agri/quote-compare/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"ko-KR","isAccessibleForFree":true,"description":"받은 농기계 탁송 견적을 비용 항목·파손 보상·추가 요금 조건 기준으로 정리하고 빠진 항목을 표시하는 도구","publisher":{"@type":"Organization","name":"제이 미디어(J MEDIA)","url":"https://jnewmedia.com/"}}</script>
+  <script src="/assets/quote-compare-20261026.js" defer></script>
 </head>
 <body>
-  <main class="static-shell">
-    <p><a href="/agri/">농기계 이동 준비</a> › 견적 비교</p>
-    <h1>농기계 탁송 견적 항목 비교표</h1>
-    <p>업체마다 상차·하차와 부대비용을 다르게 표기하면 기본 운임만 보고 비교하기 어렵습니다. 받은 견적서에 명시된 원 단위 금액만 입력하세요. 비용이 기본 운임에 포함됐다는 확인을 받은 항목에는 <strong>0원</strong>을 적고, 확인하지 못한 칸은 비워 둡니다.</p>
-    <div class="editor-note"><strong>계산 범위</strong><p>각 업체의 입력 금액을 단순 합산합니다. 미확인 칸이 하나라도 있으면 완전한 총액으로 표시하지 않습니다. 차량 적재·도로 운행 적합성, 면허, 보험 보장 범위와 부가세 적용 여부는 이 도구가 판정하지 않습니다.</p></div>
-
-    <form id="quote-form">
-      <div class="quote-grid">
-        <fieldset class="quote-card" data-quote><legend>견적 A</legend>
-          <label>업체 구분 이름<input name="label" maxlength="30" placeholder="예: A업체"></label>
-          <label>견적 받은 날짜<input name="quotedAt" type="date"></label><label>견적 유효기한<input name="validUntil" type="date"></label><label>근거 메모 (연락처 제외)<input name="basis" maxlength="150" placeholder="예: 문자 견적, 작업기 분리 별도"></label><label>기본 운임 (원)<input name="base" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>상차 비용 (원)<input name="load" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>하차 비용 (원)<input name="unload" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>대기·통행료 (원)<input name="wait" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>부가세 (원)<input name="tax" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-        </fieldset>
-        <fieldset class="quote-card" data-quote><legend>견적 B</legend>
-          <label>업체 구분 이름<input name="label" maxlength="30" placeholder="예: B업체"></label>
-          <label>견적 받은 날짜<input name="quotedAt" type="date"></label><label>견적 유효기한<input name="validUntil" type="date"></label><label>근거 메모 (연락처 제외)<input name="basis" maxlength="150" placeholder="예: 문자 견적, 작업기 분리 별도"></label><label>기본 운임 (원)<input name="base" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>상차 비용 (원)<input name="load" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>하차 비용 (원)<input name="unload" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>대기·통행료 (원)<input name="wait" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>부가세 (원)<input name="tax" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-        </fieldset>
-        <fieldset class="quote-card" data-quote><legend>견적 C</legend>
-          <label>업체 구분 이름<input name="label" maxlength="30" placeholder="예: C업체"></label>
-          <label>견적 받은 날짜<input name="quotedAt" type="date"></label><label>견적 유효기한<input name="validUntil" type="date"></label><label>근거 메모 (연락처 제외)<input name="basis" maxlength="150" placeholder="예: 문자 견적, 작업기 분리 별도"></label><label>기본 운임 (원)<input name="base" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>상차 비용 (원)<input name="load" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>하차 비용 (원)<input name="unload" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>대기·통행료 (원)<input name="wait" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-          <label>부가세 (원)<input name="tax" type="number" min="0" max="999999999" step="1" inputmode="numeric"></label>
-        </fieldset>
+  <a class="skip" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="identity" href="/" aria-label="농기계 탁송 견적 비교 홈"><span class="mark" aria-hidden="true">농</span><span><strong>농기계 탁송 견적 비교</strong><small>견적 요청서 · 견적 비교표</small></span></a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="/agri/machinery-transport-plan/">견적 요청서</a>
+        <a href="/agri/quote-compare/" aria-current="page">견적 비교</a>
+        <a href="/agri/">운송 안내</a>
+        <a href="/about/">소개</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+<div class="wrap page">
+      <div class="narrow" style="margin:0">
+        <p class="crumb"><a href="/">홈</a> › <a href="/agri/">운송 안내</a> › 견적 비교</p>
+        <h1>업체별 탁송 견적 비교표</h1>
+        <p class="lead">기본 운임만 보고 고르면 상하차비나 대기료가 나중에 붙을 수 있습니다. 받은 견적을 항목별로 옮겨 적으면 빠진 비용은 노랗게 표시되고, 업체에 다시 물어볼 문자가 만들어집니다.</p>
+        <div class="note"><strong>적는 방법</strong>
+          <ul>
+            <li>금액은 숫자로 적습니다. <strong>350000</strong>, <strong>350,000</strong>, <strong>35만</strong> 모두 됩니다.</li>
+            <li>업체가 알려 주지 않은 비용은 <strong>비워 두세요</strong>. '미확인'으로 표시됩니다.</li>
+            <li>기본 운임에 포함됐다고 들었거나 해당 없는 비용(예: 작업기 없음)은 <strong>0</strong>을 적으세요.</li>
+          </ul>
+        </div>
+        <p>아직 견적을 받지 않았다면 먼저 <a href="/agri/machinery-transport-plan/">견적 요청서</a>를 만들어 같은 내용으로 문의하세요. 입력값은 이 브라우저에서만 계산하며 서버로 보내거나 저장하지 않습니다.</p>
       </div>
-      <div class="quote-actions"><button type="submit">입력 금액 비교</button> <button type="button" id="quote-copy">견적·결과 복사</button> <button type="button" id="quote-print">견적·결과 인쇄</button></div>
-    </form>
-    <section id="quote-result" class="quote-results" role="status" aria-live="polite"><p>금액을 입력한 뒤 비교를 누르세요. 입력값은 서버로 전송하거나 저장하지 않습니다.</p></section>
 
-    <h2>금액 외에 같은 질문으로 확인할 항목</h2>
-    <ol class="use-steps">
-      <li>제조사 제원과 장착 작업기를 반영한 기계의 실제 길이·너비·높이·중량을 업체에 전달했는지 확인합니다.</li>
-      <li>기계가 스스로 상차 가능한지, 별도 장비와 사람이 필요한지 양쪽 현장 조건을 비교합니다.</li>
-      <li>파손 시 연락·증빙·보상 절차와 작업기 분리 비용의 포함 여부를 계약서와 약관으로 확인합니다.</li>
-      <li>견적 유효기간, 결제 시점, 대기·취소 조건을 기록합니다. 숫자가 작아도 조건이 다르면 같은 견적이 아닙니다.</li>
-    </ol>
-    <p><a href="/agri/machinery-transport-plan/">탁송 현장 확인표</a>로 같은 제원을 정리한 뒤 업체에 다시 문의하세요. 계약 전 질문은 <a href="https://boribay.com/guides/farm-machinery-transport-checklist">보리장터 농기계 탁송 점검 안내</a>에서 이어서 확인할 수 있습니다.</p>
-    <p>보리장터는 농기계 탁송 견적 비교와 같은 운영자가 관리하는 거래 서비스입니다.</p>
-    <section class="editor-note"><h2>제작 책임과 수정 이력</h2><p>제작·수정 책임: 농기계 탁송 견적 비교 운영자. 받은 견적의 항목과 확인 날짜를 정리하는 도구이며 운송 업체의 자격·보험·현장 작업을 검증하거나 보증하지 않습니다. 입력은 이 페이지의 브라우저에서 계산하며 자동 저장·서버 전송하지 않습니다. 복사·인쇄하면 선택한 대상으로 전달됩니다.</p><p>2026-10-15: 견적일·유효기한·출처 메모와 복사·인쇄를 추가했습니다. 아래 공식 자료의 기존 확인 기록과 구분합니다. 오류는 <a href="/contact/">수정 제안</a>에 페이지 주소·재현 입력·기대 결과를 알려주세요. 거래 상대방의 개인정보는 제외하세요.</p></section>
-    <!-- SOURCE_NOTE_START -->
-    <div class="editor-note"><strong>제작·수정 기준</strong><p>계산 방식은 이 페이지에 적힌 입력값의 산술 합계입니다. 운송 자격이나 안전성은 판단하지 않습니다. 출발 전 농기계 상태 항목은 <a href="https://rda.go.kr/board/board.do?dataNo=100000809513&amp;mode=view&amp;prgId=day_farmprmninfoEntry">농촌진흥청의 자가 점검·안전관리 안내</a>를 참고했습니다(확인 2026-09-24). 도구 오류는 <a href="/contact/">수정 제안</a>으로 알려주세요.</p></div>
-    <!-- SOURCE_NOTE_END -->
+      <form id="quote-form" novalidate>
+        <div class="quote-grid">
+          <fieldset data-quote>
+            <legend>견적 A</legend>
+            <label class="field" for="qa-label"><span>업체 이름(구분용)</span><input id="qa-label" name="label" type="text" maxlength="30" placeholder="예: A업체" autocomplete="off"></label>
+            <div class="grid-2">
+              <label class="field" for="qa-quotedAt"><span>견적 받은 날</span><input id="qa-quotedAt" name="quotedAt" type="date"></label>
+              <label class="field" for="qa-validUntil"><span>유효기한</span><input id="qa-validUntil" name="validUntil" type="date"></label>
+            </div>
+            <label class="field" for="qa-base"><span>기본 운임 (원)</span><input id="qa-base" name="base" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-load"><span>상차비 (원)</span><input id="qa-load" name="load" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-unload"><span>하차비 (원)</span><input id="qa-unload" name="unload" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-wait"><span>대기료 (원)</span><input id="qa-wait" name="wait" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-toll"><span>통행료·기타 실비 (원)</span><input id="qa-toll" name="toll" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-attach"><span>작업기 분리·별도 운송 (원)</span><input id="qa-attach" name="attach" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-tax"><span>부가세 (원)</span><input id="qa-tax" name="tax" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qa-insurance"><span>파손 보상</span><select id="qa-insurance" name="insurance"><option value="">확인 안 됨</option><option value="written">문자·서면으로 보상 기준 받음</option><option value="verbal">말로만 들음</option><option value="none">보상 없음·고객 부담이라고 함</option></select></label>
+            <label class="field" for="qa-insuranceNote"><span>보상 메모</span><input id="qa-insuranceNote" name="insuranceNote" type="text" maxlength="80" placeholder="예: 적재물 보험, 한도 2천만 원" autocomplete="off"></label>
+            <label class="field" for="qa-extra"><span>추가 요금 조건</span><input id="qa-extra" name="extra" type="text" maxlength="120" placeholder="예: 대기 1시간 초과 시 추가" autocomplete="off"></label>
+            <label class="field" for="qa-basis"><span>근거 메모</span><input id="qa-basis" name="basis" type="text" maxlength="80" placeholder="예: 문자 견적, 전화" autocomplete="off"></label>
+          </fieldset>
+          <fieldset data-quote>
+            <legend>견적 B</legend>
+            <label class="field" for="qb-label"><span>업체 이름(구분용)</span><input id="qb-label" name="label" type="text" maxlength="30" placeholder="예: B업체" autocomplete="off"></label>
+            <div class="grid-2">
+              <label class="field" for="qb-quotedAt"><span>견적 받은 날</span><input id="qb-quotedAt" name="quotedAt" type="date"></label>
+              <label class="field" for="qb-validUntil"><span>유효기한</span><input id="qb-validUntil" name="validUntil" type="date"></label>
+            </div>
+            <label class="field" for="qb-base"><span>기본 운임 (원)</span><input id="qb-base" name="base" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-load"><span>상차비 (원)</span><input id="qb-load" name="load" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-unload"><span>하차비 (원)</span><input id="qb-unload" name="unload" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-wait"><span>대기료 (원)</span><input id="qb-wait" name="wait" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-toll"><span>통행료·기타 실비 (원)</span><input id="qb-toll" name="toll" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-attach"><span>작업기 분리·별도 운송 (원)</span><input id="qb-attach" name="attach" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-tax"><span>부가세 (원)</span><input id="qb-tax" name="tax" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qb-insurance"><span>파손 보상</span><select id="qb-insurance" name="insurance"><option value="">확인 안 됨</option><option value="written">문자·서면으로 보상 기준 받음</option><option value="verbal">말로만 들음</option><option value="none">보상 없음·고객 부담이라고 함</option></select></label>
+            <label class="field" for="qb-insuranceNote"><span>보상 메모</span><input id="qb-insuranceNote" name="insuranceNote" type="text" maxlength="80" placeholder="예: 적재물 보험, 한도 2천만 원" autocomplete="off"></label>
+            <label class="field" for="qb-extra"><span>추가 요금 조건</span><input id="qb-extra" name="extra" type="text" maxlength="120" placeholder="예: 대기 1시간 초과 시 추가" autocomplete="off"></label>
+            <label class="field" for="qb-basis"><span>근거 메모</span><input id="qb-basis" name="basis" type="text" maxlength="80" placeholder="예: 문자 견적, 전화" autocomplete="off"></label>
+          </fieldset>
+          <fieldset data-quote>
+            <legend>견적 C</legend>
+            <label class="field" for="qc-label"><span>업체 이름(구분용)</span><input id="qc-label" name="label" type="text" maxlength="30" placeholder="예: C업체" autocomplete="off"></label>
+            <div class="grid-2">
+              <label class="field" for="qc-quotedAt"><span>견적 받은 날</span><input id="qc-quotedAt" name="quotedAt" type="date"></label>
+              <label class="field" for="qc-validUntil"><span>유효기한</span><input id="qc-validUntil" name="validUntil" type="date"></label>
+            </div>
+            <label class="field" for="qc-base"><span>기본 운임 (원)</span><input id="qc-base" name="base" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-load"><span>상차비 (원)</span><input id="qc-load" name="load" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-unload"><span>하차비 (원)</span><input id="qc-unload" name="unload" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-wait"><span>대기료 (원)</span><input id="qc-wait" name="wait" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-toll"><span>통행료·기타 실비 (원)</span><input id="qc-toll" name="toll" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-attach"><span>작업기 분리·별도 운송 (원)</span><input id="qc-attach" name="attach" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-tax"><span>부가세 (원)</span><input id="qc-tax" name="tax" type="text" inputmode="numeric" maxlength="16" placeholder="모르면 비움" autocomplete="off"></label>
+            <label class="field" for="qc-insurance"><span>파손 보상</span><select id="qc-insurance" name="insurance"><option value="">확인 안 됨</option><option value="written">문자·서면으로 보상 기준 받음</option><option value="verbal">말로만 들음</option><option value="none">보상 없음·고객 부담이라고 함</option></select></label>
+            <label class="field" for="qc-insuranceNote"><span>보상 메모</span><input id="qc-insuranceNote" name="insuranceNote" type="text" maxlength="80" placeholder="예: 적재물 보험, 한도 2천만 원" autocomplete="off"></label>
+            <label class="field" for="qc-extra"><span>추가 요금 조건</span><input id="qc-extra" name="extra" type="text" maxlength="120" placeholder="예: 대기 1시간 초과 시 추가" autocomplete="off"></label>
+            <label class="field" for="qc-basis"><span>근거 메모</span><input id="qc-basis" name="basis" type="text" maxlength="80" placeholder="예: 문자 견적, 전화" autocomplete="off"></label>
+          </fieldset>
+        </div>
+        <p id="quote-error" class="form-error" role="alert" hidden></p>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary" disabled>비교 준비 중…</button>
+          <button type="button" id="quote-copy" class="btn btn-secondary">비교 결과 복사</button>
+          <button type="button" id="quote-print" class="btn btn-secondary">인쇄</button>
+          <button type="button" id="quote-reset" class="btn btn-secondary">모두 지우기</button>
+        </div>
+      </form>
+      <p id="quote-status" class="status" role="status"></p>
+      <section id="quote-result" class="result" aria-label="비교 결과"><p>금액을 입력한 뒤 '견적 비교하기'를 누르세요.</p></section>
+
+      <div class="narrow" style="margin:0">
+        <h2>금액 말고 꼭 확인할 것</h2>
+        <ul class="checklist">
+          <li><strong>영업용 차량인지</strong> — 화물 운송사업은 허가를 받아야 하고, 자가용 화물차로 돈을 받고 운송하는 것은 금지됩니다(<a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95/%EC%A0%9C3%EC%A1%B0">화물자동차 운수사업법 제3조</a>·<a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95/%EC%A0%9C56%EC%A1%B0">제56조</a>).</li>
+          <li><strong>파손 보상</strong> — 적재물배상보험 의무 가입은 최대 적재량 5톤 이상 또는 총중량 10톤 이상 화물차를 가진 운송사업자 등에게 해당합니다(<a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95/%EC%A0%9C35%EC%A1%B0">제35조</a>). 작은 차량이라면 보험 가입 여부와 한도를 문자로 받아 두세요.</li>
+          <li><strong>기사 자격</strong> — 화물 운송 운전업무에는 종사자격이 필요하며, 한국교통안전공단이 <a href="https://main.kotsa.or.kr/portal/contents.do?menuCode=01050800">사업용 화물 운송자격 취득 절차</a>를 안내합니다.</li>
+          <li><strong>유효기간과 결제 시점</strong> — 견적이 언제까지 유효한지, 언제 얼마를 내는지 적어 두세요. 낯선 계좌로 전액을 먼저 보내라는 요구가 있으면 <a href="https://scamreader.com/">직거래 사기 점검</a>에서 신호를 확인할 수 있습니다.</li>
+        </ul>
+        <p>각 항목을 어떻게 묻는지와 계산 예시는 <a href="/agri/guides/reading-quotes/">탁송 견적서 읽는 법</a>, 업체 확인과 상하차 당일 준비는 <a href="/agri/guides/transport-safety/">운송 안전 점검표</a>에 있습니다. 견적이 한두 곳뿐이라면 <a href="https://boribay.com/?category=TRANSPORT&amp;utm_source=tripmarking.com&amp;utm_medium=referral&amp;utm_campaign=support">보리장터 운송 업체 목록</a>에서 더 찾아 같은 요청서를 보내 보세요(보리장터는 이 사이트와 같은 운영사의 서비스입니다).</p>
+
+        <!-- SOURCE_NOTE_START -->
+      <div class="note source-note">
+        <strong>근거 자료와 확인일</strong>
+        <p>계산은 입력한 7개 비용 항목의 단순 합계이며, 빈 칸은 합계에서 빼고 '미확인'으로 표시합니다. 업체 확인 항목은 <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95/%EC%A0%9C3%EC%A1%B0">화물자동차 운수사업법 제3조</a>·<a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95/%EC%A0%9C35%EC%A1%B0">제35조</a>·<a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95/%EC%A0%9C56%EC%A1%B0">제56조</a>, <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%ED%99%94%EB%AC%BC%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%B4%EC%88%98%EC%82%AC%EC%97%85%EB%B2%95%EC%8B%9C%ED%96%89%EB%A0%B9/%EC%A0%9C9%EC%A1%B0%EC%9D%987">같은 법 시행령 제9조의7</a>(국가법령정보센터)과 <a href="https://main.kotsa.or.kr/portal/contents.do?menuCode=01050800">한국교통안전공단</a> 안내를 근거로 했습니다. 확인일 2026-10-26. 이 도구는 업체의 자격·보험·안전성을 검증하거나 보증하지 않습니다. <a href="/sources/">출처 전체 보기</a> · <a href="/contact/">수정 제안</a></p>
+      </div>
+      <!-- SOURCE_NOTE_END -->
+      </div>
+    </div>
   </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav class="footer-nav" aria-label="보조 메뉴"><a href="/about/">소개·운영자</a><a href="/sources/">출처</a><a href="/editorial/">편집 기준</a><a href="/privacy/">개인정보</a><a href="/terms/">이용약관</a><a href="/contact/">문의·정정</a></nav>
+      <p>© 농기계 탁송 견적 비교 · 운영 제이 미디어(J MEDIA) · 보리장터와 같은 운영사</p>
+      <p>도구에 입력한 내용은 이 브라우저 안에서만 처리하며 서버로 보내지 않습니다.</p>
+    </div>
+  </footer>
 </body>
 </html>

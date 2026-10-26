@@ -1,86 +1,156 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>탁송 전 현장 확인표 만들기 - 농기계 탁송 견적 비교</title>
-    <meta name="description" content="농기계 출발·도착 현장, 크기·중량, 작업기와 상하차 조건을 한 장으로 정리하는 무료 탁송 확인표. 운송업체와 견적을 비교하기 전에 확인할 항목을 만듭니다.">
-    <meta name="robots" content="index,follow">
-    <link rel="canonical" href="https://tripmarking.com/agri/machinery-transport-plan/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="농기계 탁송 견적 비교">
-    <meta property="og:title" content="중고 농기계 탁송 현장 확인표 만들기">
-    <meta property="og:description" content="출발·도착 현장과 농기계 제원을 정리해 운송업체에 같은 조건으로 문의하세요.">
-    <meta property="og:url" content="https://tripmarking.com/agri/machinery-transport-plan/">
-    <link rel="stylesheet" href="/assets/styles.css?v=20260924-agri1">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"농기계 탁송 현장 확인표","url":"https://tripmarking.com/agri/machinery-transport-plan/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"ko-KR","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"농기계 탁송 견적 비교","url":"https://tripmarking.com/"}}</script>
-    <script src="/assets/agri-transport-plan-20260924b.js" defer></script>
-  </head>
-  <body>
-    <main class="static-shell">
-      <p><a href="/agri/">농기계 이동 준비</a> › 현장 조건</p>
-      <h1>중고 농기계 탁송 현장 확인표 만들기</h1>
-      <p>운송업체마다 다른 조건으로 견적을 받으면 가격을 비교하기 어렵습니다. 이 도구는 기계 제원과 출발·도착 현장의 조건을 한 장으로 정리합니다. 입력 내용은 이 브라우저 화면에서만 처리하며 서버에 보내거나 저장하지 않습니다.</p>
-      <div class="editor-note">
-        <strong>이 확인표의 범위</strong>
-        <p>차량 적재 가능 여부, 도로 통행 가능 여부, 운임·보험 보장은 계산하지 않습니다. 실제 크기·중량은 제조사 제원과 장착된 작업기 상태로 확인하고, 상하차 방법과 운송 가능 여부는 운송업체가 현장에서 결정해야 합니다.</p>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>농기계 탁송 견적 요청서 만들기 - 농기계 탁송 견적 비교</title>
+  <meta name="description" content="기종·마력·전장·전폭·전고·중량·작업기와 상차·하차 현장의 진입로, 크레인·지게차 필요 여부, 대기 시간을 적으면 여러 탁송 업체에 같은 조건으로 보낼 견적 요청 문자를 만들어 줍니다.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://tripmarking.com/agri/machinery-transport-plan/">
+  <link rel="icon" href="/assets/icon.svg?v=20261026" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="농기계 탁송 견적 비교">
+  <meta property="og:title" content="농기계 탁송 견적 요청서 만들기 - 농기계 탁송 견적 비교">
+  <meta property="og:description" content="기종·마력·전장·전폭·전고·중량·작업기와 상차·하차 현장의 진입로, 크레인·지게차 필요 여부, 대기 시간을 적으면 여러 탁송 업체에 같은 조건으로 보낼 견적 요청 문자를 만들어 줍니다.">
+  <meta property="og:url" content="https://tripmarking.com/agri/machinery-transport-plan/">
+  <meta name="theme-color" content="#f6f7f1">
+  <link rel="alternate" type="application/rss+xml" title="농기계 탁송 견적 비교 자료" href="/feed.xml">
+  <link rel="stylesheet" href="/assets/site.css?v=20261026">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"농기계 탁송 견적 요청서 만들기","url":"https://tripmarking.com/agri/machinery-transport-plan/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"ko-KR","isAccessibleForFree":true,"description":"농기계 제원과 상하차 현장 조건으로 탁송 업체에 보낼 표준 견적 요청 문자를 만드는 도구","publisher":{"@type":"Organization","name":"제이 미디어(J MEDIA)","url":"https://jnewmedia.com/"}}</script>
+  <script src="/assets/quote-request-20261026.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="identity" href="/" aria-label="농기계 탁송 견적 비교 홈"><span class="mark" aria-hidden="true">농</span><span><strong>농기계 탁송 견적 비교</strong><small>견적 요청서 · 견적 비교표</small></span></a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="/agri/machinery-transport-plan/" aria-current="page">견적 요청서</a>
+        <a href="/agri/quote-compare/">견적 비교</a>
+        <a href="/agri/">운송 안내</a>
+        <a href="/about/">소개</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+<div class="wrap page">
+      <div class="narrow" style="margin:0">
+        <p class="crumb"><a href="/">홈</a> › <a href="/agri/">운송 안내</a> › 견적 요청서</p>
+        <h1>농기계 탁송 견적 요청서 만들기</h1>
+        <p class="lead">업체마다 다른 정보를 듣고 견적을 내면 금액을 비교할 수 없습니다. 아래 칸을 채우면 여러 업체에 똑같이 보낼 수 있는 요청 문자가 만들어집니다. 모르는 칸은 비워 두면 '미확인'으로 적힙니다.</p>
+        <div class="note"><strong>개인정보는 적지 마세요</strong><p>이름·전화번호·상세 주소는 적지 않아도 됩니다. 입력한 내용은 이 화면에서만 처리하고 서버에 보내거나 저장하지 않습니다. 연락처는 문자를 보낼 때 직접 덧붙이세요.</p></div>
       </div>
 
-      <form id="transport-plan-form" class="agri-plan-form">
+      <form id="request-form" novalidate>
         <fieldset>
-          <legend>1. 기계와 현장</legend>
-          <label>기계 종류
-            <select name="machine" required>
-              <option value="">선택하세요</option>
-              <option>트랙터</option><option>경운기</option><option>관리기</option><option>콤바인</option><option>이앙기</option><option>기타 농기계</option>
-            </select>
-          </label>
-          <label>출발 지역 또는 현장 특징 <input name="pickup" maxlength="80" placeholder="예: 충남 예산, 진입로 폭 확인 필요" required></label>
-          <label>도착 지역 또는 현장 특징 <input name="dropoff" maxlength="80" placeholder="예: 경기 여주, 하차 공간 협의 필요" required></label>
-          <p class="agri-plan-note">개인 이름·전화번호·상세 주소 대신 지역과 현장 조건만 적어도 됩니다.</p>
-        </fieldset>
-        <fieldset>
-          <legend>2. 실측 또는 확인할 제원</legend>
-          <div class="agri-plan-grid">
-            <label>전체 길이 (m) <input name="length" type="number" min="0.1" max="100" step="0.01" placeholder="미확인 가능"></label>
-            <label>전체 너비 (m) <input name="width" type="number" min="0.1" max="100" step="0.01" placeholder="미확인 가능"></label>
-            <label>전체 높이 (m) <input name="height" type="number" min="0.1" max="100" step="0.01" placeholder="미확인 가능"></label>
-            <label>전체 중량 (kg) <input name="weight" type="number" min="1" max="100000" step="1" placeholder="미확인 가능"></label>
+          <legend>1. 기계 정보</legend>
+          <div class="grid-2">
+            <label class="field" for="machine"><span>기종 (필수)</span><select id="machine" name="machine" required><option value="">골라 주세요</option><option value="트랙터">트랙터</option><option value="콤바인">콤바인</option><option value="이앙기">이앙기</option><option value="경운기">경운기</option><option value="관리기">관리기</option><option value="기타 농기계">기타 농기계</option></select><span class="field-error" id="machine-error" hidden></span></label>
+            <label class="field" for="model"><span>제조사·모델명</span><input id="model" name="model" type="text" maxlength="80" placeholder="명판에 적힌 이름" autocomplete="off"><small>기계에 붙은 명판(금속 표)이나 취급설명서에 적힌 이름입니다.</small><span class="field-error" id="model-error" hidden></span></label>
+            <label class="field" for="hp"><span>마력</span><input id="hp" name="hp" type="text" maxlength="6" inputmode="numeric" placeholder="예: 45" autocomplete="off"><small>모르면 비워 두세요.</small><span class="field-error" id="hp-error" hidden></span></label>
+            <label class="field" for="dimUnit"><span>치수 단위</span><select id="dimUnit" name="dimUnit"><option value="m">m (미터)</option><option value="cm">cm (센티미터)</option><option value="mm">mm (제원표 표기)</option></select><small>제원표에 '3,450'처럼 네 자리로 적혀 있으면 mm입니다.</small><span class="field-error" id="dimUnit-error" hidden></span></label>
           </div>
-          <label>작업기 상태
-            <select name="attachment"><option value="unknown">아직 확인하지 않음</option><option value="attached">장착한 채 운송 예정</option><option value="detached">분리해 별도 운송 예정</option><option value="none">작업기 없음</option></select>
-          </label>
-          <label>기계가 스스로 이동해 상차할 수 있는지
-            <select name="selfLoading"><option value="unknown">아직 확인하지 않음</option><option value="yes">가능 여부를 현장에서 확인함</option><option value="no">불가능하거나 불안정함</option></select>
-          </label>
+          <div class="grid-4">
+            <label class="field" for="length"><span>길이(전장)</span><input id="length" name="length" type="text" maxlength="10" inputmode="decimal" placeholder="예: 3.45" autocomplete="off"><span class="field-error" id="length-error" hidden></span></label>
+            <label class="field" for="width"><span>너비(전폭)</span><input id="width" name="width" type="text" maxlength="10" inputmode="decimal" placeholder="예: 1.8" autocomplete="off"><span class="field-error" id="width-error" hidden></span></label>
+            <label class="field" for="height"><span>높이(전고)</span><input id="height" name="height" type="text" maxlength="10" inputmode="decimal" placeholder="예: 2.5" autocomplete="off"><span class="field-error" id="height-error" hidden></span></label>
+            <label class="field" for="weight"><span>중량(kg)</span><input id="weight" name="weight" type="text" maxlength="12" inputmode="decimal" placeholder="예: 2100" autocomplete="off"><small>'2.1톤'처럼 적어도 됩니다.</small><span class="field-error" id="weight-error" hidden></span></label>
+          </div>
+          <p class="hint">작업기를 단 채로 보낼 거면 작업기까지 포함한 전체 길이·높이·중량을 적으세요. 높이는 가장 높은 곳(캐빈 지붕, 안전 프레임, 경광등)까지입니다.</p>
+          <div class="grid-2">
+            <label class="field" for="attachment"><span>작업기</span><select id="attachment" name="attachment"><option value="unknown">아직 정하지 않음</option><option value="none">작업기 없음</option><option value="attached">부착한 채로 운송</option><option value="detached">분리해서 함께 운송</option></select><span class="field-error" id="attachment-error" hidden></span></label>
+            <label class="field" for="drive"><span>자력 주행</span><select id="drive" name="drive"><option value="unknown">모름</option><option value="yes">시동·주행 가능</option><option value="no">시동 또는 주행 불가(고장 등)</option></select><span class="field-error" id="drive-error" hidden></span></label>
+          </div>
+          <div id="attachment-note-field"><label class="field" for="attachmentNote"><span>작업기 이름·크기</span><input id="attachmentNote" name="attachmentNote" type="text" maxlength="80" placeholder="예: 로터리 1개, 폭 2.1m" autocomplete="off"><span class="field-error" id="attachmentNote-error" hidden></span></label></div>
         </fieldset>
-        <button type="submit" disabled>확인표 준비 중…</button>
-      </form>
-      <noscript><p>확인표 생성에는 브라우저의 JavaScript가 필요합니다. 아래 확인 항목은 JavaScript 없이도 읽을 수 있습니다.</p></noscript>
 
-      <section id="transport-plan-result" class="agri-plan-result" hidden aria-live="polite">
-        <h2>운송업체에 전달할 확인표</h2>
-        <p>아래는 문의용 메모입니다. 안전 승인이나 확정 견적서가 아닙니다.</p>
-        <pre id="transport-plan-text"></pre>
-        <div class="agri-plan-actions"><button type="button" id="transport-plan-copy">내용 복사</button><button type="button" id="transport-plan-print">인쇄</button></div>
-        <p id="transport-plan-status" role="status"></p>
+        <fieldset>
+          <legend>2. 출발지(상차) 현장</legend>
+          <label class="field" for="pickupRegion"><span>지역 (필수)</span><input id="pickupRegion" name="pickupRegion" type="text" maxlength="80" placeholder="예: 충남 예산군 신암면" required autocomplete="off"><small>시·군과 읍·면까지만 적어도 견적을 낼 수 있습니다. 상세 주소는 업체와 따로 나누세요.</small><span class="field-error" id="pickupRegion-error" hidden></span></label>
+          <label class="field" for="pickupAccess"><span>화물차 진입로</span><select id="pickupAccess" name="pickupAccess"><option value="unknown">모름</option><option value="large">대형 화물차 진입 가능</option><option value="small">소형 트럭만 진입 가능</option><option value="hard">차량 진입 어려움(좁은 농로·급경사 등)</option></select><small>화물차가 기계 바로 옆까지 들어올 수 있는지 적습니다.</small><span class="field-error" id="pickupAccess-error" hidden></span></label>
+          <label class="field" for="pickupNote"><span>진입로 메모</span><input id="pickupNote" name="pickupNote" type="text" maxlength="100" placeholder="예: 농로 폭 약 3m, 입구 전선 낮음, 마을 다리 있음" autocomplete="off"><span class="field-error" id="pickupNote-error" hidden></span></label>
+          <label class="field" for="pickupMethod"><span>상차 방법</span><select id="pickupMethod" name="pickupMethod"><option value="discuss">업체와 상의</option><option value="self">기계가 직접 올라감(사다리·경사판)</option><option value="crane">크레인 필요</option><option value="forklift">지게차 필요</option><option value="site">현장에 지게차·로더 있음</option></select><small>기계가 스스로 움직이지 못하면 크레인이나 지게차가 필요할 수 있습니다.</small><span class="field-error" id="pickupMethod-error" hidden></span></label>
+          <label class="field" for="pickupWait"><span>예상 대기 시간</span><select id="pickupWait" name="pickupWait"><option value="unknown">모름</option><option value="none">대기 없음(바로 작업)</option><option value="30">30분 이내</option><option value="60">1시간 이내</option><option value="over">1시간 넘을 수 있음</option></select><small>차가 도착한 뒤 작업을 시작하기까지 기다릴 시간입니다. 길면 대기료가 붙을 수 있습니다.</small><span class="field-error" id="pickupWait-error" hidden></span></label>
+        </fieldset>
+        <fieldset>
+          <legend>3. 도착지(하차) 현장</legend>
+          <label class="field" for="dropRegion"><span>지역 (필수)</span><input id="dropRegion" name="dropRegion" type="text" maxlength="80" placeholder="예: 경기 여주시 대신면" required autocomplete="off"><small>시·군과 읍·면까지만 적어도 견적을 낼 수 있습니다. 상세 주소는 업체와 따로 나누세요.</small><span class="field-error" id="dropRegion-error" hidden></span></label>
+          <label class="field" for="dropAccess"><span>화물차 진입로</span><select id="dropAccess" name="dropAccess"><option value="unknown">모름</option><option value="large">대형 화물차 진입 가능</option><option value="small">소형 트럭만 진입 가능</option><option value="hard">차량 진입 어려움(좁은 농로·급경사 등)</option></select><small>화물차가 기계 바로 옆까지 들어올 수 있는지 적습니다.</small><span class="field-error" id="dropAccess-error" hidden></span></label>
+          <label class="field" for="dropNote"><span>진입로 메모</span><input id="dropNote" name="dropNote" type="text" maxlength="100" placeholder="예: 농로 폭 약 3m, 입구 전선 낮음, 마을 다리 있음" autocomplete="off"><span class="field-error" id="dropNote-error" hidden></span></label>
+          <label class="field" for="dropMethod"><span>하차 방법</span><select id="dropMethod" name="dropMethod"><option value="discuss">업체와 상의</option><option value="self">기계가 직접 올라감(사다리·경사판)</option><option value="crane">크레인 필요</option><option value="forklift">지게차 필요</option><option value="site">현장에 지게차·로더 있음</option></select><small>기계가 스스로 움직이지 못하면 크레인이나 지게차가 필요할 수 있습니다.</small><span class="field-error" id="dropMethod-error" hidden></span></label>
+          <label class="field" for="dropWait"><span>예상 대기 시간</span><select id="dropWait" name="dropWait"><option value="unknown">모름</option><option value="none">대기 없음(바로 작업)</option><option value="30">30분 이내</option><option value="60">1시간 이내</option><option value="over">1시간 넘을 수 있음</option></select><small>차가 도착한 뒤 작업을 시작하기까지 기다릴 시간입니다. 길면 대기료가 붙을 수 있습니다.</small><span class="field-error" id="dropWait-error" hidden></span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. 일정과 기타</legend>
+          <div class="grid-2">
+            <label class="field" for="date"><span>희망 날짜</span><input id="date" name="date" type="date"></label>
+            <label class="field" for="time"><span>시간대</span><select id="time" name="time"><option value="any">시간 무관</option><option value="am">오전</option><option value="pm">오후</option><option value="discuss">시간 협의</option></select><span class="field-error" id="time-error" hidden></span></label>
+            <label class="field" for="flexible"><span>날짜 조정</span><select id="flexible" name="flexible"><option value="">고르지 않음</option><option value="yes">조정 가능</option><option value="no">조정 어려움</option></select><span class="field-error" id="flexible-error" hidden></span></label>
+          </div>
+          <label class="field" for="memo"><span>기타 요청</span><textarea id="memo" name="memo" maxlength="200" placeholder="예: 판매자가 상차를 도와줄 수 있음, 비 오는 날은 진입 불가"></textarea></label>
+        </fieldset>
+
+        <p id="request-error" class="form-error" role="alert" hidden></p>
+        <div class="btn-row"><button type="submit" class="btn btn-primary" disabled>요청서 준비 중…</button></div>
+      </form>
+      <noscript><p class="note">요청서를 만들려면 브라우저의 JavaScript가 필요합니다. 아래 '요청서에 꼭 들어갈 내용'을 보고 직접 적어 보내도 됩니다.</p></noscript>
+
+      <section id="request-result" class="result" hidden aria-labelledby="request-result-title">
+        <h2 id="request-result-title" tabindex="-1">업체에 보낼 견적 요청서</h2>
+        <p>아래 글을 복사해 2~3곳에 똑같이 보내세요. 같은 내용을 보내야 견적을 비교할 수 있습니다.</p>
+        <pre id="request-text" class="out-text"></pre>
+        <div class="btn-row">
+          <button type="button" id="request-copy" class="btn btn-primary">요청서 복사</button>
+          <button type="button" id="request-share" class="btn btn-secondary" hidden>문자·카톡으로 보내기</button>
+          <button type="button" id="request-print" class="btn btn-secondary">인쇄</button>
+        </div>
+        <p id="request-status" class="status" role="status"></p>
+        <h3>보내기 전에 확인하세요</h3>
+        <ul id="request-flags" class="flags"></ul>
+        <h3>다음 할 일</h3>
+        <ol class="steps">
+          <li>같은 요청서를 업체 2~3곳에 보냅니다. 업체를 아직 못 찾았다면 <a href="https://boribay.com/?category=TRANSPORT&amp;utm_source=tripmarking.com&amp;utm_medium=referral&amp;utm_campaign=support">보리장터 운송 업체 목록</a>에서 찾을 수 있습니다.</li>
+          <li>답을 받으면 <a href="/agri/quote-compare/">견적 비교표</a>에 항목별로 옮겨 적습니다.</li>
+          <li>빠진 항목은 비교표가 만들어 주는 질문 문자로 다시 묻습니다.</li>
+        </ol>
       </section>
 
-      <h2>견적을 받기 전에 같은 질문으로 확인하세요</h2>
-      <ol class="use-steps">
-        <li>제조사 제원과 실제 장착 작업기를 기준으로 길이·너비·높이·중량을 다시 확인합니다.</li>
-        <li>출발지·도착지의 진입로, 경사, 회차 공간, 상하차 장비와 담당자를 운송업체와 함께 확인합니다.</li>
-        <li>상차·운송·하차, 대기, 통행료, 파손 시 처리 범위가 견적에 각각 포함되는지 적어 비교합니다.</li>
-        <li>인수 전후의 기계 상태와 작업기·부속품을 사진으로 기록하고, 인계 장소와 시간을 맞춥니다.</li>
-      </ol>
-      <p>기계 상태와 운송비 질문을 더 살펴보려면 <a href="https://boribay.com/guides/farm-machinery-transport-checklist?utm_source=tripmarking.com&amp;utm_medium=owned_referral&amp;utm_campaign=agri_transport_plan">보리장터의 농기계 탁송 점검 안내</a>가 다음 단계입니다. 이 페이지의 확인표는 현장 조건 정리용이고, 링크된 글은 견적·계약 항목을 설명합니다.</p>
-      <p>업체별 금액을 받은 뒤에는 <a href="/agri/quote-compare/">탁송 견적 항목 비교표</a>에서 기본 운임과 부대비용을 같은 순서로 대조하세요. 미확인 비용은 총액으로 단정하지 않습니다.</p>
-      <!-- SOURCE_NOTE_START -->
-      <div class="editor-note source-note">
-        <strong>자료와 검수 범위</strong>
-        <p>농촌진흥청의 <a href="https://rda.go.kr/board/board.do?dataNo=100000809513&amp;mode=view&amp;prgId=day_farmprmninfoEntry">농기계 자가 점검·안전관리 요령</a>을 출발 전 기계 상태 확인의 참고 자료로 확인했습니다(2026-09-24). 이 자료는 개별 운송 차량의 적재·통행 적합성 판정 자료가 아닙니다. <a href="/sources/">출처·편집 방법</a>과 <a href="/contact/">수정 제안</a>도 확인할 수 있습니다.</p>
+      <div class="narrow" style="margin:0">
+        <h2>요청서에 꼭 들어갈 내용</h2>
+        <ul>
+          <li><strong>기계</strong>: 기종, 제조사·모델명, 마력</li>
+          <li><strong>크기·무게</strong>: 길이·너비·높이·중량(작업기를 단 채라면 포함한 값)</li>
+          <li><strong>작업기</strong>: 부착한 채인지, 분리해서 따로 싣는지</li>
+          <li><strong>주행</strong>: 시동이 걸리고 스스로 움직이는지</li>
+          <li><strong>양쪽 현장</strong>: 화물차 진입로, 상하차 방법(크레인·지게차 필요 여부), 예상 대기 시간</li>
+          <li><strong>일정</strong>: 희망 날짜와 시간대, 조정 가능 여부</li>
+        </ul>
+
+        <h2>치수와 중량은 어디서 확인하나요</h2>
+        <p>먼저 기계에 붙은 명판과 취급설명서의 제원표를 봅니다. 판매자에게 명판 사진을 부탁해도 됩니다. 제원표 값은 보통 기계 본체 기준이므로, 로터리나 로더 같은 작업기를 단 채로 보낼 때는 줄자로 전체 길이와 가장 높은 곳까지의 높이를 다시 잽니다. 중량은 제원표의 기계 중량에 작업기 무게를 더해 적습니다.</p>
+        <p>값을 모르면 추측해서 채우지 말고 비워 두세요. 요청서에 '미확인'으로 적혀 업체가 다시 물어볼 수 있습니다. 중량은 실제 값으로 알려야 합니다. <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EB%8F%84%EB%A1%9C%EB%B2%95/%EC%A0%9C77%EC%A1%B0">도로법 제77조 제3항</a>은 화주가 실은 화물의 중량을 사실과 다르게 알리는 것을 금지합니다.</p>
+
+        <h2>현장 조건을 적을 때</h2>
+        <p>화물차가 기계 바로 옆까지 들어올 수 있는지가 가장 중요합니다. 농로 폭, 입구의 낮은 전선이나 나뭇가지, 무게 제한이 있는 다리를 메모에 적어 두면 업체가 맞는 차량을 고를 수 있습니다. 차량이 들어오기 어렵다면 기계를 어디까지 옮겨 둘 수 있는지 정하세요. 농촌진흥청은 논밭 출입로 경사가 15도 이상이면 농기계 전도 위험이 매우 높다고 안내합니다.</p>
+        <p>요청서에는 높이·너비를 기준으로 한 적재 참고 문구가 함께 나옵니다. 자세한 기준은 <a href="/agri/guides/loading-limits/">농기계를 화물차에 실을 때의 적재 기준</a>을 보세요.</p>
+
+        <!-- SOURCE_NOTE_START -->
+      <div class="note source-note">
+        <strong>근거 자료와 확인일</strong>
+        <p>적재 높이 4m: <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EB%8F%84%EB%A1%9C%EA%B5%90%ED%86%B5%EB%B2%95%EC%8B%9C%ED%96%89%EB%A0%B9/%EC%A0%9C22%EC%A1%B0">도로교통법 시행령 제22조</a> · 기준 초과 허가: <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EB%8F%84%EB%A1%9C%EA%B5%90%ED%86%B5%EB%B2%95/%EC%A0%9C39%EC%A1%B0">도로교통법 제39조</a> · 폭 2.5m 운행 제한: <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EB%8F%84%EB%A1%9C%EB%B2%95%EC%8B%9C%ED%96%89%EB%A0%B9/%EC%A0%9C79%EC%A1%B0">도로법 시행령 제79조</a> · 중량 고지: <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EB%8F%84%EB%A1%9C%EB%B2%95/%EC%A0%9C77%EC%A1%B0">도로법 제77조</a> (국가법령정보센터) · 출입로 경사: <a href="https://www.rda.go.kr/webzine/2021/02/sub2-3.html">농촌진흥청 국립농업과학원 농기계 사고 예방 자료</a>. 확인일 2026-10-26. 이 도구는 운송 가능 여부나 운임을 판정하지 않습니다. <a href="/sources/">출처 전체 보기</a> · <a href="/contact/">수정 제안</a></p>
       </div>
       <!-- SOURCE_NOTE_END -->
-    </main>
-  </body>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav class="footer-nav" aria-label="보조 메뉴"><a href="/about/">소개·운영자</a><a href="/sources/">출처</a><a href="/editorial/">편집 기준</a><a href="/privacy/">개인정보</a><a href="/terms/">이용약관</a><a href="/contact/">문의·정정</a></nav>
+      <p>© 농기계 탁송 견적 비교 · 운영 제이 미디어(J MEDIA) · 보리장터와 같은 운영사</p>
+      <p>도구에 입력한 내용은 이 브라우저 안에서만 처리하며 서버로 보내지 않습니다.</p>
+    </div>
+  </footer>
+</body>
 </html>

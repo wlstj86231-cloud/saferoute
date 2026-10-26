@@ -4,70 +4,105 @@ const baseURL = process.env.SITE_URL || "http://127.0.0.1:4198";
 
 test.use({ serviceWorkers: "block" });
 
-test("agricultural home opens the transport tool and retains the travel map", async ({ page }) => {
+async function noHorizontalScroll(page) {
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth));
+}
+
+test("home leads to the quote request tool", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${baseURL}/`, { waitUntil: "load" });
   await expect(page).toHaveTitle(/농기계 이동 준비/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("농기계 이동 조건");
-  await page.getByRole("link", { name: /현장 확인표 만들기/ }).click();
+  await expect(page.locator("body")).not.toContainText("여행 안전 지도");
+  await page.getByRole("link", { name: "견적 요청서 만들기" }).first().click();
   await expect(page).toHaveURL(/\/agri\/machinery-transport-plan\/$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("농기계");
-  await page.goto(`${baseURL}/travel/`, { waitUntil: "networkidle" });
-  await expect(page.locator("[data-spot-marker]").first()).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("견적 요청서");
+  await noHorizontalScroll(page);
 });
 
-test("desktop map keeps its layout and removes misleading community signals", async ({ page }) => {
+test("quote request validates input and builds a standard request text", async ({ page }) => {
   const consoleErrors = [];
-  page.on("console", (message) => {
-    if (message.type() === "error") consoleErrors.push(message.text());
-  });
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto(`${baseURL}/travel/`, { waitUntil: "networkidle" });
+  page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/agri/machinery-transport-plan/`, { waitUntil: "load" });
+  const submit = page.getByRole("button", { name: "견적 요청서 만들기" });
+  await expect(submit).toBeEnabled();
+  await submit.click();
+  await expect(page.locator("#request-error")).toContainText("3군데");
 
-  await expect(page.locator(".topbar")).toBeVisible();
-  await expect(page.locator(".bottom-nav")).toBeVisible();
-  await expect(page.locator("[data-spot-marker]").first()).toBeVisible();
-  await expect(page.locator("body")).not.toContainText("평균 위험");
-  await expect(page.locator("body")).not.toContainText("실시간 제보");
+  await page.locator("#machine").selectOption("트랙터");
+  await page.locator("#pickupRegion").fill("충남 예산군 신암면");
+  await page.locator("#dropRegion").fill("경기 여주시");
+  await page.locator("#length").fill("3450");
+  await submit.click();
+  await expect(page.locator("#length-error")).toContainText("mm로 바꾸세요");
 
-  await page.locator('[data-panel="cities"]').click();
-  await expect(page.locator(".compare-card")).toContainText("도시별 안내 범위");
-  await expect(page.locator(".compare-card")).not.toContainText(/\d+\.\s/);
+  await page.locator("#dimUnit").selectOption("mm");
+  await page.locator("#height").fill("2600");
+  await page.locator("#weight").fill("2.1톤");
+  await page.locator("#hp").fill("45");
+  await page.locator("#attachment").selectOption("attached");
+  await page.locator("#pickupMethod").selectOption("crane");
+  await submit.click();
 
-  await page.screenshot({ path: "output/playwright/trip-local-desktop.png", fullPage: true });
+  const text = page.locator("#request-text");
+  await expect(text).toContainText("[농기계 탁송 견적 요청]");
+  await expect(text).toContainText("길이 3.45m · 너비 미확인 · 높이 2.60m");
+  await expect(text).toContainText("중량: 2,100kg");
+  await expect(text).toContainText("상차: 크레인 필요");
+  await expect(text).toContainText("6) 운송 중 파손 시 보상 기준");
+  await expect(page.locator("#request-flags")).toContainText("1.40m 이하");
+  await expect(page.locator("#request-flags")).toContainText("너비");
+  await noHorizontalScroll(page);
   expect(consoleErrors).toEqual([]);
 });
 
-test("mobile map remains usable without horizontal overflow", async ({ page }) => {
+test("quote comparison normalises items and flags missing ones", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseURL}/travel/`, { waitUntil: "networkidle" });
-  await expect(page.locator("[data-spot-marker]").first()).toBeVisible();
+  await page.goto(`${baseURL}/agri/`, { waitUntil: "load" });
+  await page.getByRole("link", { name: "견적 비교표" }).first().click();
+  await expect(page).toHaveURL(/\/agri\/quote-compare\/$/);
+  const submit = page.getByRole("button", { name: "견적 비교하기" });
+  await expect(submit).toBeEnabled();
 
-  const overflow = await page.evaluate(() => ({
-    viewport: window.innerWidth,
-    document: document.documentElement.scrollWidth,
-    body: document.body.scrollWidth
-  }));
-  expect(overflow.document).toBeLessThanOrEqual(overflow.viewport);
-  expect(overflow.body).toBeLessThanOrEqual(overflow.viewport);
+  await page.locator("#qa-label").fill("가 업체");
+  await page.locator("#qa-base").fill("40만");
+  await page.locator("#qa-load").fill("0");
+  await page.locator("#qb-label").fill("나 업체");
+  for (const [name, value] of [["base", "350,000"], ["load", "50000"], ["unload", "50000"], ["wait", "0"], ["toll", "0"], ["attach", "0"], ["tax", "0"]]) {
+    await page.locator(`#qb-${name}`).fill(value);
+  }
+  await page.locator("#qb-insurance").selectOption("written");
+  await page.locator("#qb-extra").fill("대기 30분 초과 시 추가");
+  await page.locator("#qb-validUntil").fill("2099-12-31");
+  await submit.click();
 
-  await page.locator("[data-spot-marker]").last().click();
-  await expect(page.locator(".spot-brief-card")).toBeVisible();
-  await page.screenshot({ path: "output/playwright/trip-local-mobile.png", fullPage: true });
+  const result = page.locator("#quote-result");
+  await expect(result).toContainText("가 업체: 하차비·대기료·통행료·기타 실비·작업기 분리·별도 운송·부가세 미확인");
+  await expect(result).toContainText("확인된 금액만 더하면 400,000원");
+  await expect(result).toContainText("모든 비용 항목이 확인된 견적: 나 업체");
+  await expect(result.locator("table.cmp td.missing").first()).toBeVisible();
+  await expect(result.locator(".ask-block")).toHaveCount(1);
+  await expect(result.locator(".ask-block pre")).toContainText("- 하차비");
+  await noHorizontalScroll(page);
+
+  await page.locator("#qa-base").fill("삼십만");
+  await submit.click();
+  await expect(page.locator("#qa-base-error")).toContainText("숫자로 적어");
 });
 
-test("sources, true 404, disabled API and legacy redirects behave correctly", async ({ page, request }) => {
-  await page.goto(`${baseURL}/sources/`);
-  await expect(page).toHaveTitle(/공식 출처와 검수 기준/);
-  await expect(page.locator("#barcelona")).toBeVisible();
-  await expect(page.locator("#mexicocity")).toBeVisible();
+test("retired travel pages answer 410 and moved pages redirect", async ({ request }) => {
+  for (const path of ["/travel/", "/cities/paris/", "/guides/pickpocket/", "/spots/rome/termini-station/", "/field-notes/", "/paris-pickpocket-guide/?from=test"]) {
+    const response = await request.get(`${baseURL}${path}`, { maxRedirects: 0 });
+    expect(response.status(), path).toBe(410);
+    expect(response.headers()["x-robots-tag"]).toContain("noindex");
+    expect(await response.text()).toContain("종료되었습니다");
+  }
+  const moved = await request.get(`${baseURL}/travel/about/?from=test`, { maxRedirects: 0 });
+  expect(moved.status()).toBe(301);
+  expect(moved.headers().location).toBe("https://tripmarking.com/about/?from=test");
 
-  const article = await request.get(`${baseURL}/cities/paris/`);
-  expect(article.status()).toBe(200);
-  expect(await article.text()).toContain("SOURCE_NOTE_START");
-
-  const missing = await request.get(`${baseURL}/definitely-not-a-route-20260814`);
+  const missing = await request.get(`${baseURL}/definitely-not-a-route-20261026`);
   expect(missing.status()).toBe(404);
   expect(missing.headers()["x-robots-tag"]).toContain("noindex");
   expect(await missing.text()).toContain("페이지를 찾을 수 없습니다");
@@ -75,45 +110,18 @@ test("sources, true 404, disabled API and legacy redirects behave correctly", as
   const api = await request.get(`${baseURL}/api/reports`);
   expect(api.status()).toBe(404);
   expect(await api.json()).toEqual({ ok: false, error: "not found" });
-
-  const legacy = await request.get(`${baseURL}/paris-pickpocket-guide/?from=test`, { maxRedirects: 0 });
-  expect(legacy.status()).toBe(301);
-  expect(legacy.headers().location).toBe("https://tripmarking.com/cities/paris/?from=test");
 });
 
-test("agricultural transport memo works on mobile and is discoverable from sources", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+test("guides cite official sources and link back to the tools", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  for (const path of ["/agri/guides/loading-limits/", "/agri/guides/transport-safety/", "/agri/guides/reading-quotes/"]) {
+    await page.goto(`${baseURL}${path}`, { waitUntil: "load" });
+    await expect(page.locator(".source-note")).toContainText("2026-10-26");
+    await expect(page.locator('main a[href="/agri/quote-compare/"]').first()).toBeVisible();
+  }
   await page.goto(`${baseURL}/sources/`);
-  await page.getByRole("link", { name: "농기계 탁송 현장 확인표" }).click();
-  await expect(page).toHaveURL(/\/agri\/machinery-transport-plan\/$/);
-  await page.waitForLoadState("load");
-  await page.getByLabel("기계 종류").selectOption({ label: "트랙터" });
-  await page.getByLabel("출발 지역 또는 현장 특징").fill("충남 예산, 진입로 협소");
-  await page.getByLabel("도착 지역 또는 현장 특징").fill("경기 여주, 하차 공간 확인");
-  await page.getByLabel("작업기 상태").selectOption("attached");
-  await page.getByRole("button", { name: "확인표 만들기" }).click();
-  const memo = page.locator("#transport-plan-text");
-  await expect(memo).toContainText("충남 예산, 진입로 협소");
-  await expect(memo).toContainText("작업기를 장착한 전체 크기와 중량 재확인");
-  await expect(memo).toContainText("미확인 — 제원·실측 확인 필요");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-});
-
-test("transport quote comparison distinguishes known subtotal from missing costs", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseURL}/agri/`, { waitUntil: "load" });
-  await page.getByRole("link", { name: "농기계 탁송 견적 항목 비교표" }).click();
-  await expect(page).toHaveURL(/\/agri\/quote-compare\/$/);
-  await page.waitForLoadState("load");
-  const quoteA = page.locator("[data-quote]").first();
-  await quoteA.locator('[name="base"]').fill("100000");
-  await quoteA.locator('[name="load"]').fill("20000");
-  await page.getByRole("button", { name: "입력 금액 비교" }).click();
-  await expect(page.locator("#quote-result")).toContainText("입력 금액 합계: 120,000원");
-  await expect(page.locator("#quote-result")).toContainText("미확인 3항목");
-  for (const name of ["unload", "wait", "tax"]) await quoteA.locator(`[name="${name}"]`).fill("0");
-  await page.getByRole("button", { name: "입력 금액 비교" }).click();
-  await expect(page.locator("#quote-result")).toContainText("항목별 금액 합계: 120,000원");
-  await expect(page.locator("#quote-result")).not.toContainText("확정 총액으로 비교하지 마세요");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await expect(page).toHaveTitle(/공식 출처와 검수 기준/);
+  await expect(page.locator("#law")).toBeVisible();
+  await expect(page.locator("#ts")).toBeVisible();
+  await expect(page.locator("#rda")).toBeVisible();
 });
