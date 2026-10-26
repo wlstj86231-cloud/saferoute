@@ -20,3 +20,8 @@ No page currently loads the AdSense script; ownership is shown by the `google-ad
 - the 404 page and the 410 retirement notice
 
 `npm run content:inventory` fails on ad scripts on blocked pages and reports pages without ads as warnings.
+
+## Cloudflare zone notes
+
+- Email Address Obfuscation is on for the zone and rewrites visible addresses into `/cdn-cgi/l/email-protection` links that need JavaScript. The published contact email is wrapped in `<!--email_off-->...<!--/email_off-->` so it stays readable without scripts; keep that wrapper on any new visible email.
+- The zone also prepends Cloudflare's managed robots.txt block (AI crawlers disallowed, `Content-Signal` line). It does not block Googlebot, Mediapartners-Google or AdsBot-Google; the `Content-Signal` line makes Lighthouse report robots.txt as invalid, which Google ignores.
