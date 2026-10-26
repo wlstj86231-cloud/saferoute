@@ -1,8 +1,8 @@
 const dictionary = {
   ko: {
-    brand: "트립마킹",
+    brand: "농기계 탁송 견적 비교",
     tagline: "여행자 주의 지도",
-    title: "트립마킹 - 해외여행 도난·스캠 주의 지도",
+    title: "해외여행 도난·스캠 주의 지도 - 농기계 탁송 견적 비교",
     description: "공식 여행안전 안내를 바탕으로 한국인 해외여행자의 소지품 관리와 피해 직후 행동을 돕는 여행 지도.",
     mapPanelTitle: "지금 조심할 여행 스팟",
     mapPanelDesc: "소매치기, 휴대폰 날치기, 가방 절도, 관광지 스캠을 장소별 행동요령으로 봐요.",
@@ -184,9 +184,9 @@ const dictionary = {
     loopPanic: "대처 순서 보기"
   },
   en: {
-    brand: "TripMarking",
+    brand: "농기계 탁송 견적 비교",
     tagline: "Traveler risk map",
-    title: "TripMarking - Travel Theft and Scam Risk Map",
+    title: "Travel Theft and Scam Risk Map - 농기계 탁송 견적 비교",
     description: "A travel map that translates official safety guidance into practical belongings checks and post-incident steps for Korean travelers.",
     mapPanelTitle: "Travel Spots To Watch Now",
     mapPanelDesc: "Check pickpocketing, phone snatching, bag theft, and tourist scams with simple on-site actions.",
@@ -2999,7 +2999,7 @@ function renderHomeContentGuide() {
     ko: {
       eyebrow: "지도와 함께 읽는 여행 안전 가이드",
       title: "도시를 위험하다고 단정하지 않고, 장면별 판단 기준을 정리합니다.",
-      body: "트립마킹은 소매치기·여권 분실·야간 이동처럼 여행자가 바로 검색하는 질문을 지도와 문서로 연결합니다.",
+      body: "농기계 탁송 견적 비교는 소매치기·여권 분실·야간 이동처럼 여행자가 바로 검색하는 질문을 지도와 문서로 연결합니다.",
       links: [
         { href: "/guide/", label: "예방 가이드", body: "여행 전 기본 원칙" },
         { href: "/field-notes/crowd-density-check/", label: "혼잡도 판단", body: "사람 많은 곳 읽기" },
@@ -3011,7 +3011,7 @@ function renderHomeContentGuide() {
     en: {
       eyebrow: "Travel safety guides linked to the map",
       title: "The map avoids city-wide fear labels and explains scene-by-scene decisions.",
-      body: "TripMarking connects common traveler searches such as pickpocketing, passport loss, and night transit to map context and guide pages.",
+      body: "농기계 탁송 견적 비교 connects common traveler searches such as pickpocketing, passport loss, and night transit to map context and guide pages.",
       links: [
         { href: "/guide/", label: "Prevention guide", body: "Before-trip basics" },
         { href: "/field-notes/crowd-density-check/", label: "Crowd check", body: "Read busy places" },

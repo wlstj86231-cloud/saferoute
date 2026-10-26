@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>트립마킹</title>
+    <title>농기계 탁송 견적 비교</title>
     <link>https://tripmarking.com/</link>
-    <description>여행 안전 자료와 현장 이동 조건을 확인하는 트립마킹의 가이드·도구.</description>
+    <description>여행 안전 자료와 현장 이동 조건을 확인하는 농기계 탁송 견적 비교의 가이드·도구.</description>
     <language>ko-KR</language>
     <lastBuildDate>Sun, 27 Sep 2026 12:00:00 +0900</lastBuildDate>
     <item>
-      <title>농기계 이동 준비 도구</title>
+      <title>이동 준비 도구 모음</title>
       <link>https://tripmarking.com/agri/</link>
       <guid>https://tripmarking.com/agri/</guid>
       <pubDate>Thu, 24 Sep 2026 21:00:00 +0900</pubDate>
       <description>중고 농기계 이동 전에 현장 조건을 정리하고 업체별 견적 항목을 같은 기준으로 비교하는 무료 도구 모음.</description>
     </item>
     <item>
-      <title>중고 농기계 탁송 현장 확인표 만들기</title>
+      <title>탁송 전 현장 확인표 만들기</title>
       <link>https://tripmarking.com/agri/machinery-transport-plan/</link>
       <guid>https://tripmarking.com/agri/machinery-transport-plan/</guid>
       <pubDate>Thu, 24 Sep 2026 21:00:00 +0900</pubDate>
       <description>농기계 출발·도착 현장, 크기·중량, 작업기와 상하차 조건을 한 장으로 정리하는 무료 탁송 확인표. 운송업체와 견적을 비교하기 전에 확인할 항목을 만듭니다.</description>
     </item>
     <item>
-      <title>농기계 탁송 견적 항목 비교표</title>
+      <title>업체별 견적 항목 비교표</title>
       <link>https://tripmarking.com/agri/quote-compare/</link>
       <guid>https://tripmarking.com/agri/quote-compare/</guid>
       <pubDate>Thu, 24 Sep 2026 21:00:00 +0900</pubDate>
@@ -105,39 +105,39 @@
       <description>도쿄 신주쿠, 시부야, 우에노 등 큰 역과 야간 번화가에서 소지품, 결제, 숙소 귀가를 확인하는 도시별 여행 안전 가이드.</description>
     </item>
     <item>
-      <title>트립마킹 현장 판단 기준</title>
+      <title>여행 현장 판단 기준</title>
       <link>https://tripmarking.com/field-notes/</link>
       <guid>https://tripmarking.com/field-notes/</guid>
       <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
-      <description>해외여행 중 도난·스캠을 줄이기 위해 트립마킹이 장소와 행동 신호를 해석하는 기준.</description>
+      <description>해외여행 중 도난·스캠을 줄이기 위해 농기계 탁송 견적 비교가 장소와 행동 신호를 해석하는 기준.</description>
     </item>
     <item>
       <title>가방 위치 판단 field note</title>
       <link>https://tripmarking.com/field-notes/bag-position-decision/</link>
       <guid>https://tripmarking.com/field-notes/bag-position-decision/</guid>
       <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
-      <description>해외여행 중 백팩, 크로스백, 쇼핑 봉투, 캐리어 위치를 장소와 행동에 맞게 정하는 트립마킹 현장 판단 기준.</description>
+      <description>해외여행 중 백팩, 크로스백, 쇼핑 봉투, 캐리어 위치를 장소와 행동에 맞게 정하는 여행 현장 판단 기준.</description>
     </item>
     <item>
       <title>혼잡도 확인 field note</title>
       <link>https://tripmarking.com/field-notes/crowd-density-check/</link>
       <guid>https://tripmarking.com/field-notes/crowd-density-check/</guid>
       <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
-      <description>해외여행 중 역, 광장, 대기줄, 야시장에서 혼잡도를 불안이 아니라 행동 신호로 바꾸어 보는 트립마킹 현장 판단 기준.</description>
+      <description>해외여행 중 역, 광장, 대기줄, 야시장에서 혼잡도를 불안이 아니라 행동 신호로 바꾸어 보는 여행 현장 판단 기준.</description>
     </item>
     <item>
       <title>야간 이동 선택 field note</title>
       <link>https://tripmarking.com/field-notes/night-transport-choice/</link>
       <guid>https://tripmarking.com/field-notes/night-transport-choice/</guid>
       <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
-      <description>해외여행 야간 귀가, 호출앱, 택시, 지하철 막차, 숙소 주소를 확인하는 트립마킹 현장 판단 기준.</description>
+      <description>해외여행 야간 귀가, 호출앱, 택시, 지하철 막차, 숙소 주소를 확인하는 여행 현장 판단 기준.</description>
     </item>
     <item>
       <title>자리를 옮길 때 field note</title>
       <link>https://tripmarking.com/field-notes/when-to-leave-area/</link>
       <guid>https://tripmarking.com/field-notes/when-to-leave-area/</guid>
       <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
-      <description>해외여행 중 접근 제안, 가격이 모호한 대화, 길찾기 혼란, 과한 혼잡에서 자리를 옮기는 기준을 정리한 트립마킹 field note.</description>
+      <description>해외여행 중 접근 제안, 가격이 모호한 대화, 길찾기 혼란, 과한 혼잡에서 자리를 옮기는 기준을 정리한 여행 field note.</description>
     </item>
     <item>
       <title>해외여행 도난·스캠 예방 가이드</title>
@@ -151,7 +151,7 @@
       <link>https://tripmarking.com/guides/</link>
       <guid>https://tripmarking.com/guides/</guid>
       <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
-      <description>공항 도착, 지하철 환승, 붐비는 광장, ATM 출금, 택시·호출앱, 해변·테라스처럼 여행자가 자주 검색하는 상황을 정리한 트립마킹 가이드 허브.</description>
+      <description>공항 도착, 지하철 환승, 붐비는 광장, ATM 출금, 택시·호출앱, 해변·테라스처럼 여행자가 자주 검색하는 상황을 정리한 여행 가이드 허브.</description>
     </item>
     <item>
       <title>공항 도착 직후 소지품 점검 가이드</title>

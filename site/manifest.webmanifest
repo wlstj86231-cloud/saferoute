@@ -1,6 +1,6 @@
 {
-  "name": "트립마킹",
-  "short_name": "트립마킹",
+  "name": "농기계 탁송 견적 비교",
+  "short_name": "농기계탁송견적비교",
   "description": "농기계 이동 현장 확인표와 탁송 견적 항목 비교 도구",
   "start_url": "/",
   "display": "standalone",

@@ -1,10 +1,10 @@
-const CACHE_NAME = "tripmarking-v37-agriculture-home";
+const CACHE_NAME = "tripmarking-v38-site-rename";
 const LOCAL_ASSETS = [
   "/",
   "/travel/",
   "/assets/agri-home.css?v=20260927",
   "/assets/styles.css?v=20260814-trust1",
-  "/assets/app.js?v=20260927-travel1",
+  "/assets/app.js?v=20261026-rename1",
   "/assets/vendor/leaflet/leaflet.css",
   "/assets/vendor/leaflet/leaflet.js",
   "/assets/vendor/leaflet/images/layers.png",

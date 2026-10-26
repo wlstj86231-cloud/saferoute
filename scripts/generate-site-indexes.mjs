@@ -119,13 +119,13 @@ const feedPages = pages.filter(({ route }) => isFeedRoute(route));
 const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>트립마킹</title>
+    <title>농기계 탁송 견적 비교</title>
     <link>${siteUrl}/</link>
-    <description>여행 안전 자료와 현장 이동 조건을 확인하는 트립마킹의 가이드·도구.</description>
+    <description>여행 안전 자료와 현장 이동 조건을 확인하는 농기계 탁송 견적 비교의 가이드·도구.</description>
     <language>ko-KR</language>
     <lastBuildDate>${buildDate}</lastBuildDate>
 ${feedPages.map(({ route, title, description }) => `    <item>
-      <title>${escapeXml(title.replace(/\s+-\s+트립마킹$/, ""))}</title>
+      <title>${escapeXml(title.replace(/\s+-\s+농기계 탁송 견적 비교$/, ""))}</title>
       <link>${siteUrl}${escapeXml(route)}</link>
       <guid>${siteUrl}${escapeXml(route)}</guid>
       <pubDate>${routePubDate.get(route) ?? originalPubDate}</pubDate>

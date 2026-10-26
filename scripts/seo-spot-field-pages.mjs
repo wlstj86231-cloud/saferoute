@@ -11,7 +11,7 @@ const buildDate = "Fri, 03 Jul 2026 15:40:00 +0900";
 const assetVersion = "20260703-spotfield1";
 
 const relatedTitles = new Map([
-  ["/", "트립마킹 지도 열기"],
+  ["/", "농기계 탁송 견적 비교 홈"],
   ["/guide/", "해외여행 도난·스캠 예방 가이드"],
   ["/guides/", "여행 상황별 판단 가이드"],
   ["/guides/pickpocket/", "해외여행 소매치기 예방 핵심 가이드"],
@@ -30,7 +30,7 @@ const relatedTitles = new Map([
   ["/cities/amsterdam/", "암스테르담 여행 안전 맥락 가이드"],
   ["/cities/istanbul/", "이스탄불 여행 안전 맥락 가이드"],
   ["/cities/bangkok/", "방콕 여행 안전 맥락 가이드"],
-  ["/field-notes/", "트립마킹 현장 판단 기준"],
+  ["/field-notes/", "여행 현장 판단 기준"],
   ["/field-notes/crowd-density-check/", "혼잡도 확인 field note"],
   ["/field-notes/bag-position-decision/", "가방 위치 판단 field note"],
   ["/field-notes/night-transport-choice/", "야간 이동 선택 field note"],
@@ -53,7 +53,7 @@ const relatedTitles = new Map([
 const spotPages = [
   {
     slug: "spots/paris/chatelet-transfer",
-    title: "파리 샤틀레 환승 주의 맥락 - 트립마킹",
+    title: "파리 샤틀레 환승 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "파리 샤틀레 환승에서 노선 확인과 가방 위치를 분리하는 법",
     description: "파리 샤틀레·레알 환승 구간에서 출구, 노선, 휴대폰, 백팩이 동시에 흩어지지 않게 확인하는 장소별 여행 안전 가이드.",
     scope: "파리 샤틀레 환승",
@@ -72,14 +72,14 @@ const spotPages = [
       "혼잡하면 백팩은 앞으로 돌리고 휴대폰은 짧게 확인한다.",
       "길을 잃었다고 느끼면 통로 한가운데가 아니라 가장자리에서 멈춘다."
     ],
-    routeReading: "트립마킹 지도에서는 파리 도시 맥락과 지하철 환승 가이드를 함께 보면 좋습니다. 이 장소 문서는 지도 마커의 한 줄 주의를 검색 가능한 문서로 풀어쓴 보조 설명입니다.",
+    routeReading: "여행 안전 지도에서는 파리 도시 맥락과 지하철 환승 가이드를 함께 보면 좋습니다. 이 장소 문서는 지도 마커의 한 줄 주의를 검색 가능한 문서로 풀어쓴 보조 설명입니다.",
     response: "물건이 보이지 않으면 무리해서 사람 흐름을 거슬러 뛰지 말고, 바로 다음 안전한 벽 쪽으로 이동해 카드와 계정을 먼저 확인합니다. 역명, 노선, 시간, 마지막으로 물건을 본 위치를 짧게 적어 두면 문의와 신고가 쉬워집니다.",
     editorialNote: "샤틀레 환승 문서는 특정 사람을 의심하라는 문서가 아닙니다. 복잡한 환승 구조 속에서 여행자가 조정할 수 있는 동작만 정리합니다.",
     related: ["/cities/paris/", "/guides/metro-transfer/", "/field-notes/crowd-density-check/", "/field-notes/bag-position-decision/", "/guides/pickpocket/", "/field-notes/"]
   },
   {
     slug: "spots/paris/montmartre-crowd",
-    title: "파리 몽마르트르 혼잡 구간 주의 맥락 - 트립마킹",
+    title: "파리 몽마르트르 혼잡 구간 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "몽마르트르 언덕과 사진 구간에서 접근 제안과 가방 위치를 나눠 보는 법",
     description: "파리 몽마르트르 언덕, 사크레쾨르 주변, 사진 명소에서 대화가 길어지는 접근과 소지품 노출을 줄이는 장소별 가이드.",
     scope: "파리 몽마르트르",
@@ -105,7 +105,7 @@ const spotPages = [
   },
   {
     slug: "spots/rome/termini-station",
-    title: "로마 테르미니역 주의 맥락 - 트립마킹",
+    title: "로마 테르미니역 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "로마 테르미니역에서 열차, 지하철, 숙소 이동을 분리해서 보는 법",
     description: "로마 테르미니역에서 열차 도착, 지하철 환승, 숙소 이동, 택시 선택 전 소지품과 목적지를 확인하는 장소별 여행 안전 가이드.",
     scope: "로마 테르미니역",
@@ -131,7 +131,7 @@ const spotPages = [
   },
   {
     slug: "spots/rome/trevi-fountain-crowd",
-    title: "로마 트레비 분수 혼잡 구간 주의 맥락 - 트립마킹",
+    title: "로마 트레비 분수 혼잡 구간 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "트레비 분수 주변에서 사진, 동전, 길찾기를 한 번에 처리하지 않는 법",
     description: "로마 트레비 분수 주변 혼잡 구간에서 사진 촬영, 동전, 휴대폰, 가방 위치를 분리해 확인하는 장소별 가이드.",
     scope: "로마 트레비 분수",
@@ -157,7 +157,7 @@ const spotPages = [
   },
   {
     slug: "spots/barcelona/catalunya-transfer",
-    title: "바르셀로나 카탈루냐 광장 환승 주의 맥락 - 트립마킹",
+    title: "바르셀로나 카탈루냐 광장 환승 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "카탈루냐 광장에서 만남, 환승, 길찾기를 분리해서 보는 법",
     description: "바르셀로나 카탈루냐 광장과 지하철 환승 주변에서 휴대폰, 가방, 캐리어 위치를 확인하는 장소별 여행 안전 가이드.",
     scope: "바르셀로나 카탈루냐 광장",
@@ -183,7 +183,7 @@ const spotPages = [
   },
   {
     slug: "spots/barcelona/sagrada-familia-queue",
-    title: "사그라다 파밀리아 대기줄 주의 맥락 - 트립마킹",
+    title: "사그라다 파밀리아 대기줄 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "사그라다 파밀리아 대기줄에서 입장권, 사진, 가방을 나눠 보는 법",
     description: "사그라다 파밀리아 주변 대기줄과 사진 구간에서 입장권, 휴대폰, 가방 위치를 분리해 확인하는 장소별 여행 안전 가이드.",
     scope: "사그라다 파밀리아 대기줄",
@@ -209,7 +209,7 @@ const spotPages = [
   },
   {
     slug: "spots/london/oxford-street-phone-awareness",
-    title: "런던 옥스퍼드 스트리트 휴대폰 주의 맥락 - 트립마킹",
+    title: "런던 옥스퍼드 스트리트 휴대폰 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "옥스퍼드 스트리트에서 쇼핑, 길찾기, 휴대폰 확인을 분리하는 법",
     description: "런던 옥스퍼드 스트리트와 주변 횡단보도, 매장 입구, 카페 좌석에서 휴대폰과 쇼핑 봉투를 관리하는 장소별 가이드.",
     scope: "런던 옥스퍼드 스트리트",
@@ -235,7 +235,7 @@ const spotPages = [
   },
   {
     slug: "spots/amsterdam/central-station-bike-area",
-    title: "암스테르담 중앙역 자전거 동선 주의 맥락 - 트립마킹",
+    title: "암스테르담 중앙역 자전거 동선 주의 맥락 - 농기계 탁송 견적 비교",
     h1: "암스테르담 중앙역 앞에서 자전거 흐름과 소지품을 동시에 보지 않는 법",
     description: "암스테르담 중앙역 주변 자전거 동선, 트램, 운하 방향 이동 중 휴대폰과 가방 위치를 확인하는 장소별 여행 안전 가이드.",
     scope: "암스테르담 중앙역",
@@ -261,7 +261,7 @@ const spotPages = [
   },
   {
     slug: "spots/bangkok/night-market-bag-check",
-    title: "방콕 야시장 가방 점검 맥락 - 트립마킹",
+    title: "방콕 야시장 가방 점검 맥락 - 농기계 탁송 견적 비교",
     h1: "방콕 야시장에서 결제, 봉투, 휴대폰을 한꺼번에 들지 않는 법",
     description: "방콕 야시장과 음식 노점 주변에서 결제 후 지갑, 휴대폰, 쇼핑 봉투, 가방 위치를 정리하는 장소별 여행 안전 가이드.",
     scope: "방콕 야시장",
@@ -287,7 +287,7 @@ const spotPages = [
   },
   {
     slug: "spots/istanbul/grand-bazaar-navigation",
-    title: "이스탄불 그랜드 바자르 이동 판단 맥락 - 트립마킹",
+    title: "이스탄불 그랜드 바자르 이동 판단 맥락 - 농기계 탁송 견적 비교",
     h1: "그랜드 바자르에서 길찾기, 가격 확인, 가방 위치를 분리하는 법",
     description: "이스탄불 그랜드 바자르 주변에서 길찾기, 가격 확인, 결제, 가방 위치를 차분히 분리하는 장소별 여행 안전 가이드.",
     scope: "이스탄불 그랜드 바자르",
@@ -316,12 +316,12 @@ const spotPages = [
 const fieldPages = [
   {
     slug: "field-notes/crowd-density-check",
-    title: "혼잡도 확인 field note - 트립마킹",
+    title: "혼잡도 확인 field note - 농기계 탁송 견적 비교",
     h1: "사람이 많은 곳에서 위험도를 단정하지 않고 움직임을 읽는 법",
-    description: "해외여행 중 역, 광장, 대기줄, 야시장에서 혼잡도를 불안이 아니라 행동 신호로 바꾸어 보는 트립마킹 현장 판단 기준.",
+    description: "해외여행 중 역, 광장, 대기줄, 야시장에서 혼잡도를 불안이 아니라 행동 신호로 바꾸어 보는 여행 현장 판단 기준.",
     scope: "혼잡도 확인",
     mapHref: "/?utm_source=field-note&utm_medium=internal&utm_campaign=crowd-density",
-    intro: "혼잡한 곳은 무조건 위험한 곳이 아닙니다. 트립마킹은 사람 수 자체보다 사용자의 손, 시선, 가방 위치, 이동 방향이 동시에 흔들리는지를 봅니다.",
+    intro: "혼잡한 곳은 무조건 위험한 곳이 아닙니다. 농기계 탁송 견적 비교는 사람 수 자체보다 사용자의 손, 시선, 가방 위치, 이동 방향이 동시에 흔들리는지를 봅니다.",
     context: "같은 광장이라도 사진을 찍는 중인지, 환승을 찾는 중인지, 결제 직후인지에 따라 확인 기준이 달라집니다. 혼잡도는 장소 평가가 아니라 다음 행동을 고르는 신호입니다.",
     signals: [
       "휴대폰 화면을 보는 동안 몸 주변 흐름이 계속 바뀌는 순간",
@@ -342,12 +342,12 @@ const fieldPages = [
   },
   {
     slug: "field-notes/bag-position-decision",
-    title: "가방 위치 판단 field note - 트립마킹",
+    title: "가방 위치 판단 field note - 농기계 탁송 견적 비교",
     h1: "가방을 앞으로 돌릴지, 몸 안쪽에 둘지 결정하는 기준",
-    description: "해외여행 중 백팩, 크로스백, 쇼핑 봉투, 캐리어 위치를 장소와 행동에 맞게 정하는 트립마킹 현장 판단 기준.",
+    description: "해외여행 중 백팩, 크로스백, 쇼핑 봉투, 캐리어 위치를 장소와 행동에 맞게 정하는 여행 현장 판단 기준.",
     scope: "가방 위치 판단",
     mapHref: "/?utm_source=field-note&utm_medium=internal&utm_campaign=bag-position",
-    intro: "가방을 항상 앞으로 돌려야 하는 것은 아닙니다. 트립마킹은 장소보다 사용자가 지금 무엇을 하는지, 가방 지퍼가 어느 방향을 향하는지, 손이 얼마나 비어 있는지를 봅니다.",
+    intro: "가방을 항상 앞으로 돌려야 하는 것은 아닙니다. 농기계 탁송 견적 비교는 장소보다 사용자가 지금 무엇을 하는지, 가방 지퍼가 어느 방향을 향하는지, 손이 얼마나 비어 있는지를 봅니다.",
     context: "길찾기, 사진, 결제, 대기줄, 야간 이동처럼 시선이 바뀌는 순간에는 가방 위치도 바뀌어야 합니다. 이 기준은 도시별 문서와 장소 상세에서 반복되는 가장 기본적인 field note입니다.",
     signals: [
       "휴대폰을 오래 보고 있어 가방이 시야 밖으로 밀리는 순간",
@@ -368,9 +368,9 @@ const fieldPages = [
   },
   {
     slug: "field-notes/night-transport-choice",
-    title: "야간 이동 선택 field note - 트립마킹",
+    title: "야간 이동 선택 field note - 농기계 탁송 견적 비교",
     h1: "밤에 이동 수단을 고를 때 비용보다 먼저 확인할 것",
-    description: "해외여행 야간 귀가, 호출앱, 택시, 지하철 막차, 숙소 주소를 확인하는 트립마킹 현장 판단 기준.",
+    description: "해외여행 야간 귀가, 호출앱, 택시, 지하철 막차, 숙소 주소를 확인하는 여행 현장 판단 기준.",
     scope: "야간 이동 선택",
     mapHref: "/?utm_source=field-note&utm_medium=internal&utm_campaign=night-transport-choice",
     intro: "밤에는 도시 전체의 위험보다 여행자의 피로와 배터리, 결제 수단, 숙소 주소가 더 중요해집니다. 이 field note는 이동 수단을 고를 때 비용보다 먼저 볼 기준을 정리합니다.",
@@ -394,9 +394,9 @@ const fieldPages = [
   },
   {
     slug: "field-notes/when-to-leave-area",
-    title: "자리를 옮길 때 field note - 트립마킹",
+    title: "자리를 옮길 때 field note - 농기계 탁송 견적 비교",
     h1: "불안할 때 사람을 판단하지 않고 위치를 바꾸는 기준",
-    description: "해외여행 중 접근 제안, 가격이 모호한 대화, 길찾기 혼란, 과한 혼잡에서 자리를 옮기는 기준을 정리한 트립마킹 field note.",
+    description: "해외여행 중 접근 제안, 가격이 모호한 대화, 길찾기 혼란, 과한 혼잡에서 자리를 옮기는 기준을 정리한 여행 field note.",
     scope: "자리를 옮길 때",
     mapHref: "/?utm_source=field-note&utm_medium=internal&utm_campaign=leave-area",
     intro: "여행 중 불안할 때 중요한 것은 누군가를 단정하는 것이 아니라 내 위치와 다음 행동을 바꾸는 것입니다. 이 field note는 자리를 옮길 타이밍을 행동 기준으로 정리합니다.",
@@ -440,7 +440,7 @@ function pageUrl(page) {
 }
 
 function stripBrand(title) {
-  return title.replace(" - 트립마킹", "");
+  return title.replace(" - 농기계 탁송 견적 비교", "");
 }
 
 function relatedTitle(href) {
@@ -470,8 +470,8 @@ function renderStructuredData(page) {
     inLanguage: "ko-KR",
     datePublished: lastmod,
     dateModified: lastmod,
-    author: { "@type": "Organization", name: "트립마킹 편집부" },
-    publisher: { "@type": "Organization", name: "트립마킹", url: siteUrl },
+    author: { "@type": "Organization", name: "농기계 탁송 견적 비교 편집부" },
+    publisher: { "@type": "Organization", name: "농기계 탁송 견적 비교", url: siteUrl },
     mainEntityOfPage: pageUrl(page),
     about: [page.scope, "해외여행 안전", "현장 판단"]
   };
@@ -487,8 +487,8 @@ function renderPage(page) {
     ? "/assets/screenshots/tripmarking-marker-legend.png"
     : "/assets/screenshots/tripmarking-spot-detail.png";
   const screenshotAlt = kind === "field note"
-    ? "트립마킹 지도에서 위험 유형별 마커를 확인하는 화면"
-    : "트립마킹 장소 상세에서 현장 행동과 피해 직후 순서를 확인하는 화면";
+    ? "여행 안전 지도에서 위험 유형별 마커를 확인하는 화면"
+    : "여행 안전 지도 장소 상세에서 현장 행동과 피해 직후 순서를 확인하는 화면";
 
   return `<!doctype html>
 <html lang="ko">
@@ -499,13 +499,13 @@ function renderPage(page) {
     <meta name="description" content="${description}">
     <link rel="canonical" href="${canonical}">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="트립마킹">
+    <meta property="og:site_name" content="농기계 탁송 견적 비교">
     <meta property="og:title" content="${escapeHtml(stripBrand(page.title))}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${canonical}">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5877883031077615" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-5877883031077615">
-    <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="${siteUrl}/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="농기계 탁송 견적 비교 RSS" href="${siteUrl}/feed.xml">
     <link rel="stylesheet" href="/assets/styles.css?v=${assetVersion}">
     <script type="application/ld+json">${JSON.stringify(renderStructuredData(page))}</script>
   </head>
@@ -522,7 +522,7 @@ function renderPage(page) {
 
       <figure class="static-shot">
         <img src="${screenshot}" alt="${screenshotAlt}">
-        <figcaption>트립마킹은 지도에서 짧은 신호를 먼저 보여주고, 문서에서 그 신호를 실제 행동으로 풀어 씁니다. 장소 이름은 낙인이 아니라 여행자가 자신의 동선을 기억하기 위한 기준점입니다.</figcaption>
+        <figcaption>농기계 탁송 견적 비교는 지도에서 짧은 신호를 먼저 보여주고, 문서에서 그 신호를 실제 행동으로 풀어 씁니다. 장소 이름은 낙인이 아니라 여행자가 자신의 동선을 기억하기 위한 기준점입니다.</figcaption>
       </figure>
 
       <h2>먼저 볼 신호</h2>
@@ -557,7 +557,7 @@ ${renderRelatedLinks(page)}
         </ul>
       </div>
 
-      <p><a href="${page.mapHref}">트립마킹 지도에서 ${escapeHtml(page.scope)} 관련 신호 보기</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/cities/">도시별 맥락</a> · <a href="/editorial-policy/">표현·검수 기준</a></p>
+      <p><a href="${page.mapHref}">여행 안전 지도에서 ${escapeHtml(page.scope)} 관련 신호 보기</a> · <a href="/field-notes/">현장 판단 기준</a> · <a href="/cities/">도시별 맥락</a> · <a href="/editorial-policy/">표현·검수 기준</a></p>
     </main>
   </body>
 </html>
@@ -609,7 +609,7 @@ async function upsertFeed() {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>트립마킹</title>
+    <title>농기계 탁송 견적 비교</title>
     <link>${siteUrl}/</link>
     <description>한국인 여행자를 위한 해외여행 도난·스캠 주의 지도와 장소별 현장 판단 가이드.</description>
     <language>ko-KR</language>
