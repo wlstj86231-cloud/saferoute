@@ -311,7 +311,7 @@ async function main() {
     if (page.canonical && page.canonical !== expectedCanonicalForRoute(route)) {
       errors.push(`canonical mismatch on ${route}: ${page.canonical}`);
     }
-    if (!page.hasAds) errors.push(`missing AdSense loader: ${route}`);
+    if (blockedAdPaths.has(route) && page.hasAds) errors.push(`ad script on blocked page: ${route}`);
 
     if (isContentPath(route) && !sitemapSet.has(route)) warnings.push(`content page missing from sitemap: ${route}`);
     if (isContentPath(route) && !feedSet.has(route)) warnings.push(`content page missing from feed: ${route}`);
@@ -373,7 +373,7 @@ async function main() {
   } else {
     if (!/name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(notFound.html)) errors.push("404 page missing noindex");
     if (notFound.canonical) errors.push("404 page must not declare canonical");
-    if (!notFound.hasAds) errors.push("404 page missing AdSense loader");
+    if (notFound.hasAds) errors.push("404 page must not load ads");
   }
 
   if (!htmlRoutes.has("/sources/")) errors.push("missing sources page");

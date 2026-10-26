@@ -57,7 +57,7 @@ for (const forbidden of [
 const notFound = await fs.readFile(path.join(siteRoot, "404.html"), "utf8");
 assert.match(notFound, /name="robots" content="noindex,\s*follow"/i);
 assert.doesNotMatch(notFound, /rel="canonical"/i);
-assert.match(notFound, /adsbygoogle\.js\?client=ca-pub-5877883031077615/);
+assert.doesNotMatch(notFound, /adsbygoogle|pagead2\.googlesyndication/i);
 
 const privacy = await fs.readFile(path.join(siteRoot, "privacy", "index.html"), "utf8");
 assert.match(privacy, /2026년 8월 14일/);
