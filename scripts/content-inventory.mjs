@@ -11,18 +11,13 @@ const blockedAdPaths = new Set([
   "/",
   "/about/",
   "/editorial/",
-  "/editorial-policy/",
   "/privacy/",
   "/terms/",
   "/contact/",
   "/sources/",
-  "/travel/",
-  "/travel/about/",
   "/agri/",
   "/agri/quote-compare/",
-  "/agri/machinery-transport-plan/",
-  "/guides/passport-loss/",
-  "/lost-passport-card-response/"
+  "/agri/machinery-transport-plan/"
 ]);
 
 const nonContentPaths = new Set([
@@ -33,17 +28,10 @@ const nonContentPaths = new Set([
   "/privacy/",
   "/terms/",
   "/contact/",
-  "/sources/",
-  "/travel/",
-  "/travel/about/"
+  "/sources/"
 ]);
 
 const contentEntryPrefixes = [
-  "/guide/",
-  "/field-notes/",
-  "/cities/",
-  "/guides/",
-  "/spots/",
   "/agri/"
 ];
 

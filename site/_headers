@@ -9,31 +9,10 @@
 /about/*
   Cache-Control: public, max-age=0, must-revalidate
 
-/barcelona-pickpocket-guide/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/barcelona/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/cities/*
+/agri/*
   Cache-Control: public, max-age=0, must-revalidate
 
 /contact/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/editorial-policy/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/field-notes/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/guide/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/guides/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/spots/*
   Cache-Control: public, max-age=0, must-revalidate
 
 /privacy/*

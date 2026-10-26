@@ -1,66 +1,21 @@
-# Tripmarking AdSense Content Structure
+# Content and ad placement structure
 
-This document is the working gate for the 80% approval pass. Tripmarking should read as a travel safety information site with a fast map, not as a danger-map-only tool.
+Since 2026-10-26 the site is only "농기계 탁송 견적 비교" (farm machinery transport quotes). The former overseas travel theft/scam map and all of its city, spot, guide and field-note pages were retired; `functions/_middleware.js` answers 410 for those paths. Do not regenerate or re-add travel content.
 
-## Publishable Content Types
+## Publishable content
 
-- Core guide: `/guide/`
-- Field notes: `/field-notes/` and future `/field-notes/*`
-- City hubs: `/cities/`, `/cities/paris/`, `/cities/rome/`, and future city pages.
-- Topic guides: `/guides/*`
-- Spot pages: `/spots/*`
-- Search-entry articles: root-level city, pickpocket, phone-snatching, scam, transit, and bag-safety articles.
+- Tools: `/agri/machinery-transport-plan/`, `/agri/quote-compare/`
+- Hub: `/agri/`
+- Guides: `/agri/guides/*` — facts only from 국가법령정보센터 law text, 한국교통안전공단, 농촌진흥청, each linked with a check date.
 
-## Required Page Blocks
+Every content page needs a canonical URL, a unique title/description, a `SOURCE_NOTE_START/END` block with at least one direct official source, three or more internal links, and an entry in `site/sitemap.xml` and `site/feed.xml` (`npm run site:indexes`).
 
-Every new publishable content page should include:
+## Ad placement
 
-- A scene-based situation, not a claim that a city is dangerous.
-- A decision standard that focuses on a traveler's behavior and context.
-- A short action order.
-- One paragraph explaining what not to over-assume.
-- At least three internal links to related guides, field notes, city hubs, or spot pages.
-- A clear canonical URL and meta description.
-- Inclusion in both `site/sitemap.xml` and `site/feed.xml` when the page is a real reading page.
+No page currently loads the AdSense script. Whether the guides under `/agri/guides/` should carry ads is an owner decision. Ads must stay off:
 
-## Expression Rules
+- `/`, `/about/`, `/editorial/`, `/privacy/`, `/terms/`, `/contact/`, `/sources/`
+- the tools and hub: `/agri/`, `/agri/machinery-transport-plan/`, `/agri/quote-compare/`
+- the 404 page and the 410 retirement notice
 
-- Do not write that a city, country, group, or street is inherently dangerous.
-- Do not sensationalize crime.
-- Do not provide instructions that help theft, fraud, evasion, or harassment.
-- Prefer phrases such as "check this signal", "keep this item in sight", and "leave the area if the interaction becomes unclear".
-
-## Ad Placement Rules
-
-Ads are allowed on:
-
-- `/guide/`
-- `/field-notes/`
-- `/cities/*`
-- Low-sensitivity `/guides/*`
-- `/spots/*`
-- Root-level prevention and city-context articles.
-
-Ads must stay off:
-
-- `/`
-- `/about/`
-- `/editorial/`
-- `/editorial-policy/`
-- `/privacy/`
-- `/terms/`
-- `/contact/`
-- `/review-readiness/`
-- `/guides/passport-loss/`
-- `/lost-passport-card-response/`
-- Map, report, save, translation, loading, and empty-result states.
-
-## Inventory Command
-
-Run this before and after content expansion:
-
-```bash
-npm run content:inventory
-```
-
-The command fails on hard issues such as broken internal links, sitemap URLs without local HTML, missing canonical/meta basics, duplicate feed or sitemap URLs, or ad scripts on blocked pages. It reports softer warnings for pages that need more internal links, paragraphs, feed coverage, or ad coverage.
+`npm run content:inventory` fails on ad scripts on blocked pages and reports pages without ads as warnings.

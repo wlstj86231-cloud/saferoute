@@ -6,25 +6,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const siteRoot = path.join(root, "site");
 const siteUrl = "https://tripmarking.com";
-const lastmod = "2026-08-14";
-const buildDate = "Sun, 27 Sep 2026 12:00:00 +0900";
-const routeLastmod = new Map([
-  ["/", "2026-09-27"],
-  ["/about/", "2026-10-26"],
-  ["/editorial/", "2026-09-27"],
-  ["/sources/", "2026-09-27"],
-  ["/agri/", "2026-09-27"],
-  ["/agri/machinery-transport-plan/", "2026-09-27"],
-  ["/agri/quote-compare/", "2026-10-15"],
-  ["/travel/", "2026-09-27"],
-  ["/travel/about/", "2026-09-27"]
-]);
+// Every page was rewritten for the transport-quote purpose on 2026-10-26.
+// Add a route here with a newer date when its visible content changes.
+const lastmod = "2026-10-26";
+const buildDate = "Mon, 26 Oct 2026 12:00:00 +0900";
+const routeLastmod = new Map();
 const routePubDate = new Map([
   ["/agri/", "Thu, 24 Sep 2026 21:00:00 +0900"],
   ["/agri/machinery-transport-plan/", "Thu, 24 Sep 2026 21:00:00 +0900"],
   ["/agri/quote-compare/", "Thu, 24 Sep 2026 21:00:00 +0900"]
 ]);
-const originalPubDate = "Fri, 14 Aug 2026 00:00:00 +0900";
+const originalPubDate = "Mon, 26 Oct 2026 12:00:00 +0900";
 
 const nonFeedRoutes = new Set([
   "/",
@@ -66,15 +58,12 @@ function routeFromFile(filePath) {
 
 function isFeedRoute(route) {
   if (nonFeedRoutes.has(route)) return false;
-  return ["/guide/", "/guides/", "/cities/", "/field-notes/", "/spots/", "/agri/"]
-    .some((prefix) => route === prefix || route.startsWith(prefix));
+  return route === "/agri/" || route.startsWith("/agri/");
 }
 
 function priority(route) {
   if (route === "/") return "1.0";
-  if (["/guide/", "/guides/", "/cities/", "/field-notes/"].includes(route)) return "0.8";
-  if (route.startsWith("/cities/") || route.startsWith("/guides/")) return "0.7";
-  if (route.startsWith("/spots/") || route.startsWith("/field-notes/")) return "0.6";
+  if (route === "/agri/machinery-transport-plan/" || route === "/agri/quote-compare/") return "0.9";
   if (route.startsWith("/agri/")) return "0.8";
   return "0.4";
 }
@@ -121,7 +110,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
   <channel>
     <title>농기계 탁송 견적 비교</title>
     <link>${siteUrl}/</link>
-    <description>여행 안전 자료와 현장 이동 조건을 확인하는 농기계 탁송 견적 비교의 가이드·도구.</description>
+    <description>중고 농기계 탁송 견적 요청서와 견적 비교표, 화물 적재 기준과 운송 안전 안내.</description>
     <language>ko-KR</language>
     <lastBuildDate>${buildDate}</lastBuildDate>
 ${feedPages.map(({ route, title, description }) => `    <item>

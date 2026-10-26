@@ -1,14 +1,14 @@
 {
   "name": "농기계 탁송 견적 비교",
   "short_name": "농기계탁송견적비교",
-  "description": "농기계 이동 현장 확인표와 탁송 견적 항목 비교 도구",
+  "description": "농기계 탁송 견적 요청서와 견적 비교표",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f5f2e9",
-  "theme_color": "#f5f2e9",
+  "background_color": "#f6f7f1",
+  "theme_color": "#f6f7f1",
   "icons": [
     {
-      "src": "/assets/icon.svg?v=20260509-tripmarking7",
+      "src": "/assets/icon.svg?v=20261026",
       "sizes": "any",
       "type": "image/svg+xml"
     }

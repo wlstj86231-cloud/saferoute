@@ -1,18 +1,10 @@
-const CACHE_NAME = "tripmarking-v38-site-rename";
+const CACHE_NAME = "tripmarking-v39-transport-quotes";
 const LOCAL_ASSETS = [
   "/",
-  "/travel/",
-  "/assets/agri-home.css?v=20260927",
-  "/assets/styles.css?v=20260814-trust1",
-  "/assets/app.js?v=20261026-rename1",
-  "/assets/vendor/leaflet/leaflet.css",
-  "/assets/vendor/leaflet/leaflet.js",
-  "/assets/vendor/leaflet/images/layers.png",
-  "/assets/vendor/leaflet/images/layers-2x.png",
-  "/assets/vendor/leaflet/images/marker-icon.png",
-  "/assets/vendor/leaflet/images/marker-icon-2x.png",
-  "/assets/vendor/leaflet/images/marker-shadow.png",
-  "/assets/icon.svg?v=20260509-tripmarking7",
+  "/assets/site.css?v=20261026",
+  "/assets/quote-request-20261026.js",
+  "/assets/quote-compare-20261026.js",
+  "/assets/icon.svg?v=20261026",
   "/manifest.webmanifest"
 ];
 

@@ -1,11 +1,14 @@
 # 농기계 탁송 견적 비교
 
-농기계 이동 현장 조건을 기록하고 받은 탁송 견적의 비용 항목을 비교하는 웹 도구입니다. 기존 해외여행 주의 지도는 `/travel/`에서 보존합니다.
+중고 농기계를 옮기기 전에 기계 제원과 상하차 조건으로 표준 견적 요청서를 만들고, 받은 탁송 견적을 같은 항목으로 비교하는 정적 웹 도구입니다. 운영: 제이 미디어(J MEDIA).
 
-- 홈 `/`: 농기계 이동 서비스와 판단 범위
-- `/agri/machinery-transport-plan/`: 기계·현장 문의용 메모
-- `/agri/quote-compare/`: 사용자가 입력한 견적 항목 비교
-- `/travel/`: 기존 여행 안전 지도
+- `/`: 홈
+- `/agri/machinery-transport-plan/`: 견적 요청서 만들기 (`site/assets/quote-request-20261026.js`)
+- `/agri/quote-compare/`: 업체별 견적 비교표 (`site/assets/quote-compare-20261026.js`)
+- `/agri/`: 운송 안내 모음, `/agri/guides/*`: 적재 기준·운송 안전·견적서 읽는 법
+- 이전 해외여행 지도(`/travel/`, `/cities/`, `/guides/`, `/guide/`, `/spots/`, `/field-notes/`)는 2026-10-26 종료했고 `functions/_middleware.js`가 410 안내를 돌려줍니다.
+
+도구 스크립트와 `site.css`는 `/assets/*` 1년 캐시 대상이므로 내용을 바꾸면 파일명 또는 `?v=` 값을 올리고 `site/sw.js`의 `CACHE_NAME`도 함께 바꿉니다.
 
 ## Local
 
@@ -13,14 +16,14 @@
 python -m http.server 4197 --directory site --bind 127.0.0.1
 ```
 
+정적 서버는 미들웨어(리디렉션·410)를 실행하지 않습니다. e2e 테스트(`npm run test:e2e`)는 미들웨어가 동작하는 서버를 `SITE_URL`(기본 `http://127.0.0.1:4198`)로 지정해 실행합니다.
+
+## Checks
+
+- `npm run validate`: 스크립트 문법, 미들웨어 동작, 검증 메타 태그, 사이트맵·내부 링크·출처 표기 점검
+- `npm run site:indexes`: `site/sitemap.xml`, `site/feed.xml` 재생성
+
 ## Cloudflare Pages
 
 Build command: 없음
 Output directory: `site`
-
-## 공유 제보 API
-
-Cloudflare Pages Functions가 `/api/reports`를 제공합니다. Cloudflare Pages 프로젝트에 D1 바인딩 `REPORTS_DB`를 연결하고 `migrations/0001_reports.sql`을 적용하면, 선택형 위험 제보가 다른 사용자 지도에도 짧은 주기로 반영됩니다.
-## Feedback API
-
-`/api/feedback` stores quick bug reports, questions, and suggestions in the same D1 binding (`REPORTS_DB`). Apply `migrations/0002_feedback.sql` after the reports migration.

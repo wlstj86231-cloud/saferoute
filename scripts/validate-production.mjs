@@ -16,17 +16,31 @@ async function callMiddleware(url, downstreamStatus = 200) {
   });
 }
 
-const www = await callMiddleware("https://www.tripmarking.com/cities/paris/?from=test");
+const www = await callMiddleware("https://www.tripmarking.com/agri/quote-compare/?from=test");
 assert.equal(www.status, 301);
-assert.equal(www.headers.get("location"), "https://tripmarking.com/cities/paris/?from=test");
+assert.equal(www.headers.get("location"), "https://tripmarking.com/agri/quote-compare/?from=test");
 
-const pagesDev = await callMiddleware("https://saferoute-4hu.pages.dev/guides/pickpocket/");
+const pagesDev = await callMiddleware("https://saferoute-4hu.pages.dev/agri/");
 assert.equal(pagesDev.status, 301);
-assert.equal(pagesDev.headers.get("location"), "https://tripmarking.com/guides/pickpocket/");
+assert.equal(pagesDev.headers.get("location"), "https://tripmarking.com/agri/");
 
-const legacy = await callMiddleware("https://tripmarking.com/paris-pickpocket-guide/?utm_source=old");
-assert.equal(legacy.status, 301);
-assert.equal(legacy.headers.get("location"), "https://tripmarking.com/cities/paris/?utm_source=old");
+for (const [from, to] of [["/travel/about/", "/about/"], ["/review-readiness/", "/about/"], ["/editorial-policy/", "/editorial/"]]) {
+  const moved = await callMiddleware(`https://tripmarking.com${from}?utm_source=old`);
+  assert.equal(moved.status, 301, from);
+  assert.equal(moved.headers.get("location"), `https://tripmarking.com${to}?utm_source=old`);
+}
+
+// The retired overseas travel section answers 410 with a notice, never 200.
+for (const retired of ["/travel/", "/travel", "/cities/paris/", "/guides/pickpocket/", "/guide/", "/spots/rome/termini-station/", "/field-notes/", "/paris-pickpocket-guide/", "/barcelona/la-rambla-pickpocket/"]) {
+  const gone = await callMiddleware(`https://tripmarking.com${retired}`);
+  assert.equal(gone.status, 410, retired);
+  assert.match(gone.headers.get("x-robots-tag") || "", /noindex/);
+  assert.match(await gone.text(), /종료되었습니다/);
+}
+for (const live of ["/agri/guides/loading-limits/", "/agri/", "/"]) {
+  const ok = await callMiddleware(`https://tripmarking.com${live}`);
+  assert.equal(ok.status, 200, live);
+}
 
 const api = await callMiddleware("https://tripmarking.com/api/reports");
 assert.equal(api.status, 404);
@@ -38,21 +52,15 @@ assert.equal(missing.status, 404);
 assert.match(missing.headers.get("cache-control") || "", /no-store/);
 assert.match(missing.headers.get("x-robots-tag") || "", /noindex/);
 
-const app = await fs.readFile(path.join(siteRoot, "assets", "app.js"), "utf8");
-for (const forbidden of [
-  "/api/reports",
-  "/api/feedback",
-  "tripmarking:reports",
-  "tripmarking:feedbackOutbox",
-  "contact@tripmarking.com",
-  "sumimap.com",
-  "평균 위험",
-  "Average risk",
-  "실시간 제보",
-  "Live reports"
-]) {
-  assert.equal(app.includes(forbidden), false, `app still contains disabled or misleading string: ${forbidden}`);
+for (const script of ["quote-request-20261026.js", "quote-compare-20261026.js"]) {
+  const code = await fs.readFile(path.join(siteRoot, "assets", script), "utf8");
+  assert.doesNotMatch(code, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|sendBeacon/, `${script} must keep input in the browser`);
 }
+
+const home = await fs.readFile(path.join(siteRoot, "index.html"), "utf8");
+assert.match(home, /<meta name="naver-site-verification" content="c06d1248da3e65e670fc0dd22847f11765c946d5">/);
+assert.match(home, /<meta name="google-site-verification" content="UDKZhW7Zh4CFIqIGz8Oif7QR_XjBFwxWFiBbBsDPs7Q">/);
+assert.match(home, /<meta name="google-adsense-account" content="ca-pub-5877883031077615">/);
 
 const notFound = await fs.readFile(path.join(siteRoot, "404.html"), "utf8");
 assert.match(notFound, /name="robots" content="noindex,\s*follow"/i);
@@ -64,16 +72,13 @@ assert.match(privacy, /2026년 8월 14일/);
 assert.match(privacy, /운영 서버에 .*수집·저장하지 않습니다/);
 
 const sources = await fs.readFile(path.join(siteRoot, "sources", "index.html"), "utf8");
-for (const anchor of [
-  "barcelona", "paris", "rome", "london", "bangkok", "hochiminh", "tokyo", "new-york",
-  "istanbul", "amsterdam", "madrid", "lisbon", "athens", "prague", "budapest", "mexicocity",
-  "passport-loss", "phone-loss", "card-loss", "methodology"
-]) {
+for (const anchor of ["law", "ts", "rda", "agri", "methodology"]) {
   assert.match(sources, new RegExp(`id=["']${anchor}["']`), `missing source anchor ${anchor}`);
 }
 
 for (const file of await collectHtml(siteRoot)) {
   const html = await fs.readFile(file, "utf8");
+  assert.doesNotMatch(html, /트립마킹|assets\/app\.js|leaflet|href="\/(travel|cities|guides|guide|spots|field-notes)\//i, `legacy travel reference in ${path.relative(siteRoot, file)}`);
   for (const match of html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)) {
     JSON.parse(match[1]);
   }
