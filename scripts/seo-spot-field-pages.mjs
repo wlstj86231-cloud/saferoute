@@ -503,8 +503,8 @@ function renderPage(page) {
     <meta property="og:title" content="${escapeHtml(stripBrand(page.title))}">
     <meta property="og:description" content="${description}">
     <meta property="og:url" content="${canonical}">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217591196020054" crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-7217591196020054">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5877883031077615" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5877883031077615">
     <link rel="alternate" type="application/rss+xml" title="트립마킹 RSS" href="${siteUrl}/feed.xml">
     <link rel="stylesheet" href="/assets/styles.css?v=${assetVersion}">
     <script type="application/ld+json">${JSON.stringify(renderStructuredData(page))}</script>
