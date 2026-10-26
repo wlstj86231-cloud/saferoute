@@ -79,6 +79,14 @@ for (const anchor of ["law", "ts", "rda", "agri", "methodology"]) {
 for (const phrase of ["adssettings.google.com", "policies.google.com/technologies/ads", "consultingjinjeong@gmail.com", "010-2846-2011"]) {
   assert.ok(privacy.includes(phrase), `privacy page must mention ${phrase}`);
 }
+// The funding/ads wording must stay true whether or not ad code is live, so
+// trust pages may not promise "no ads now" and must say ads may be shown.
+for (const page of ["about", "privacy", "editorial", "terms"]) {
+  const html = await fs.readFile(path.join(siteRoot, page, "index.html"), "utf8");
+  assert.doesNotMatch(html, /광고를 싣지 않습니다|광고 스크립트를 싣는 페이지는 없|광고가 없습니다/, `${page} page states a time-bound "no ads" claim`);
+  assert.match(html, /Google 애드센스 광고가 게재될 수 있/, `${page} page must disclose that AdSense ads may be shown`);
+}
+
 const contact = await fs.readFile(path.join(siteRoot, "contact", "index.html"), "utf8");
 for (const phrase of ["tel:010-2846-2011", "mailto:consultingjinjeong@gmail.com", "https://open.kakao.com/o/scuvl1wi", "https://open.kakao.com/o/p6HiJ9Pi", "의료원로 80-8"]) {
   assert.ok(contact.includes(phrase), `contact page must list ${phrase}`);
